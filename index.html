@@ -15,12 +15,74 @@
 <meta property="og:url" content="https://drmaniortho.in/">
 <meta property="og:image" content="https://via.placeholder.com/1200x500?text=Clinic+Photo">
 
-<link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+/* General */
+body {margin:0;font-family:Arial,sans-serif;line-height:1.6;color:#333;}
+.container {max-width:1200px;margin:0 auto;padding:20px;}
+h2 {text-align:center;margin-bottom:20px;}
+
+/* Buttons */
+.btn-primary {background:#007bff;color:#fff;padding:10px 20px;border:none;border-radius:5px;text-decoration:none;display:inline-block;margin-top:10px;}
+.btn-primary:hover {background:#0056b3;}
+
+/* Hero */
+.hero {position:relative;overflow:hidden;}
+.hero-slider {position:relative;}
+.slide {position:absolute;top:0;left:0;width:100%;height:500px;background-size:cover;background-position:center;opacity:0;transition:opacity 1s ease;}
+.slide.active {opacity:1;}
+.hero-content {position:absolute;bottom:30px;left:30px;color:#fff;background:rgba(0,0,0,0.4);padding:20px;border-radius:10px;}
+.prev,.next {position:absolute;top:50%;transform:translateY(-50%);font-size:30px;color:#fff;background:rgba(0,0,0,0.3);border:none;padding:5px 10px;cursor:pointer;border-radius:5px;}
+.prev{left:10px;} .next{right:10px;}
+.dots-container {text-align:center;position:absolute;bottom:10px;width:100%;}
+.dot {height:12px;width:12px;margin:0 5px;display:inline-block;background:#bbb;border-radius:50%;cursor:pointer;}
+.dot.active {background:#fff;}
+
+/* Doctor Section */
+.doctor-section {display:flex;align-items:center;gap:20px;}
+.doctor-photo {border-radius:50%;width:200px;height:200px;object-fit:cover;}
+
+/* Services & Why Choose Us */
+.flex-list {display:flex;flex-wrap:wrap;justify-content:center;gap:20px;}
+.flex-list div {flex:1 1 200px;background:#e7f1ff;padding:20px;text-align:center;border-radius:10px;min-width:150px;}
+.flex-list i {font-size:30px;margin-bottom:10px;display:block;color:#007bff;}
+
+/* Testimonials */
+.testimonial-item {background:#f1f1f1;padding:20px;margin:10px 0;border-radius:10px;text-align:center;}
+.testimonial-item span {display:block;margin-top:10px;font-weight:bold;}
+
+/* FAQ */
+.faq-item {margin-bottom:15px;border-radius:8px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,0.1);}
+.faq-question {display:flex;justify-content:space-between;align-items:center;width:100%;padding:15px 20px;font-size:16px;cursor:pointer;background:#007bff;color:#fff;border:none;outline:none;transition:background 0.3s ease;border-radius:8px;}
+.faq-question:hover {background:#0056b3;}
+.faq-answer {max-height:0;overflow:hidden;transition:max-height 0.4s ease,padding 0.4s ease;padding:0 20px;background:#e7f1ff;}
+.faq-answer.open {padding:15px 20px;max-height:500px;}
+.faq-icon {font-weight:bold;transition:transform 0.3s ease;margin-left:10px;}
+
+/* Appointment form */
+form {display:flex;flex-direction:column;gap:10px;max-width:400px;margin:0 auto;}
+input,button {padding:10px;border-radius:5px;border:1px solid #ccc;}
+button.btn-primary {border:none;cursor:pointer;}
+
+/* Map */
+.map-container {margin-top:20px;}
+
+/* Footer */
+footer {text-align:center;padding:20px;background:#007bff;color:#fff;margin-top:40px;border-radius:5px;}
+
+/* Floating Card */
+.floating-card {position:fixed;bottom:20px;right:20px;background:#007bff;color:#fff;padding:10px 15px;border-radius:10px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 6px rgba(0,0,0,0.3);}
+.floating-card a img{vertical-align:middle;width:24px;height:24px;}
+
+/* Responsive */
+@media(max-width:768px){.doctor-section{flex-direction:column;text-align:center;}.flex-list{flex-direction:column;}}
+@media(max-width:480px){.faq-question{font-size:14px;padding:10px 12px;}.faq-answer.open{padding:10px 12px;}}
+</style>
 </head>
 <body>
 
-<!-- HERO CAROUSEL -->
+<!-- Hero Slider -->
 <header class="hero fade-section">
   <div class="hero-slider">
     <div class="slide active" style="background-image:url('https://via.placeholder.com/1200x500?text=Clinic+Photo+1');">
@@ -37,28 +99,16 @@
         <a href="#appointment" class="btn-primary">📅 Book Appointment</a>
       </div>
     </div>
-    <div class="slide" style="background-image:url('https://via.placeholder.com/1200x500?text=Clinic+Photo+3');">
-      <div class="hero-content">
-        <h1>Quality Patient Care</h1>
-        <p class="sub-text">Your Health is Our Priority</p>
-        <a href="#appointment" class="btn-primary">📅 Book Appointment</a>
-      </div>
-    </div>
   </div>
-
-  <!-- Dot Indicators -->
+  <button class="prev">&#10094;</button>
+  <button class="next">&#10095;</button>
   <div class="dots-container">
     <span class="dot active" data-index="0"></span>
     <span class="dot" data-index="1"></span>
-    <span class="dot" data-index="2"></span>
   </div>
-
-  <!-- Navigation Arrows -->
-  <button class="prev">&#10094;</button>
-  <button class="next">&#10095;</button>
 </header>
 
-<!-- DOCTOR SECTION -->
+<!-- Doctor Section -->
 <section class="container doctor-section fade-section">
   <img src="https://via.placeholder.com/200x200?text=Dr+Mani" alt="Dr Mani Arumugam" class="doctor-photo">
   <div>
@@ -67,7 +117,7 @@
   </div>
 </section>
 
-<!-- SERVICES -->
+<!-- Services -->
 <section class="container fade-section">
   <h2>Our Services</h2>
   <div class="flex-list">
@@ -80,7 +130,7 @@
   </div>
 </section>
 
-<!-- WHY CHOOSE US -->
+<!-- Why Choose Us -->
 <section class="container fade-section">
   <h2>Why Choose Us</h2>
   <div class="flex-list">
@@ -91,7 +141,7 @@
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
+<!-- Testimonials -->
 <section class="container testimonials fade-section">
   <h2>What Our Patients Say</h2>
   <div class="testimonial-item fade-item">
@@ -108,30 +158,34 @@
   </div>
 </section>
 
-<!-- FAQ -->
+<!-- FAQ Section -->
 <section class="container fade-section" id="faq">
   <h2>Frequently Asked Questions</h2>
+  
   <div class="faq-item fade-item">
-    <button class="faq-question">What are your clinic hours?</button>
+    <button class="faq-question">What are your clinic hours? <span class="faq-icon">+</span></button>
     <div class="faq-answer">
       <p>We are open Monday to Saturday from 9:00 AM to 8:00 PM. On Sundays, we are available for emergency consultations.</p>
     </div>
   </div>
+
   <div class="faq-item fade-item">
-    <button class="faq-question">Do you accept walk-in patients?</button>
+    <button class="faq-question">Do you accept walk-in patients? <span class="faq-icon">+</span></button>
     <div class="faq-answer">
       <p>Yes, we do accept walk-ins, but prior appointments are recommended to reduce waiting time.</p>
     </div>
   </div>
+
   <div class="faq-item fade-item">
-    <button class="faq-question">Which payment methods are accepted?</button>
+    <button class="faq-question">Which payment methods are accepted? <span class="faq-icon">+</span></button>
     <div class="faq-answer">
       <p>We accept cash, UPI payments, debit/credit cards, and online payment via GPay or Paytm.</p>
     </div>
   </div>
+
 </section>
 
-<!-- GOOGLE MAP -->
+<!-- Google Maps Directions -->
 <section class="container fade-section" id="location">
   <h2>Find Us</h2>
   <div class="map-container">
@@ -147,7 +201,7 @@
   </div>
 </section>
 
-<!-- APPOINTMENT FORM -->
+<!-- Appointment -->
 <section class="container fade-section" id="appointment">
   <h2>Book Appointment</h2>
   <form>
@@ -158,22 +212,92 @@
   </form>
 </section>
 
-<!-- FOOTER -->
+<!-- Footer -->
 <footer class="fade-section">
   <p>© 2025 Dr Mani's Ortho Speciality & General Clinic</p>
 </footer>
 
-<!-- FLOATING HELP CARD -->
+<!-- Floating Action Card -->
 <div class="floating-card">
   <span>Need Help?</span>
   <a href="tel:+919876543210" class="call-btn" title="Call Now">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Phone_icon.png" alt="Call" style="width:24px;height:24px;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Phone_icon.png" alt="Call">
   </a>
   <a href="https://wa.me/919876543210" target="_blank" class="whatsapp-btn" title="Chat on WhatsApp">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" style="width:24px;height:24px;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
   </a>
 </div>
 
-<script src="script.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  /* HERO CAROUSEL */
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.dot');
+  let currentSlide = 0;
+
+  function showSlide(index) {
+    slides.forEach(s => s.classList.remove('active'));
+    slides[index].classList.add('active');
+    dots.forEach(d => d.classList.remove('active'));
+    if(dots[index]) dots[index].classList.add('active');
+  }
+
+  function nextSlide() { currentSlide = (currentSlide+1)%slides.length; showSlide(currentSlide); }
+  function prevSlide() { currentSlide = (currentSlide-1+slides.length)%slides.length; showSlide(currentSlide); }
+
+  showSlide(currentSlide);
+  let autoSlide = setInterval(nextSlide, 5000);
+
+  document.querySelector('.next')?.addEventListener('click', ()=>{ nextSlide(); resetInterval(); });
+  document.querySelector('.prev')?.addEventListener('click', ()=>{ prevSlide(); resetInterval(); });
+
+  dots.forEach(dot => dot.addEventListener('click', ()=>{
+    currentSlide = parseInt(dot.getAttribute('data-index'));
+    showSlide(currentSlide);
+    resetInterval();
+  }));
+
+  const hero = document.querySelector('.hero');
+  if(hero){
+    hero.addEventListener('mouseenter', ()=> clearInterval(autoSlide));
+    hero.addEventListener('mouseleave', ()=> autoSlide=setInterval(nextSlide,5000));
+
+    // Mobile swipe
+    let touchStartX=0, touchEndX=0;
+    hero.addEventListener('touchstart', e=>touchStartX=e.changedTouches[0].screenX);
+    hero.addEventListener('touchend', e=>{
+      touchEndX=e.changedTouches[0].screenX;
+      if(touchEndX < touchStartX - 50){ nextSlide(); resetInterval(); }
+      if(touchEndX > touchStartX + 50){ prevSlide(); resetInterval(); }
+    });
+  }
+
+  function resetInterval(){ clearInterval(autoSlide); autoSlide=setInterval(nextSlide,5000); }
+
+  /* FAQ Accordion with +/− icon */
+  const faqButtons = document.querySelectorAll('.faq-question');
+  faqButtons.forEach(btn => {
+    btn.addEventListener('click', ()=>{
+      const answer = btn.nextElementSibling;
+      const icon = btn.querySelector('.faq-icon');
+
+      // Close others
+      document.querySelectorAll('.faq-answer').forEach(a => {
+        if(a !== answer){
+          a.classList.remove('open');
+          const otherIcon = a.previousElementSibling.querySelector('.faq-icon');
+          if(otherIcon) otherIcon.textContent = '+';
+        }
+      });
+
+      // Toggle clicked answer
+      const isOpen = answer.classList.toggle('open');
+      icon.textContent = isOpen ? '−' : '+';
+    });
+  });
+
+});
+</script>
+
 </body>
 </html>
