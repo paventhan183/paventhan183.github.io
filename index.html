@@ -9,13 +9,18 @@
 <meta name="description" content="Dr Mani's Ortho Speciality & General Clinic in Chennai offers expert care for fractures, joint pain, spine & back issues. Book appointments online.">
 <meta name="keywords" content="Orthopedic doctor, Chennai, joint pain, fractures, spine care, Dr Mani Arumugam, clinic, bone specialist">
 <meta name="author" content="Dr Mani's Ortho Speciality & General Clinic">
+<meta property="og:title" content="Dr Mani's Ortho Speciality & General Clinic">
+<meta property="og:description" content="Expert orthopedic and general health care in Chennai. Book your appointment now.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://drmaniortho.in/">
+<meta property="og:image" content="https://via.placeholder.com/1200x500?text=Clinic+Photo">
 
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
-<!-- Hero Slider -->
+<!-- HERO CAROUSEL -->
 <header class="hero fade-section">
   <div class="hero-slider">
     <div class="slide active" style="background-image:url('https://via.placeholder.com/1200x500?text=Clinic+Photo+1');">
@@ -32,10 +37,28 @@
         <a href="#appointment" class="btn-primary">📅 Book Appointment</a>
       </div>
     </div>
+    <div class="slide" style="background-image:url('https://via.placeholder.com/1200x500?text=Clinic+Photo+3');">
+      <div class="hero-content">
+        <h1>Quality Patient Care</h1>
+        <p class="sub-text">Your Health is Our Priority</p>
+        <a href="#appointment" class="btn-primary">📅 Book Appointment</a>
+      </div>
+    </div>
   </div>
+
+  <!-- Dot Indicators -->
+  <div class="dots-container">
+    <span class="dot active" data-index="0"></span>
+    <span class="dot" data-index="1"></span>
+    <span class="dot" data-index="2"></span>
+  </div>
+
+  <!-- Navigation Arrows -->
+  <button class="prev">&#10094;</button>
+  <button class="next">&#10095;</button>
 </header>
 
-<!-- Doctor Section -->
+<!-- DOCTOR SECTION -->
 <section class="container doctor-section fade-section">
   <img src="https://via.placeholder.com/200x200?text=Dr+Mani" alt="Dr Mani Arumugam" class="doctor-photo">
   <div>
@@ -44,7 +67,7 @@
   </div>
 </section>
 
-<!-- Services -->
+<!-- SERVICES -->
 <section class="container fade-section">
   <h2>Our Services</h2>
   <div class="flex-list">
@@ -57,7 +80,7 @@
   </div>
 </section>
 
-<!-- Why Choose Us -->
+<!-- WHY CHOOSE US -->
 <section class="container fade-section">
   <h2>Why Choose Us</h2>
   <div class="flex-list">
@@ -68,7 +91,7 @@
   </div>
 </section>
 
-<!-- Testimonials -->
+<!-- TESTIMONIALS -->
 <section class="container testimonials fade-section">
   <h2>What Our Patients Say</h2>
   <div class="testimonial-item fade-item">
@@ -85,7 +108,7 @@
   </div>
 </section>
 
-<!-- FAQ Section -->
+<!-- FAQ -->
 <section class="container fade-section" id="faq">
   <h2>Frequently Asked Questions</h2>
   <div class="faq-item fade-item">
@@ -108,7 +131,7 @@
   </div>
 </section>
 
-<!-- Google Maps Directions -->
+<!-- GOOGLE MAP -->
 <section class="container fade-section" id="location">
   <h2>Find Us</h2>
   <div class="map-container">
@@ -124,7 +147,7 @@
   </div>
 </section>
 
-<!-- Appointment -->
+<!-- APPOINTMENT FORM -->
 <section class="container fade-section" id="appointment">
   <h2>Book Appointment</h2>
   <form>
@@ -135,12 +158,12 @@
   </form>
 </section>
 
-<!-- Footer -->
+<!-- FOOTER -->
 <footer class="fade-section">
   <p>© 2025 Dr Mani's Ortho Speciality & General Clinic</p>
 </footer>
 
-<!-- Floating Action Card -->
+<!-- FLOATING HELP CARD -->
 <div class="floating-card">
   <span>Need Help?</span>
   <a href="tel:+919876543210" class="call-btn" title="Call Now">
