@@ -1,68 +1,64 @@
 document.addEventListener("DOMContentLoaded", () => {
-
-  // Smooth Scroll for anchor links
-  document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener("click", function(e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute("href"));
-      if(target) target.scrollIntoView({ behavior: "smooth" });
-    });
-  });
-
-  // Fade-in Sections
-  const fadeSections = document.querySelectorAll(".fade-section");
-  const fadeItems = document.querySelectorAll(".fade-item");
-
-  const observerSection = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting) {
-        entry.target.classList.add("show");
-        observerSection.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.2 });
-  fadeSections.forEach(section => observerSection.observe(section));
-
-  const observerItems = new IntersectionObserver(entries => {
-    entries.forEach((entry, index) => {
-      if(entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add("show"), index * 100);
-        observerItems.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.2 });
-  fadeItems.forEach(item => observerItems.observe(item));
-
-  // Hero Slider
   const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.dot');
   let currentSlide = 0;
-  if(slides.length > 0){
-    slides[currentSlide].classList.add('active');
-    setInterval(() => {
-      slides[currentSlide].classList.remove('active');
-      currentSlide = (currentSlide + 1) % slides.length;
-      slides[currentSlide].classList.add('active');
-    }, 5000);
+
+  function showSlide(index) {
+    slides.forEach(s => s.classList.remove('active'));
+    slides[index].classList.add('active');
+    dots.forEach(d => d.classList.remove('active'));
+    if(dots[index]) dots[index].classList.add('active');
   }
 
-  // Testimonials Carousel
-  const testimonials = document.querySelectorAll('.testimonial-item');
-  let tIndex = 0;
-  if(testimonials.length > 0){
-    function showTestimonial(){
-      testimonials.forEach((t, i) => t.style.display = i === tIndex ? 'block' : 'none');
-      tIndex = (tIndex + 1) % testimonials.length;
+  function nextSlide() { currentSlide = (currentSlide+1)%slides.length; showSlide(currentSlide); }
+  function prevSlide() { currentSlide = (currentSlide-1+slides.length)%slides.length; showSlide(currentSlide); }
+
+  showSlide(currentSlide);
+
+  let autoSlide = setInterval(nextSlide, 5000);
+
+  // Arrows
+  document.querySelector('.next')?.addEventListener('click', ()=>{ nextSlide(); resetInterval(); });
+  document.querySelector('.prev')?.addEventListener('click', ()=>{ prevSlide(); resetInterval(); });
+
+  // Dots
+  dots.forEach(dot => dot.addEventListener('click', ()=>{
+    currentSlide = parseInt(dot.getAttribute('data-index'));
+    showSlide(currentSlide);
+    resetInterval();
+  }));
+
+  // Pause on hover
+  const hero = document.querySelector('.hero');
+  if(hero){
+    hero.addEventListener('mouseenter', ()=> clearInterval(autoSlide));
+    hero.addEventListener('mouseleave', ()=> autoSlide=setInterval(nextSlide,5000));
+  }
+
+  // Mobile Swipe
+  let touchStartX=0, touchEndX=0;
+  if(hero){
+    hero.addEventListener('touchstart', e=>touchStartX=e.changedTouches[0].screenX);
+    hero.addEventListener('touchend', e=>{
+      touchEndX=e.changedTouches[0].screenX;
+      handleGesture();
+    });
+    function handleGesture(){
+      const threshold=50;
+      if(touchEndX < touchStartX - threshold){ nextSlide(); resetInterval(); }
+      if(touchEndX > touchStartX + threshold){ prevSlide(); resetInterval(); }
     }
-    showTestimonial();
-    setInterval(showTestimonial, 4000);
   }
 
-  // FAQ Accordion
+  function resetInterval(){ clearInterval(autoSlide); autoSlide=setInterval(nextSlide,5000); }
+
+  // FAQ toggle
   const faqButtons = document.querySelectorAll('.faq-question');
   faqButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const parent = btn.parentElement;
-      parent.classList.toggle('active');
+    btn.addEventListener('click', ()=>{
+      const answer = btn.nextElementSibling;
+      if(answer.style.display === "block"){ answer.style.display = "none"; }
+      else{ answer.style.display = "block"; }
     });
   });
 
