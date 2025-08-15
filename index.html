@@ -1,302 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dr Mani's Ortho Speciality & General Clinic</title>
+  <meta charset="UTF-8" />
+  <meta name="google-site-verification" content="nvR8tIxicWg1Pf9rOv4-YItGCzfiZJP6OP-cw9Q3nWg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <title>Dr Mani's Ortho Speciality & General Clinic</title>
+  <link rel="canonical" href="https://drmaniortho.in/" />
+  <link rel="icon" type="image/png" href="IMG-20250712-WA0001.jpg">
 
-<!-- SEO Meta Tags -->
-<meta name="description" content="Dr Mani's Ortho Speciality & General Clinic in Chennai offers expert care for fractures, joint pain, spine & back issues. Book appointments online.">
-<meta name="keywords" content="Orthopedic doctor, Chennai, joint pain, fractures, spine care, Dr Mani Arumugam, clinic, bone specialist">
-<meta name="author" content="Dr Mani's Ortho Speciality & General Clinic">
-<meta property="og:title" content="Dr Mani's Ortho Speciality & General Clinic">
-<meta property="og:description" content="Expert orthopedic and general health care in Chennai. Book your appointment now.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://drmaniortho.in/">
-<meta property="og:image" content="https://via.placeholder.com/1200x500?text=Clinic+Photo">
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MedicalBusiness",
+    "name": "Dr. MANI'S ORTHO SPECIALITY & GENERAL CLINIC",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "68, Radha Nagar Main Road, Opposite to J2 Mahal, Chromepet",
+      "addressLocality": "Chennai",
+      "postalCode": "600044",
+      "addressCountry": "IN"
+    },
+    "telephone": "+91 94442 61111",
+    "medicalSpecialty": ["Orthopedic", "General Practice"],
+    "availableService": [
+      {"@type":"MedicalProcedure","name":"Trauma & Fracture Management","description":"Management and treatment for trauma injuries and fractures."},
+      {"@type":"MedicalProcedure","name":"Joint Replacement Surgery","description":"Surgical procedures to replace joints for improved mobility."},
+      {"@type":"MedicalProcedure","name":"Spine Care & Surgery","description":"Specialized care and surgery for spine-related conditions."},
+      {"@type":"MedicalTest","name":"Clinical Laboratory Services","description":"Laboratory testing and diagnostic services."},
+      {"@type":"TherapeuticProcedure","name":"Physiotherapy","description":"Rehabilitation and physical therapy for pain relief."},
+      {"@type":"MedicalTest","name":"Digital X-Ray","description":"Digital radiography services for accurate diagnosis."},
+      {"@type":"MedicalService","name":"Fever & Infections","description":"Consultation and treatment for fever and infections."},
+      {"@type":"MedicalService","name":"Stomach Problems","description":"Evaluation and treatment for digestive issues."},
+      {"@type":"MedicalService","name":"General Pain","description":"Assessment and treatment for general pain complaints."},
+      {"@type":"MedicalService","name":"Fatigue & Weakness","description":"Treatment for fatigue and low energy conditions."},
+      {"@type":"MedicalService","name":"Wound Care","description":"Professional care for wounds and healing support."},
+      {"@type":"MedicalService","name":"Diabetic Treatment","description":"Management and care for diabetes patients."}
+    ]
+  }
+  </script>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body { font-family: Arial,sans-serif; margin:0; padding:0; background: linear-gradient(135deg, #0066cc, #ff66cc); }
+    header { background-color: #0066cc; color: white; padding: 20px; text-align:center; position:relative; z-index:10; }
+    header h1 { margin:0; font-size:1.5rem; }
+    header p { margin:5px 0; font-size:1rem; }
+    header p.phone-number { background-color:#004080; color:white; padding:8px; border-radius:5px; font-weight:bold; max-width:220px; margin:10px auto 0 auto; cursor:pointer; }
+    header p.phone-number a { color:white; text-decoration:none; }
 
-<style>
-/* General */
-body {margin:0;font-family:Arial,sans-serif;line-height:1.6;color:#333;}
-.container {max-width:1200px;margin:0 auto;padding:20px;}
-h2 {text-align:center;margin-bottom:20px;}
+    .banner-slider { position:relative; width:100%; height:250px; border-radius:0 0 15px 15px; overflow:hidden; box-shadow:0 4px 8px rgba(0,0,0,0.2); margin-bottom:20px; }
+    .banner-slider .slide { position:absolute; width:100%; height:100%; background-size:cover; background-position:center; top:0; left:0; opacity:0; transition:opacity 1s ease-in-out; display:flex; align-items:center; justify-content:center; border-radius:0 0 15px 15px; }
+    .banner-slider .slide.active { opacity:1; position:relative; }
+    .banner-slider .slide h2 { color:white; font-size:2.5rem; text-shadow:0 0 10px rgba(0,0,0,0.7); text-align:center; padding:0 15px; }
 
-/* Buttons */
-.btn-primary {background:#007bff;color:#fff;padding:10px 20px;border:none;border-radius:5px;text-decoration:none;display:inline-block;margin-top:10px;}
-.btn-primary:hover {background:#0056b3;}
+    .about-us { max-width:1200px; margin:10px auto; padding:20px; background:rgba(255,255,255,0.85); border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); box-sizing:border-box; }
+    .services-row, .timing-contact-row { max-width:1200px; margin:10px auto 30px auto; padding:0 10px; display:flex; gap:20px; flex-wrap:wrap; justify-content:center; }
+    .service-section, .timing-contact-section { flex:1 1 45%; max-width:600px; background:rgba(255,255,255,0.85); border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); padding:20px; box-sizing:border-box; }
+    h2 { color:#0066cc; border-bottom:2px solid #eee; padding-bottom:5px; }
+    ul { list-style:none; padding:0; }
+    ul li { margin-bottom:8px; padding-left:25px; position:relative; font-size:1rem; color:#333; }
+    ul li::before { content:"✔"; position:absolute; left:0; color:#25d366; font-weight:bold; }
 
-/* Hero */
-.hero {position:relative;overflow:hidden;}
-.hero-slider {position:relative;}
-.slide {position:absolute;top:0;left:0;width:100%;height:500px;background-size:cover;background-position:center;opacity:0;transition:opacity 1s ease;}
-.slide.active {opacity:1;}
-.hero-content {position:absolute;bottom:30px;left:30px;color:#fff;background:rgba(0,0,0,0.4);padding:20px;border-radius:10px;}
-.prev,.next {position:absolute;top:50%;transform:translateY(-50%);font-size:30px;color:#fff;background:rgba(0,0,0,0.3);border:none;padding:5px 10px;cursor:pointer;border-radius:5px;}
-.prev{left:10px;} .next{right:10px;}
-.dots-container {text-align:center;position:absolute;bottom:10px;width:100%;}
-.dot {height:12px;width:12px;margin:0 5px;display:inline-block;background:#bbb;border-radius:50%;cursor:pointer;}
-.dot.active {background:#fff;}
+    .map-container { width:100%; height:300px; margin-top:10px; }
 
-/* Doctor Section */
-.doctor-section {display:flex;align-items:center;gap:20px;}
-.doctor-photo {border-radius:50%;width:200px;height:200px;object-fit:cover;}
+    .appointment-container { max-width:1200px; margin:20px auto 50px auto; background:rgba(255,255,255,0.85); border-radius:10px; padding:20px; box-shadow:0 0 10px rgba(0,0,0,0.1); box-sizing:border-box; }
 
-/* Services & Why Choose Us */
-.flex-list {display:flex;flex-wrap:wrap;justify-content:center;gap:20px;}
-.flex-list div {flex:1 1 200px;background:#e7f1ff;padding:20px;text-align:center;border-radius:10px;min-width:150px;}
-.flex-list i {font-size:30px;margin-bottom:10px;display:block;color:#007bff;}
+    .whatsapp-button { position:fixed; bottom:20px; right:20px; background-color:#25d366; color:white; border-radius:50%; width:60px; height:60px; display:flex; align-items:center; justify-content:center; font-size:30px; box-shadow:0px 4px 6px rgba(0,0,0,0.2); text-decoration:none; z-index:1000; animation:bounce 2s infinite; cursor:pointer; }
+    .whatsapp-button:hover { background-color:#20b358; }
+    .whatsapp-button img { width:36px; height:36px; user-select:none; pointer-events:none; }
+    @keyframes bounce { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
 
-/* Testimonials */
-.testimonial-item {background:#f1f1f1;padding:20px;margin:10px 0;border-radius:10px;text-align:center;}
-.testimonial-item span {display:block;margin-top:10px;font-weight:bold;}
+    @media(max-width:768px){ .services-row,.timing-contact-row{flex-direction:column;padding:0 10px;} .service-section,.timing-contact-section{max-width:100%;flex-basis:100%;} .appointment-container{max-width:100%;margin:20px 10px 50px 10px;} .about-us{margin:10px 10px;} }
 
-/* FAQ */
-.faq-item {margin-bottom:15px;border-radius:8px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,0.1);}
-.faq-question {display:flex;justify-content:space-between;align-items:center;width:100%;padding:15px 20px;font-size:16px;cursor:pointer;background:#007bff;color:#fff;border:none;outline:none;transition:background 0.3s ease;border-radius:8px;}
-.faq-question:hover {background:#0056b3;}
-.faq-answer {max-height:0;overflow:hidden;transition:max-height 0.4s ease,padding 0.4s ease;padding:0 20px;background:#e7f1ff;}
-.faq-answer.open {padding:15px 20px;max-height:500px;}
-.faq-icon {font-weight:bold;transition:transform 0.3s ease;margin-left:10px;}
+    .testimonials-container { max-width:1200px; margin:40px auto 60px auto; background:rgba(255,255,255,0.9); border-radius:10px; padding:20px; box-shadow:0 0 10px rgba(0,0,0,0.1); box-sizing:border-box; font-style:italic; font-size:1rem; color:#333; line-height:1.5; }
+    .testimonials-container p { margin-bottom:20px; }
 
-/* Appointment form */
-form {display:flex;flex-direction:column;gap:10px;max-width:400px;margin:0 auto;}
-input,button {padding:10px;border-radius:5px;border:1px solid #ccc;}
-button.btn-primary {border:none;cursor:pointer;}
-
-/* Map */
-.map-container {margin-top:20px;}
-
-/* Footer */
-footer {text-align:center;padding:20px;background:#007bff;color:#fff;margin-top:40px;border-radius:5px;}
-
-/* Floating Card */
-.floating-card {position:fixed;bottom:20px;right:20px;background:#007bff;color:#fff;padding:10px 15px;border-radius:10px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 6px rgba(0,0,0,0.3);}
-.floating-card a img{vertical-align:middle;width:24px;height:24px;}
-
-/* Responsive */
-@media(max-width:768px){.doctor-section{flex-direction:column;text-align:center;}.flex-list{flex-direction:column;}}
-@media(max-width:480px){.faq-question{font-size:14px;padding:10px 12px;}.faq-answer.open{padding:10px 12px;}}
-</style>
+    #call-btn { position:fixed; bottom:20px; left:-250px; background-color:#4CAF50; color:white; font-size:18px; padding:10px 20px; border-radius:30px; display:flex; align-items:center; gap:8px; text-decoration:none; font-weight:bold; box-shadow:0 4px 8px rgba(0,0,0,0.3); z-index:1000; transition:background-color 0.3s ease, left 0.6s ease; white-space:nowrap; }
+    #call-btn:hover { background-color:#45a049; }
+    #call-btn.show { left:20px; }
+  </style>
 </head>
 <body>
 
-<!-- Hero Slider -->
-<header class="hero fade-section">
-  <div class="hero-slider">
-    <div class="slide active" style="background-image:url('https://via.placeholder.com/1200x500?text=Clinic+Photo+1');">
-      <div class="hero-content">
-        <h1>Dr Mani's Ortho Speciality & General Clinic</h1>
-        <p class="sub-text"><strong>MBBS, MS (Ortho)</strong> – 12+ years of trusted care</p>
-        <a href="#appointment" class="btn-primary">📅 Book Appointment</a>
-      </div>
-    </div>
-    <div class="slide" style="background-image:url('https://via.placeholder.com/1200x500?text=Clinic+Photo+2');">
-      <div class="hero-content">
-        <h1>Expert Orthopedic Care</h1>
-        <p class="sub-text">Compassionate & Personalized Treatment</p>
-        <a href="#appointment" class="btn-primary">📅 Book Appointment</a>
-      </div>
-    </div>
-  </div>
-  <button class="prev">&#10094;</button>
-  <button class="next">&#10095;</button>
-  <div class="dots-container">
-    <span class="dot active" data-index="0"></span>
-    <span class="dot" data-index="1"></span>
-  </div>
-</header>
+<a id="call-btn" href="tel:9444261111" aria-label="Call Dr. Mani" title="Call Dr. Mani">📞 94442&nbsp;61111</a>
 
-<!-- Doctor Section -->
-<section class="container doctor-section fade-section">
-  <img src="https://via.placeholder.com/200x200?text=Dr+Mani" alt="Dr Mani Arumugam" class="doctor-photo">
-  <div>
-    <h2>Meet Dr. Mani Arumugam</h2>
-    <p>With over 12 years of experience, Dr. Mani Arumugam has treated thousands of patients and performed numerous successful surgeries. He is committed to delivering compassionate, personalized care to every patient.</p>
-  </div>
-</section>
-
-<!-- Services -->
-<section class="container fade-section">
-  <h2>Our Services</h2>
-  <div class="flex-list">
-    <div class="fade-item"><i class="fas fa-bone"></i> Fractures & Bone Injuries</div>
-    <div class="fade-item"><i class="fas fa-walking"></i> Joint Pain & Arthritis</div>
-    <div class="fade-item"><i class="fas fa-running"></i> Sports Injuries</div>
-    <div class="fade-item"><i class="fas fa-spine"></i> Spine & Back Care</div>
-    <div class="fade-item"><i class="fas fa-thermometer-half"></i> Fever & Infection Care</div>
-    <div class="fade-item"><i class="fas fa-heartbeat"></i> Diabetes & BP Management</div>
-  </div>
-</section>
-
-<!-- Why Choose Us -->
-<section class="container fade-section">
-  <h2>Why Choose Us</h2>
-  <div class="flex-list">
-    <div class="fade-item"><i class="fas fa-calendar-check"></i> Same-Day Appointments</div>
-    <div class="fade-item"><i class="fas fa-clock"></i> 24/7 Availability</div>
-    <div class="fade-item"><i class="fas fa-stethoscope"></i> Modern Equipment</div>
-    <div class="fade-item"><i class="fas fa-hand-holding-heart"></i> Compassionate Care</div>
-  </div>
-</section>
-
-<!-- Testimonials -->
-<section class="container testimonials fade-section">
-  <h2>What Our Patients Say</h2>
-  <div class="testimonial-item fade-item">
-    <p>"Dr. Mani is very kind and explains everything clearly. My knee pain is completely gone!"</p>
-    <span>- Rajesh K.</span>
-  </div>
-  <div class="testimonial-item fade-item">
-    <p>"Excellent care and quick recovery. Highly recommend this clinic."</p>
-    <span>- Priya S.</span>
-  </div>
-  <div class="testimonial-item fade-item">
-    <p>"Best orthopedic doctor I have met. He listens patiently and provides the right treatment."</p>
-    <span>- Arun M.</span>
-  </div>
-</section>
-
-<!-- FAQ Section -->
-<section class="container fade-section" id="faq">
-  <h2>Frequently Asked Questions</h2>
-  
-  <div class="faq-item fade-item">
-    <button class="faq-question">What are your clinic hours? <span class="faq-icon">+</span></button>
-    <div class="faq-answer">
-      <p>We are open Monday to Saturday from 9:00 AM to 8:00 PM. On Sundays, we are available for emergency consultations.</p>
-    </div>
-  </div>
-
-  <div class="faq-item fade-item">
-    <button class="faq-question">Do you accept walk-in patients? <span class="faq-icon">+</span></button>
-    <div class="faq-answer">
-      <p>Yes, we do accept walk-ins, but prior appointments are recommended to reduce waiting time.</p>
-    </div>
-  </div>
-
-  <div class="faq-item fade-item">
-    <button class="faq-question">Which payment methods are accepted? <span class="faq-icon">+</span></button>
-    <div class="faq-answer">
-      <p>We accept cash, UPI payments, debit/credit cards, and online payment via GPay or Paytm.</p>
-    </div>
-  </div>
-
-</section>
-
-<!-- Google Maps Directions -->
-<section class="container fade-section" id="location">
-  <h2>Find Us</h2>
-  <div class="map-container">
-    <iframe 
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.54321012345!2d80.154321!3d12.987654!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525a123456789%3A0xabcdef123456789!2sDr%20Mani%27s%20Ortho%20Speciality%20%26%20General%20Clinic!5e0!3m2!1sen!2sin!4v1690000000000!5m2!1sen!2sin" 
-      width="100%" 
-      height="400" 
-      style="border:0;" 
-      allowfullscreen="" 
-      loading="lazy" 
-      referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
-  </div>
-</section>
-
-<!-- Appointment -->
-<section class="container fade-section" id="appointment">
-  <h2>Book Appointment</h2>
-  <form>
-    <input type="text" placeholder="Your Name" required>
-    <input type="tel" placeholder="Phone Number" required>
-    <input type="date" required>
-    <button type="submit" class="btn-primary">Submit</button>
-  </form>
-</section>
-
-<!-- Footer -->
-<footer class="fade-section">
-  <p>© 2025 Dr Mani's Ortho Speciality & General Clinic</p>
-</footer>
-
-<!-- Floating Action Card -->
-<div class="floating-card">
-  <span>Need Help?</span>
-  <a href="tel:+919876543210" class="call-btn" title="Call Now">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Phone_icon.png" alt="Call">
-  </a>
-  <a href="https://wa.me/919876543210" target="_blank" class="whatsapp-btn" title="Chat on WhatsApp">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
-  </a>
+<div class="banner-slider">
+  <div class="slide active" style="background-image:url('images/freepik__knee-pain__68945.jpeg')"><h2>Knee Pain, Ligament Injuries & Arthritis</h2></div>
+  <div class="slide" style="background-image:url('images/grok_image_wztxy9.jpg')"><h2>Back or Neck Pain, Slipped Disc & Sciatica</h2></div>
+  <div class="slide" style="background-color:#660000"><h2>Shoulder Pain, Stiffness & Tendon Tears</h2></div>
+  <div class="slide" style="background-color:#4b0082"><h2>Hip Pain, Fractures & Arthritis</h2></div>
+  <div class="slide" style="background-color:#003366"><h2>Sports Injuries</h2></div>
+  <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1576765607923-522c426e3266?auto=format&fit=crop&w=1350&q=80')"><h2>Trauma & Fracture Management</h2></div>
+  <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=1350&q=80')"><h2>Joint Replacement Surgery</h2></div>
+  <div class="slide" style="background-color:#003300"><h2>Spine Care & Surgery</h2></div>
+  <div class="slide" style="background-color:#004080"><h2>Clinical Laboratory Services</h2></div>
+  <div class="slide" style="background-color:#660066"><h2>Physiotherapy</h2></div>
+  <div class="slide" style="background-color:#003300"><h2>Digital X-Ray</h2></div>
+  <div class="slide" style="background-color:#2f4f4f"><h2>Foot, Ankle, Hand & Wrist Injuries or Pain</h2></div>
 </div>
 
+<header>
+  <h1>🏥 Dr. MANI'S ORTHO SPECIALITY & GENERAL CLINIC</h1>
+  <p>Dr. Mani Arumugam, M.B.B.S., M.S. (Ortho) – Orthopedic Specialist & General Physician</p>
+</header>
+
+<div class="about-us">
+  <section aria-labelledby="about-dr-mani-info">
+    <h2 id="about-dr-mani-info">About Dr. Mani Arumugam</h2>
+    <p>With <strong>over 12 years of experience</strong>, Dr. Mani Arumugam has treated <strong>more than 10,000 patients</strong> and performed <strong>over 1,500 successful surgeries</strong>. He emphasizes <strong>non-surgical treatments</strong> whenever possible.</p>
+    <p>Specializes in <strong>fracture care, joint pain, and bone health</strong>, along with <strong>general health checkups</strong> for fever, infections, diabetes, and wound care.</p>
+    <p><strong>Reliable care. Consistent results.</strong></p>
+  </section>
+</div>
+
+<div id="services-list" class="services-row">
+  <section class="service-section">
+    <div>
+      <h2>Orthopedic & Specialized Treatments</h2>
+      <ul>
+        <li>Knee pain, ligament injuries, arthritis</li>
+        <li>Back/neck pain, slipped disc, sciatica</li>
+        <li>Shoulder pain, stiffness, tendon injuries</li>
+        <li>Hip pain, fractures, arthritis</li>
+        <li>Trauma & Fracture Management</li>
+        <li>Sports injuries</li>
+        <li>Joint Replacement Surgery</li>
+        <li>Spine Care & Surgery</li>
+        <li>Laboratory Diagnostics</li>
+        <li>Physiotherapy & Rehabilitation</li>
+        <li>Digital X-Ray Imaging</li>
+        <li>Foot, ankle, hand & wrist conditions</li>
+      </ul>
+    </div>
+  </section>
+  <section class="service-section">
+    <div>
+      <h2>General Health Services</h2>
+      <ul>
+        <li>Fever & infections consultation</li>
+        <li>Digestive & stomach issues</li>
+        <li>General pain management</li>
+        <li>Fatigue & weakness treatment</li>
+        <li>Wound care services</li>
+        <li>Diabetes care & management</li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<div class="timing-contact-row">
+  <section class="timing-contact-section">
+    <h2>Clinic Timing</h2>
+    <ul><li>Monday – Sunday: Open 24 Hours</li></ul>
+  </section>
+  <section class="timing-contact-section">
+    <h2>Contact & Location</h2>
+    <p><strong>Address:</strong> 68, Radha Nagar Main Road, Opposite to J2 Mahal, Chromepet, Chennai – 600044</p>
+    <p><strong>Phone:</strong> +91 94442 61111</p>
+    <div class="map-container">
+      <iframe src="https://www.google.com/maps?q=12.9519539,80.1451097&z=17&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </section>
+</div>
+
+<div class="testimonials-container">
+  <h2>Patient Testimonials</h2>
+  <p>"Dr. Mani treated my knee pain effectively and guided me through physiotherapy. Highly recommend!" – Ravi K.</p>
+  <p>"Excellent care and detailed explanation of my fracture treatment. Very professional." – Priya S.</p>
+  <p>"Friendly and approachable doctor. My back pain is now under control thanks to Dr. Mani." – Anil M.</p>
+</div>
+
+<a class="whatsapp-button" href="https://wa.me/919444261111" target="_blank" title="Chat on WhatsApp">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Chat">
+</a>
+
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  /* HERO CAROUSEL */
-  const slides = document.querySelectorAll('.slide');
-  const dots = document.querySelectorAll('.dot');
+  // Banner slider
+  let slides = document.querySelectorAll('.banner-slider .slide');
   let currentSlide = 0;
+  setInterval(() => {
+    slides[currentSlide].classList.remove('active');
+    currentSlide = (currentSlide+1)%slides.length;
+    slides[currentSlide].classList.add('active');
+  }, 4000);
 
-  function showSlide(index) {
-    slides.forEach(s => s.classList.remove('active'));
-    slides[index].classList.add('active');
-    dots.forEach(d => d.classList.remove('active'));
-    if(dots[index]) dots[index].classList.add('active');
-  }
-
-  function nextSlide() { currentSlide = (currentSlide+1)%slides.length; showSlide(currentSlide); }
-  function prevSlide() { currentSlide = (currentSlide-1+slides.length)%slides.length; showSlide(currentSlide); }
-
-  showSlide(currentSlide);
-  let autoSlide = setInterval(nextSlide, 5000);
-
-  document.querySelector('.next')?.addEventListener('click', ()=>{ nextSlide(); resetInterval(); });
-  document.querySelector('.prev')?.addEventListener('click', ()=>{ prevSlide(); resetInterval(); });
-
-  dots.forEach(dot => dot.addEventListener('click', ()=>{
-    currentSlide = parseInt(dot.getAttribute('data-index'));
-    showSlide(currentSlide);
-    resetInterval();
-  }));
-
-  const hero = document.querySelector('.hero');
-  if(hero){
-    hero.addEventListener('mouseenter', ()=> clearInterval(autoSlide));
-    hero.addEventListener('mouseleave', ()=> autoSlide=setInterval(nextSlide,5000));
-
-    // Mobile swipe
-    let touchStartX=0, touchEndX=0;
-    hero.addEventListener('touchstart', e=>touchStartX=e.changedTouches[0].screenX);
-    hero.addEventListener('touchend', e=>{
-      touchEndX=e.changedTouches[0].screenX;
-      if(touchEndX < touchStartX - 50){ nextSlide(); resetInterval(); }
-      if(touchEndX > touchStartX + 50){ prevSlide(); resetInterval(); }
-    });
-  }
-
-  function resetInterval(){ clearInterval(autoSlide); autoSlide=setInterval(nextSlide,5000); }
-
-  /* FAQ Accordion with +/− icon */
-  const faqButtons = document.querySelectorAll('.faq-question');
-  faqButtons.forEach(btn => {
-    btn.addEventListener('click', ()=>{
-      const answer = btn.nextElementSibling;
-      const icon = btn.querySelector('.faq-icon');
-
-      // Close others
-      document.querySelectorAll('.faq-answer').forEach(a => {
-        if(a !== answer){
-          a.classList.remove('open');
-          const otherIcon = a.previousElementSibling.querySelector('.faq-icon');
-          if(otherIcon) otherIcon.textContent = '+';
-        }
-      });
-
-      // Toggle clicked answer
-      const isOpen = answer.classList.toggle('open');
-      icon.textContent = isOpen ? '−' : '+';
-    });
+  // Show call button after delay
+  window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(()=>{ document.getElementById('call-btn').classList.add('show'); }, 2000);
   });
-
-});
 </script>
 
 </body>
