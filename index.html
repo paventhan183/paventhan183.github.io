@@ -658,7 +658,7 @@
   </section>
 </div>
   
-<div class="testimonials-container">
+<div id="widget" class="testimonials-container">
   <section>
   <!-- Elfsight Google Reviews | Untitled Google Reviews -->
 <script src="https://elfsightcdn.com/platform.js" async></script>
@@ -685,6 +685,14 @@
 
 
 <script>
+  const params = new URLSearchParams(window.location.search);
+  if (params.has("test")) {
+    // Load widget only if not in test mode
+    document.getElementById("widget").style.display = "none";
+    
+  } else {
+    document.getElementById("widget").style.display = "block";
+  }
   const menuToggle = document.getElementById('menu-toggle');
   const navMenu = document.getElementById('nav-menu');
 
@@ -710,6 +718,8 @@
     currentIndex = (currentIndex + 1) % slides.length;
     showSlide(currentIndex);
   }
+
+  
 
   setInterval(nextSlide, 4000); // change slide every 4 seconds
   // Wait until page is fully loaded, then slide in the button
