@@ -41,84 +41,104 @@
   <!-- JSON-LD Structured Data for Services -->
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "MedicalBusiness",
-    "name": "Dr. MANI'S ORTHO SPECIALITY & GENERAL CLINIC",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "68, Radha Nagar Main Road, Opposite to J2 Mahal, Chromepet",
-      "addressLocality": "Chennai",
-      "postalCode": "600044",
-      "addressCountry": "IN"
+  "@context": "https://schema.org",
+  "@type": "MedicalClinic",
+  "name": "Dr Mani's Ortho Speciality & General Clinic",
+  "url": "https://drmaniortho.in/",
+  "image": "https://drmaniortho.in/path-to-your-image.jpg",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "68, Radha Nagar Main Road, opposite J2 Mahal",
+    "addressLocality": "Chromepet",
+    "addressRegion": "Chennai",
+    "postalCode": "600044",
+    "addressCountry": "IN"
+  },
+  "medicalSpecialty": [
+    {
+      "@type": "MedicalSpecialty",
+      "name": "Orthopedic & Specialized Care"
     },
-    "telephone": "+91 94442 61111",
-    "medicalSpecialty": [
-      "Orthopedic",
-      "General Practice"
-    ],
-    "availableService": [
-      {
-        "@type": "MedicalProcedure",
-        "name": "Trauma & Fracture Management",
-        "description": "Treatment for trauma injuries and fracture management."
-      },
-      {
-        "@type": "MedicalProcedure",
-        "name": "Joint Replacement Surgery",
-        "description": "Surgical replacement of joints to restore mobility."
-      },
-      {
-        "@type": "MedicalProcedure",
-        "name": "Spine Care & Surgery",
-        "description": "Specialized care and surgery for spine-related issues."
-      },
-      {
-        "@type": "MedicalTest",
-        "name": "Clinical Laboratory Services",
-        "description": "Laboratory testing and diagnostics services."
-      },
-      {
-        "@type": "TherapeuticProcedure",
-        "name": "Physiotherapy",
-        "description": "Physical therapy for rehabilitation and pain relief."
-      },
-      {
-        "@type": "MedicalTest",
-        "name": "Digital X-Ray",
-        "description": "Digital radiography services for accurate imaging."
-      },
-      {
-        "@type": "MedicalService",
-        "name": "Fever & Infections",
-        "description": "Consultation and treatment for fever and infections."
-      },
-      {
-        "@type": "MedicalService",
-        "name": "Stomach Problems",
-        "description": "Diagnosis and treatment for stomach related illnesses."
-      },
-      {
-        "@type": "MedicalService",
-        "name": "General Pain",
-        "description": "Consultation for various general pain conditions."
-      },
-      {
-        "@type": "MedicalService",
-        "name": "Fatigue & Weakness",
-        "description": "Evaluation and treatment for fatigue and weakness."
-      },
-      {
-        "@type": "MedicalService",
-        "name": "Wound Care",
-        "description": "Care and treatment for wounds."
-      },
-      {
-        "@type": "MedicalService",
-        "name": "Diabetic Treatment",
-        "description": "Management and treatment of diabetes."
-      }
-    ]
-  }
+    {
+      "@type": "MedicalSpecialty",
+      "name": "General Health Consultation"
+    }
+  ],
+  "makesOffer": [
+    {
+      "@type": "MedicalService",
+      "name": "Knee pain, ligament injuries, and arthritis"
+    },
+    {
+      "@type": "MedicalService",
+      "name": "Back or neck pain, slipped disc, and sciatica"
+    },
+    {
+      "@type": "MedicalService",
+      "name": "Shoulder pain, stiffness, and tendon tears"
+    },
+    {
+      "@type": "MedicalService",
+      "name": "Hip pain, fractures, and arthritis"
+    },
+    {
+      "@type": "MedicalService",
+      "name": "Trauma & Fracture Management"
+    },
+    {
+      "@type": "MedicalService",
+      "name": "Sports injuries"
+    },
+    {
+      "@type": "MedicalService",
+      "name": "Joint Replacement Surgery"
+    },
+    {
+      "@type": "MedicalService",
+      "name": "Spine Care & Surgery"
+    },
+    {
+      "@type": "MedicalService",
+      "name": "Clinical Laboratory Services"
+    },
+    {
+      "@type": "MedicalService",
+      "name": "Physiotherapy"
+    },
+    {
+      "@type": "MedicalService",
+      "name": "Digital X-Ray"
+    },
+    {
+      "@type": "MedicalService",
+      "name": "Foot, ankle, hand, and wrist injuries or pain"
+    },
+    {
+      "@type": "MedicalService",
+      "name": "Fever & Infections"
+    },
+    {
+      "@type": "MedicalService",
+      "name": "Stomach Problems"
+    },
+    {
+      "@type": "MedicalService",
+      "name": "General Pain"
+    },
+    {
+      "@type": "MedicalService",
+      "name": "Fatigue & Weakness"
+    },
+    {
+      "@type": "MedicalService",
+      "name": "Wound Care"
+    },
+    {
+      "@type": "MedicalService",
+      "name": "Diabetic Treatment"
+    }
+  ]
+}
   </script>
 
   <style>
