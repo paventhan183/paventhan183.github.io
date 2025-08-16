@@ -123,22 +123,31 @@
 
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family:  sans-serif;
       margin: 0;
       padding: 0;
       background: linear-gradient(135deg, #0066cc, #ff66cc);
     }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
     header {
       background-color: #0066cc;
       color: white;
-      padding: 20px;
-      text-align: center;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       position: relative;
-      z-index: 10;
+      z-index: 1000; /* Important so nav stays clickable */
+      flex-wrap: wrap;
     }
     header h1 {
       margin: 0;
-      font-size: 1.5rem;
+      font-size: 1.4rem;
+      flex: 1 1 auto;
+      min-width: 200px;
     }
     header p {
       margin: 5px 0;
@@ -157,6 +166,38 @@
     header p.phone-number a {
       color: white;
       text-decoration: none;
+    }nav#nav-menu {
+      display: flex;
+      gap: 20px;
+      flex: 1 1 auto;
+      justify-content: flex-end;
+    }
+    nav#nav-menu a {
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 8px 12px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+      cursor: pointer;
+    }
+    nav#nav-menu a:hover,
+    nav#nav-menu a:focus {
+      background-color: #004a99;
+      outline: none;
+    }
+        #menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 25px;
+      height: 20px;
+      cursor: pointer;
+    }
+    #menu-toggle div {
+      height: 3px;
+      background: white;
+      border-radius: 2px;
     }
 
     /* Banner carousel styles */
@@ -204,6 +245,7 @@
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
       box-sizing: border-box;
+      font-size:1rem;
     }
     .services-row {
       max-width:1200px;
@@ -315,6 +357,10 @@
       }
     }
     @media (max-width: 768px) {
+      #menu-toggle {
+        display: flex;
+        order: 2;
+      }
       .services-row, .timing-contact-row {
         flex-direction: column;
         padding: 0 10px;
@@ -322,6 +368,25 @@
       .service-section, .timing-contact-section {
         max-width: 100%;
         flex-basis: 100%;
+      }
+      nav#nav-menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: #0066cc;
+        margin-top: 10px;
+        order: 3;
+        border-radius: 0 0 10px 10px;
+      }
+      nav#nav-menu.show {
+        display: flex;
+      }
+      nav#nav-menu a {
+        padding: 12px 20px;
+        border-bottom: 1px solid #005bb5;
+      }
+      nav#nav-menu a:last-child {
+        border-bottom: none;
       }
       .appointment-container {
         max-width: 100%;
@@ -378,6 +443,22 @@
   </style>
 </head>
 <body>
+  <header>
+  <h1>Dr. MANI'S ORTHO SPECIALITY & GENERAL CLINIC</h1>
+
+  <div id="menu-toggle" aria-label="Toggle navigation menu" role="button" tabindex="0">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <nav id="nav-menu">
+    <a href="index.html">Home</a>
+    <a href="#services">Services</a>
+    <a href="#contact-form">Booking Appointment</a>
+    
+  </nav>
+</header>
 <a id="call-btn" href="tel:9444261111" aria-label="Call Dr. Mani" title="Call Dr. Mani">
   📞 94442&nbsp;61111
 </a>
@@ -423,18 +504,24 @@
     <h2>Foot, Ankle, Hand & Wrist Injuries or Pain</h2>
   </div>
 </div>
-<header>
-  <h1>🏥 Dr. MANI'S ORTHO SPECIALITY & GENERAL CLINIC</h1>
-  <p>Dr. Mani Arumugam, M.B.B.S., M.S. (Ortho) – Orthopedic Specialist & General Physician</p>
-  
-</header>
+
 
 <div class="about-us">
   
   
-<section aria-labelledby="about-dr-mani">
+<section  aria-labelledby="about-dr-mani">
   <h2 id="about-dr-mani">About Dr. Mani Arumugam</h2>
+    <p>
+      <strong>
+        
+      Dr. Mani Arumugam, M.B.B.S., M.S. (Ortho) 
+        </strong>
+    </p>
+  <p><strong>
+    Orthopedic Specialist & General Physician
+  </strong></p>
   <p>
+    
     <strong>12+ years of experience</strong>, Dr. Mani Arumugam has treated
     <strong>over 10,000 patients</strong> and performed
     <strong>1,500+ successful surgical procedures</strong>, however he encourages
@@ -446,7 +533,7 @@
     fever, cold, diabetes, blood pressure, infections, and wound care.
   </p>
 
-  <p><strong>Trusted care. Proven results.</strong></p>
+  <div><strong>Trusted care. Proven results.</strong></div>
   </section>
 </div>
 
@@ -598,6 +685,18 @@
 
 
 <script>
+  const menuToggle = document.getElementById('menu-toggle');
+  const navMenu = document.getElementById('nav-menu');
+
+  menuToggle.addEventListener('click', () => {
+    navMenu.classList.toggle('show');
+  });
+  menuToggle.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      navMenu.classList.toggle('show');
+    }
+  });
   const slides = document.querySelectorAll('.banner-slider .slide');
   let currentIndex = 0;
 
