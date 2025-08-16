@@ -657,14 +657,35 @@
     </div>
   </section>
 </div>
-  
-<div id="widget" class="testimonials-container">
+  <!-- Button to show widget -->
+<button id="showWidgetBtn" 
+        style="
+          background-color: #4285F4;
+          color: white;
+          border: none;
+          padding: 12px 20px;
+          border-radius: 8px;
+          font-size: 16px;
+          cursor: pointer;
+        ">
+  ⭐ View Google Reviews
+</button>
+
+<!-- Widget div (hidden initially) -->
+
+  <!-- Paste your widget code here -->
+  <div id="widget" class="testimonials-container">
   <section>
   <!-- Elfsight Google Reviews | Untitled Google Reviews -->
 <script src="https://elfsightcdn.com/platform.js" async></script>
 <div class="elfsight-app-89b3b662-ec57-4360-9733-cbceda009a38" data-elfsight-app-lazy></div>
   </section>
 </div>
+
+
+
+  
+
 <div  id="contact-form" class="appointment-container">
   <h2>Appointment / Contact Form</h2>
   <iframe 
@@ -685,14 +706,14 @@
 
 
 <script>
-  const params = new URLSearchParams(window.location.search);
-  if (params.has("test")) {
-    // Load widget only if not in test mode
-    document.getElementById("widget").style.display = "none";
-    
-  } else {
-    document.getElementById("widget").style.display = "block";
-  }
+  document.getElementById("showWidgetBtn").addEventListener("click", function() {
+    const widget = document.getElementById("widget");
+    if(widget.style.display === "none") {
+      widget.style.display = "block";  // Show widget
+    } else {
+      widget.style.display = "none";   // Optional: toggle hide if clicked again
+    }
+  });
   const menuToggle = document.getElementById('menu-toggle');
   const navMenu = document.getElementById('nav-menu');
 
