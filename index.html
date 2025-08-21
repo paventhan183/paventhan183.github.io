@@ -723,29 +723,16 @@
     <ul>
       <li>Monday – Sunday: Open 24 Hours</li>
     </ul>
-    <button id="showWidgetBtn" 
-        style="
-          background-color: #4285F4;
-          color: white;
-          border: none;
-          padding: 12px 20px;
-          border-radius: 8px;
-          font-size: 16px;
-          cursor: pointer;
-        ">
-  ⭐ View Google Reviews
-    </button>
+    
   </section>
-<div id="widget"
-  style="display: none; margin-top: 20px;"
+<div
   class="testimonials-container">
-  <section>
-  <!-- Elfsight Google Reviews | Untitled Google Reviews -->
+  <div id="widgetContainer"></div>
+<button onclick="loadWidget()">⭐ View Google Reviews</button>
 
-<script src="https://elfsightcdn.com/platform.js" async></script>
-<div class="elfsight-app-ff0aa769-35b6-43b1-b509-29937e7567ca" data-elfsight-app-lazy></div>
-  </section>
 </div>
+
+
   <section class="timing-contact-section">
     <h2>Contact & Location</h2>
     <p><strong>Address:</strong> 68, Radha Nagar Main Road, Opposite to J2 Mahal, Chromepet, Chennai – 600044</p>
@@ -796,14 +783,32 @@
 
 
 <script>
-  document.getElementById("showWidgetBtn").addEventListener("click", function() {
-    const widget = document.getElementById("widget");
-    if(widget.style.display === "none") {
-      widget.style.display = "block";  // Show widget
-    } else {
-      widget.style.display = "none";   // Optional: toggle hide if clicked again
-    }
-  });
+
+
+
+  
+
+
+function loadWidget() {
+  // 1. Create the widget container div
+  let div = document.createElement("div");
+  div.className = "elfsight-app-ff0aa769-35b6-43b1-b509-29937e7567ca";
+  div.setAttribute("data-elfsight-app-lazy", ""); 
+  document.getElementById("widgetContainer").appendChild(div);
+
+  // 2. Load the Elfsight platform script if not already loaded
+  if (!document.getElementById("elfsightScript")) {
+    let script = document.createElement("script");
+    script.src = "https://apps.elfsight.com/p/platform.js";
+    script.defer = true;
+    script.id = "elfsightScript";
+    document.body.appendChild(script);
+  }
+}
+
+  
+
+  
   const menuToggle = document.getElementById('menu-toggle');
   const navMenu = document.getElementById('nav-menu');
 
