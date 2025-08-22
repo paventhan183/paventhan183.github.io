@@ -749,6 +749,7 @@
     <p><strong>Phone:</strong> +91 94442 61111</p>
     <div class="map-container">
       <iframe
+        id="iframe2" 
         src="https://www.google.com/maps?q=12.9519539,80.1451097&z=17&output=embed"
         width="100%"
         height="100%"
@@ -775,6 +776,7 @@
 <div  id="contact-form" class="appointment-container">
   <h2>Appointment / Contact Form</h2>
   <iframe 
+    id="iframe1"
     src="https://whatsform.com/d3olh_" 
     width="100%" 
     height="1000" 
@@ -792,9 +794,47 @@
 <!-- Patient Testimonials Section -->
 
 
+
 <script>
+const iframes = [
+  { element: document.getElementById('iframe1'), attempts: 0 },
+  { element: document.getElementById('iframe2'), attempts: 0 }
+];
+
+const maxRetries = 3;
+const retryDelay = 3000; // 3 seconds
+
+function checkIframe(iframeObj) {
+  iframeObj.attempts++;
+  try {
+    const doc = iframeObj.element.contentDocument || iframeObj.element.contentWindow.document;
+    if (!doc || doc.readyState !== 'complete') {
+      throw new Error('Iframe not loaded');
+    }
+    console.log(`${iframeObj.element.id} loaded successfully`);
+  } catch (e) {
+    if (iframeObj.attempts <= maxRetries) {
+      console.log(`Reloading ${iframeObj.element.id}, attempt ${iframeObj.attempts}`);
+      iframeObj.element.src = iframeObj.element.src; // reload iframe
+      setTimeout(() => checkIframe(iframeObj), retryDelay);
+    } else {
+      console.log(`Failed to load ${iframeObj.element.id} after ${maxRetries} attempts`);
+    }
+  }
+}
+
+// Start checking both iframes after 2 seconds
+iframes.forEach(iframeObj => setTimeout(() => checkIframe(iframeObj), 2000));
+
+// Optional: log when iframes load successfully
+iframes.forEach(iframeObj => {
+  iframeObj.element.onload = () => {
+    console.log(`${iframeObj.element.id} loaded!`);
+  };
+});
 
 
+  
 
   
 
