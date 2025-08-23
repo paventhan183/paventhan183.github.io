@@ -577,7 +577,27 @@
     <h2>Foot, Ankle, Hand & Wrist Injuries or Pain</h2>
   </div>
 </div>
-
+<div class="about-us">
+  
+  
+<section  aria-labelledby="about-dr-mani">
+<h2>Dr. Mani Arumugam, M.B.B.S., M.S. (Ortho)</h2>
+<div style="text-align:center; padding:50px">
+  <div>
+    <h1 id="experience">0</h1>
+    <p>Years of Experience</p>
+  </div>
+  <div>
+    <h1 id="patients">0</h1>
+    <p>Treated patients</p>
+  </div>
+  <div>
+    <h1 id="success">5/5</h1>
+    <p>Google Rating</p>
+  </div>
+</div>
+  </section>
+</div>
 
 <div class="about-us">
   
@@ -863,6 +883,25 @@ function loadWidget() {
   window.addEventListener("load", function(){
     document.getElementById("loader").style.display = "none";
   });
+  
+function animateCount(id, target, duration) {
+  let element = document.getElementById(id);
+  let start = 0;
+  let increment = target / (duration / 20); // update every 20ms
+  let interval = setInterval(() => {
+    start += increment;
+    if(start >= target) {
+      start = target;
+      clearInterval(interval);
+    }
+    element.textContent = id === "success" ? Math.floor(start) + "%" : Math.floor(start).toLocaleString();
+  }, 20);
+}
+
+// Trigger the animations
+animateCount("experience", 12, 2000);  // 18+ in 2 seconds
+   // 92% in 2 seconds
+animateCount("patients", 10000, 2000);  
 
 </script>
 
