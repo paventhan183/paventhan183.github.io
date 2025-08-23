@@ -621,9 +621,31 @@
   <div>
     <h1 id="success">5/5</h1>
     <p>Google Rating</p>
+
   </div>
 </div>
 </div>
+
+  </section>
+</div>
+
+<div class="about-us">
+  
+  
+<section  aria-labelledby="about-dr-mani">
+<button id="myButton"
+  style="
+          background-color: #4285F4;
+          color: white;
+          border: none;
+          padding: 12px 20px;
+          border-radius: 8px;
+          font-size: 16px;
+          cursor: pointer;
+        "
+  onclick="loadWidget()">⭐Click here to see reviews</button>
+
+<div id="widgetContainer"></div>
 
   </section>
 </div>
@@ -776,18 +798,7 @@
       <li>Monday – Sunday: Open 24 Hours</li>
     </ul>
 
-      <div id="widgetContainer"></div>
-<button 
-  style="
-          background-color: #4285F4;
-          color: white;
-          border: none;
-          padding: 12px 20px;
-          border-radius: 8px;
-          font-size: 16px;
-          cursor: pointer;
-        "
-  onclick="loadWidget()">⭐Click here to see reviews</button>
+      
   </section>
 
 
@@ -932,7 +943,14 @@ function animateCount(id, target, duration) {
 animateCount("experience", 12, 2000);  // 18+ in 2 seconds
    // 92% in 2 seconds
 animateCount("patients", 10000, 2000);  
+const button = document.getElementById('myButton');
 
+  button.addEventListener('click', function() {
+    // Hide the button
+    button.style.display = 'none';
+    // Optional: do something else
+
+  });
 </script>
 
 </body>
