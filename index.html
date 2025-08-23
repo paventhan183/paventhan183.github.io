@@ -494,6 +494,28 @@
   #call-btn.show {
     left: 20px; /* final position */
   }
+.doctor-img {
+      display: flex;
+      justify-content: center; /* centers horizontally */
+      align-items: center;     /* centers vertically */
+               /* full height of the viewport */
+      
+      /* optional background */
+    }
+
+    .circle-image {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid #0066cc;
+    }
+
+    .circle-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   </style>
 </head>
 <body>
@@ -604,6 +626,11 @@
   
 <section  aria-labelledby="about-dr-mani">
   <h2 id="about-dr-mani">About Dr. Mani Arumugam</h2>
+  <div class="doctor-img">
+   <div class="circle-image">
+    <img src="IMG-20250712-WA0001.jpg" alt="Profile Image">
+  </div>
+  </div>
     <p>
       <strong>
         
