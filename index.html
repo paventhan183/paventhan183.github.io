@@ -618,6 +618,10 @@
     <h1 id="patients">0</h1>
     <p>Overall Treated patients</p>
   </div>
+<div>
+    <h1 id="surgery">0</h1>
+    <p> Surgery</p>
+  </div>
   <div>
     <h1 id="success">5/5</h1>
     <p>Google Rating</p>
@@ -950,6 +954,7 @@ function animateCount(id, target, duration) {
 animateCount("experience", 12, 2000);  // 18+ in 2 seconds
    // 92% in 2 seconds
 animateCount("patients", 10000, 2000);  
+animateCount("surgery", 1500, 2000);  
 const button = document.getElementById('myButton');
 
   button.addEventListener('click', function() {
