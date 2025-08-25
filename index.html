@@ -444,6 +444,11 @@ Meet Dr. Mani Arumugam, M.B.B.S., M.S., ORTHO </h2>
     menuToggle.addEventListener('click',()=>navMenu.classList.toggle('show'));
     menuToggle.addEventListener('keydown',(e)=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();navMenu.classList.toggle('show');}});
 
+navMenu.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      navMenu.classList.toggle('hide');
+    });
+  });
     // Animate counters
     function animateCount(id,target,duration){let el=document.getElementById(id),start=0,inc=target/(duration/20),intv=setInterval(()=>{start+=inc;if(start>=target){start=target;clearInterval(intv);}el.textContent=Math.floor(start).toLocaleString();},20);}
     animateCount("experience",12,2000);
