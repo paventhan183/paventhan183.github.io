@@ -239,6 +239,27 @@
       .services-row, .timing-contact-row { flex-direction:column; }
       .service-section, .timing-contact-section { max-width:100%; flex-basis:100%; }
     }
+    #moveUpBtn {
+    display: none; /* hidden by default */
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    z-index: 99;
+    font-size: 20px;
+    border: none;
+    outline: none;
+    background-color: #0077cc;
+    color: white;
+    cursor: pointer;
+    padding: 12px 16px;
+    border-radius: 50%;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+  }
+
+  #moveUpBtn:hover {
+    background-color: #005fa3;
+  }
   </style>
 </head>
 <body>
@@ -251,6 +272,9 @@
       <div id="menu-toggle" role="button" tabindex="0"><div></div><div></div><div></div></div>
       <h1>Dr. MANI'S ORTHO SPECIALITY & GENERAL CLINIC</h1>
     </div>
+    <button id="moveUpBtn" title="Go to top">
+  ⬆
+</button>
 <nav id="nav-menu">
   <a href="#"><i class="fas fa-home"></i> Home</a>
   <a href="#about-us"><i class="fas fa-info-circle"></i> About Us</a>
@@ -451,6 +475,22 @@ const button = document.getElementById('myButton');
     // Optional: do something else
 
   });
+// Get the button
+  let moveUpBtn = document.getElementById("moveUpBtn");
+
+  // Show the button when scrolling down
+  window.onscroll = function() {
+    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+      moveUpBtn.style.display = "block";
+    } else {
+      moveUpBtn.style.display = "none";
+    }
+  };
+
+  // When button is clicked, scroll to top smoothly
+  moveUpBtn.onclick = function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   </script>
 </body>
