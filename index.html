@@ -190,6 +190,33 @@
     #call-btn.show { left:20px; }
     .whatsapp-button { position:fixed; bottom:20px; right:20px; background:#25d366; color:white; border-radius:50%; width:60px; height:60px; display:flex; align-items:center; justify-content:center; font-size:30px; box-shadow:0 4px 6px rgba(0,0,0,0.2); text-decoration:none; z-index:1000; animation:bounce 2s infinite; }
     .whatsapp-button img { width:36px; height:36px; }
+    .icon {
+  width: 120px;           /* width of one icon */
+  height: 120px;          /* height of one icon */
+  background-image:
+  url('https://drmaniortho.in/images (31).jpeg');
+  background-repeat: no-repeat;
+}
+
+/* Show icon1 */
+.icon1 {
+  background-position: -120px 0;
+}
+
+/* Show icon2 */
+.icon2 {
+  background-position: 0 -240px;
+}
+
+/* Show icon3 */
+.icon3 {
+  background-position: -120px -120px;
+}
+
+/* Show icon4 */
+.icon4 {
+  background-position: -360px 0;
+}
     @keyframes bounce { 0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);} }
 
     /* Responsive */
@@ -278,7 +305,9 @@
     <section class="service-section">
       <h2>Orthopedic & Specialized Care</h2>
       <ul>
-        <li>Trauma & Fracture Management</li>
+        <li>
+          <span class="icon icon1"></span>
+          Trauma & Fracture Management</li>
         <li>Knee pain & Ligament Injuries</li>
         <li>Back or Neck Pain</li>
         <li>Shoulder Pain</li>
