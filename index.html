@@ -282,6 +282,30 @@
         #moveUpBtn:hover {
           background-color: #005fa3;
         }
+        
+        footer {
+  background: #0066cc;   /* dark background */
+  color: #e6eef8;        /* light text */
+  text-align: center;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+footer h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+footer p {
+  margin: 6px 0;
+  font-size: 14px;
+}
+
+
+
+
+
+
     </style>
   </head>
   <body>
@@ -475,7 +499,7 @@
     </div>
 
     <!-- Appointment Form -->
-    <div id="contact-form" style="margin-bottom:100px" class="services-row">
+    <div id="contact-form" class="services-row">
       <section class="service-section">
         <h2>Book Appointment</h2>
         <iframe
@@ -501,6 +525,17 @@
         </ul>
       </section>
     </div>
+<footer style="padding-bottom: 100px">
+  <h3>Dr Mani's Ortho Speciality & General Clinic</h3>
+  <p>68, Radha Nagar Main Road, Opposite J2 Mahal, Chromepet, Chennai</p>
+ 
+
+  <p>© <span id="year"></span> Dr Mani's Ortho Speciality & General Clinic. All rights reserved.</p>
+</footer>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
 
     <script>
           // Loader hide
