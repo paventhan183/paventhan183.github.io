@@ -304,7 +304,43 @@ footer p {
 
 
 
+.fixed-bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #fff;
+      border-top: 1px solid #ddd;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+      z-index: 9999;
+    }
 
+    .fixed-bottom-bar .btn {
+      flex: 1;
+      margin: 0 5px;
+      text-align: center;
+      padding: 12px;
+      border-radius: 8px;
+      color: #fff;
+      font-weight: bold;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .fixed-bottom-bar .btn:hover {
+      opacity: 0.9;
+    }
+
+    .fixed-bottom-bar .whatsapp {
+      background: #25D366; /* WhatsApp Green */
+    }
+
+    .fixed-bottom-bar .phone {
+      background: #007bff; /* Blue */
+    }
 
 
     </style>
@@ -345,13 +381,7 @@ footer p {
     </header>
 
     <!-- Floating buttons -->
-    <a id="call-btn" href="tel:9444261111">📞 94442 61111</a>
-    <a href="https://wa.me/919444261111" class="whatsapp-button" target="_blank"
-      ><img
-        src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-        alt="WhatsApp"
-    /></a>
-
+    
     <!-- Banner -->
     <div class="banner-slider">
       <div class="slide active"><h2>Trauma & Fracture Management</h2></div>
@@ -529,6 +559,12 @@ footer p {
         </ul>
       </section>
     </div>
+    
+<div class="fixed-bottom-bar">
+<a href="tel:+919444261111" class="btn phone">Call</a>
+    <a href="https://wa.me/919444261111" class="btn whatsapp" target="_blank">WhatsApp</a>
+    
+  </div>
 <footer style="padding-bottom: 100px">
   <h3>Dr Mani's Ortho Speciality & General Clinic</h3>
   <p>68, Radha Nagar Main Road, Opposite J2 Mahal, Chromepet, Chennai</p>
