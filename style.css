@@ -1,0 +1,177 @@
+
+          /* General Reset */
+          body { margin:0; font-family:sans-serif; background:#f5f5f5; color:#333; line-height:1.6; }
+          a { text-decoration:none; color:inherit; }
+          h1,h2,h3,h4 { margin:0 0 10px 0; }
+          ul { list-style:none; padding:0; margin:0; }
+          img { max-width:100%; display:block; }
+
+          /* Loader */
+          #loader { position:fixed;top:0;left:0;width:100%;height:100%;background:white;display:flex;justify-content:center;align-items:center;z-index:9999;font-size:24px; color:#1976d2; }
+          .ortho-loader { display:flex; align-items:center; gap:10px; animation: fade 1.2s infinite; }
+          @keyframes fade { 0%,100%{opacity:0.5;}50%{opacity:1;} }
+
+          /* Header */
+          header { background:#0066cc; color:white; padding:15px 20px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; position:relative; }
+          header h1 { font-size:1.4rem; flex:1 1 auto; min-width:200px; }
+          nav { display:flex; gap:20px; flex:1 1 auto; justify-content:flex-end; }
+          nav a { padding:8px 12px; border-radius:5px; transition:0.3s; font-weight:600; }
+          nav a:hover { background:#004a99; }
+          #menu-toggle { display:none; flex-direction:column; justify-content:space-between; width:25px; height:20px; cursor:pointer; }
+          #menu-toggle div { height:3px; background:white; border-radius:2px; }
+
+          /* Banner */
+          .banner-slider { position:relative; width:100%; height:250px; overflow:hidden; border-radius:0 0 15px 15px; margin-bottom:20px; }
+          .banner-slider .slide { position:absolute; width:100%; height:100%; background-size:cover; background-position:center; top:0; left:0; opacity:0; transition:opacity 1s ease-in-out; display:flex; align-items:center; justify-content:center; }
+          .banner-slider .slide.active { opacity:1; position:relative; }
+          .banner-slider h2 { color:#0066cc; font-size:2rem; text-shadow:0 0 10px rgba(0,0,0,0.7); text-align:center; padding:0 10px; }
+
+          /* About */
+          .about-us { max-width:1200px; margin:10px auto; padding:20px; background:rgba(255,255,255,0.95); border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); }
+          .circle-image { width:150px; height:150px; border-radius:50%; overflow:hidden; border:3px solid #0066cc; }
+          .circle-image img { width:100%; height:100%; object-fit:cover; }
+
+          /* Services */
+          .services-row, .timing-contact-row { max-width:1200px; margin:10px auto 30px auto; display:flex; gap:20px; flex-wrap:wrap; justify-content:center; padding:0 10px; }
+          .service-section, .timing-contact-section { flex:1 1 45%; max-width:600px; background:rgba(255,255,255,0.95); border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); padding:20px; box-sizing:border-box; }
+           h2 { color:#1976d2; margin-bottom:10px; }
+          ul li { margin-bottom:8px; padding-left:25px; position:relative; }
+          ul li::before { content:"✔"; position:absolute; left:0; color:#16a34a; font-weight:bold; }
+
+          /* Map */
+          .map-container { width:100%; height:300px; margin-top:10px; }
+
+          /* Buttons */
+          #call-btn { position:fixed; bottom:20px; left:-250px; background:#4CAF50; color:white; font-size:18px; padding:10px 20px; border-radius:30px; display:flex; align-items:center; gap:8px; text-decoration:none; font-weight:bold; box-shadow:0 4px 8px rgba(0,0,0,0.3); z-index:1000; transition: left 0.6s; }
+          #call-btn.show { left:20px; }
+          .whatsapp-button { position:fixed; bottom:20px; right:20px; background:#25d366; color:white; border-radius:50%; width:60px; height:60px; display:flex; align-items:center; justify-content:center; font-size:30px; box-shadow:0 4px 6px rgba(0,0,0,0.2); text-decoration:none; z-index:1000; animation:bounce 2s infinite; }
+          .whatsapp-button img { width:36px; height:36px; }
+          .icon {
+        width: 120px;           /* width of one icon */
+        height: 120px;          /* height of one icon */
+        background-image:
+        url('https://drmaniortho.in/images (31).jpeg');
+        background-repeat: no-repeat;
+      }
+
+      /* Show icon1 */
+      .icon1 {
+        background-position: -120px 0;
+      }
+
+      /* Show icon2 */
+      .icon2 {
+        background-position: 0 -240px;
+      }
+
+      /* Show icon3 */
+      .icon3 {
+        background-position: -120px -120px;
+      }
+
+      /* Show icon4 */
+      .icon4 {
+        background-position: -360px 0;
+      }
+      #nav-menu a {
+        text-decoration: none;
+        margin: 10px;
+        font-size: 18px;
+      }
+
+      #nav-menu i {
+        margin-right: 8px; /* space between icon and text */
+        color: white;    /* change icon color */
+      }
+          @keyframes bounce { 0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);} }
+
+          /* Responsive */
+          @media(max-width:768px) {
+            #menu-toggle { display:flex; order:2; }
+            nav { display:none; flex-direction:column; width:100%; background:#0066cc; margin-top:10px; order:3; border-radius:0 0 10px 10px; }
+            nav.show { display:flex; }
+            nav a { padding:12px 20px; border-bottom:1px solid #005bb5; }
+            nav a:last-child { border-bottom:none; }
+            .services-row, .timing-contact-row { flex-direction:column; }
+            .service-section, .timing-contact-section { max-width:100%; flex-basis:100%; }
+          }
+          #moveUpBtn {
+          display: none; /* hidden by default */
+          position: fixed;
+          bottom: 100px;
+          right: 20px;
+          z-index: 99;
+          font-size: 20px;
+          border: none;
+          outline: none;
+          background-color: #0077cc;
+          color: white;
+          cursor: pointer;
+          padding: 12px 16px;
+          border-radius: 50%;
+          box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+          transition: all 0.3s ease;
+        }
+
+        #moveUpBtn:hover {
+          background-color: #005fa3;
+        }
+        
+        footer {
+  background: #0066cc;   /* dark background */
+  color: #e6eef8;        /* light text */
+  text-align: center;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+footer h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+footer p {
+  margin: 6px 0;
+  font-size: 14px;
+}
+
+
+
+.fixed-bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #fff;
+      border-top: 1px solid #ddd;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+      z-index: 9999;
+    }
+
+    .fixed-bottom-bar .btn {
+      flex: 1;
+      margin: 0 5px;
+      text-align: center;
+      padding: 12px;
+      border-radius: 8px;
+      color: #fff;
+      font-weight: bold;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .fixed-bottom-bar .btn:hover {
+      opacity: 0.9;
+    }
+
+    .fixed-bottom-bar .whatsapp {
+      background: #25D366; /* WhatsApp Green */
+    }
+
+    .fixed-bottom-bar .phone {
+      background: #007bff; /* Blue */
+    }
+
