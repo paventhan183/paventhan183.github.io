@@ -41,38 +41,9 @@
           /* Map */
           .map-container { width:100%; height:300px; margin-top:10px; }
 
-          /* Buttons */
-          #call-btn { position:fixed; bottom:20px; left:-250px; background:#4CAF50; color:white; font-size:18px; padding:10px 20px; border-radius:30px; display:flex; align-items:center; gap:8px; text-decoration:none; font-weight:bold; box-shadow:0 4px 8px rgba(0,0,0,0.3); z-index:1000; transition: left 0.6s; }
-          #call-btn.show { left:20px; }
-          .whatsapp-button { position:fixed; bottom:20px; right:20px; background:#25d366; color:white; border-radius:50%; width:60px; height:60px; display:flex; align-items:center; justify-content:center; font-size:30px; box-shadow:0 4px 6px rgba(0,0,0,0.2); text-decoration:none; z-index:1000; animation:bounce 2s infinite; }
-          .whatsapp-button img { width:36px; height:36px; }
-          .icon {
-        width: 120px;           /* width of one icon */
-        height: 120px;          /* height of one icon */
-        background-image:
-        url('https://drmaniortho.in/images (31).jpeg');
-        background-repeat: no-repeat;
-      }
+         
 
-      /* Show icon1 */
-      .icon1 {
-        background-position: -120px 0;
-      }
-
-      /* Show icon2 */
-      .icon2 {
-        background-position: 0 -240px;
-      }
-
-      /* Show icon3 */
-      .icon3 {
-        background-position: -120px -120px;
-      }
-
-      /* Show icon4 */
-      .icon4 {
-        background-position: -360px 0;
-      }
+      
       #nav-menu a {
         text-decoration: none;
         margin: 10px;
