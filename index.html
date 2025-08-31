@@ -59,183 +59,161 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
    <link  rel="stylesheet" href="style.css">
-    <!-- JSON-LD Structured Data for Services -->
-    <script type="application/ld+json">
-        {
-        "@context": "https://schema.org",
-        "@type": "MedicalClinic",
-        "name": "Dr Mani's Ortho Speciality & General Clinic",
-        "url": "https://drmaniortho.in/",
-        "telephone": "+91-9444261111",
-        "priceRange": "300",
-        "image": "https://drmaniortho.in/dr-mani-ortho.jpg",
-        "logo": "https://drmaniortho.in/IMG-20250712-WA0001.jpg",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "68, Radha Nagar Main Road, opposite J2 Mahal",
-          "addressLocality": "Chromepet",
-          "addressRegion": "Chennai",
-          "postalCode": "600044",
-          "addressCountry": "IN"
-        },
-        "medicalSpecialty": [
-          {
-            "@type": "MedicalSpecialty",
-            "name": "Orthopedic & Specialized Care"
-          },
-          {
-            "@type": "MedicalSpecialty",
-            "name": "General Health Consultation"
-          }
-        ],
-        "makesOffer": [
-          {
-            "@type": "MedicalService",
-            "name": "Knee pain, ligament injuries, and arthritis"
-          },
-          {
-            "@type": "MedicalService",
-            "name": "Back or neck pain, slipped disc, and sciatica"
-          },
-          {
-            "@type": "MedicalService",
-            "name": "Shoulder pain, stiffness, and tendon tears"
-          },
-          {
-            "@type": "MedicalService",
-            "name": "Hip pain, fractures, and arthritis"
-          },
-          {
-            "@type": "MedicalService",
-            "name": "Trauma & Fracture Management"
-          },
-          {
-            "@type": "MedicalService",
-            "name": "Sports injuries"
-          },
-          {
-            "@type": "MedicalService",
-            "name": "Joint Replacement Surgery"
-          },
-          {
-            "@type": "MedicalService",
-            "name": "Spine Care & Surgery"
-          },
-          {
-            "@type": "MedicalService",
-            "name": "Clinical Laboratory Services"
-          },
-          {
-            "@type": "MedicalService",
-            "name": "Physiotherapy"
-          },
-          {
-            "@type": "MedicalService",
-            "name": "Digital X-Ray"
-          },
-          {
-            "@type": "MedicalService",
-            "name": "Foot, ankle, hand, and wrist injuries or pain"
-          },
-          {
-            "@type": "MedicalService",
-            "name": "Fever & Infections"
-          },
-          {
-            "@type": "MedicalService",
-            "name": "Stomach Problems"
-          },
-          {
-            "@type": "MedicalService",
-            "name": "General Pain"
-          },
-          {
-            "@type": "MedicalService",
-            "name": "Fatigue & Weakness"
-          },
-          {
-            "@type": "MedicalService",
-            "name": "Wound Care"
-          },
-          {
-            "@type": "MedicalService",
-            "name": "Diabetic Treatment"
-          }
-        ]
-      }
-    </script>
-    <script type="application/ld+json">
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
+  "@graph": [
     {
-      "@type": "Question",
-      "name": "What orthopedic treatments are available at Dr. Mani’s Ortho Speciality & General Clinic in Chromepet?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "We provide complete orthopedic care in Chromepet including trauma & fracture management, knee pain and ligament injuries, back or neck pain, shoulder pain, hip pain & arthritis, sports injuries, joint replacement surgery, spine care & surgery, foot, ankle, hand and wrist injuries, advanced physiotherapy, and digital X-ray."
-      }
+      "@type": "MedicalClinic",
+      "@id": "https://drmaniortho.in/",
+      "name": "Dr Mani's Ortho Speciality & General Clinic",
+      "url": "https://drmaniortho.in/",
+      "telephone": "+91-9444261111",
+      "priceRange": "300",
+      "image": "https://drmaniortho.in/dr-mani-ortho.jpg",
+      "logo": "https://drmaniortho.in/IMG-20250712-WA0001.jpg",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "68, Radha Nagar Main Road, opposite J2 Mahal",
+        "addressLocality": "Chromepet",
+        "addressRegion": "Chennai",
+        "postalCode": "600044",
+        "addressCountry": "IN"
+      },
+      "sameAs": [
+        "https://www.google.com/maps/place/Dr+Mani's+Ortho+Speciality+%26+General+Clinic"
+      ],
+      "medicalSpecialty": [
+        { "@type": "MedicalSpecialty", "name": "Orthopedic & Specialized Care" },
+        { "@type": "MedicalSpecialty", "name": "General Health Consultation" }
+      ],
+      "makesOffer": [
+        { "@type": "MedicalService", "name": "Knee pain, ligament injuries, and arthritis" },
+        { "@type": "MedicalService", "name": "Back or neck pain, slipped disc, and sciatica" },
+        { "@type": "MedicalService", "name": "Shoulder pain, stiffness, and tendon tears" },
+        { "@type": "MedicalService", "name": "Hip pain, fractures, and arthritis" },
+        { "@type": "MedicalService", "name": "Trauma & Fracture Management" },
+        { "@type": "MedicalService", "name": "Sports injuries" },
+        { "@type": "MedicalService", "name": "Joint Replacement Surgery" },
+        { "@type": "MedicalService", "name": "Spine Care & Surgery" },
+        { "@type": "MedicalService", "name": "Clinical Laboratory Services" },
+        { "@type": "MedicalService", "name": "Physiotherapy" },
+        { "@type": "MedicalService", "name": "Digital X-Ray" },
+        { "@type": "MedicalService", "name": "Foot, ankle, hand, and wrist injuries or pain" },
+        { "@type": "MedicalService", "name": "Fever & Infections" },
+        { "@type": "MedicalService", "name": "Stomach Problems" },
+        { "@type": "MedicalService", "name": "General Pain" },
+        { "@type": "MedicalService", "name": "Fatigue & Weakness" },
+        { "@type": "MedicalService", "name": "Wound Care" },
+        { "@type": "MedicalService", "name": "Diabetic Treatment" }
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "reviewCount": "56"
+      },
+      "review": [
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "Saravanan D" },
+          "reviewBody": "Doctor explained very clearly about the problem and gave proper treatment. Staffs were also polite.",
+          "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }
+        },
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "Revathi M" },
+          "reviewBody": "Very good doctor, listens patiently and treatment is very effective.",
+          "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }
+        },
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "Mohan Raj" },
+          "reviewBody": "Had severe knee pain, after treatment I feel much better. Highly recommend this clinic.",
+          "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }
+        }
+      ]
     },
     {
-      "@type": "Question",
-      "name": "Do you offer trauma and fracture management?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. Dr. Mani’s Ortho Speciality & General Clinic in Chromepet provides expert trauma and fracture management using modern surgical techniques and rehabilitation for faster recovery."
-      }
+      "@type": "Physician",
+      "@id": "https://drmaniortho.in/",
+      "name": "Dr. Mani Arumugam",
+      "medicalSpecialty": "Orthopedic Surgery",
+      "alumniOf": "M.B.B.S., M.S. Ortho",
+      "worksFor": { "@id": "https://drmaniortho.in/" }
     },
     {
-      "@type": "Question",
-      "name": "What treatments do you provide for knee pain and ligament injuries?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "We treat knee pain and ligament injuries with medication, physiotherapy, arthroscopy, and surgery if required. Our goal is to reduce pain and restore mobility."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do you treat spine, back, or neck pain?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes, we provide treatments for spine, back, and neck pain including physiotherapy, medication, injections, and surgical solutions when needed."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do you provide physiotherapy in Chromepet?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. Our clinic is equipped with advanced physiotherapy facilities to treat orthopedic conditions, sports injuries, post-fracture recovery, and arthritis care."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do you have digital X-ray services?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. We provide digital X-ray at our clinic in Chromepet for accurate diagnosis of fractures, joint issues, and spine problems."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do you also provide general health consultation?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. Apart from orthopedic care, we provide general health consultation including fever & infections, stomach problems, general pain, fatigue & weakness, wound care, and diabetic treatment."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Where is Dr. Mani’s Ortho Speciality & General Clinic located?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Our clinic is located at 68, Radha Nagar Main Road, opposite J2 Mahal, Chromepet, Chennai. We provide orthopedic and general health care for patients in and around Chromepet."
-      }
+      "@type": "FAQPage",
+      "@id": "https://drmaniortho.in/",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What orthopedic treatments are available at Dr. Mani’s Ortho Speciality & General Clinic in Chromepet?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We provide complete orthopedic care in Chromepet including trauma & fracture management, knee pain and ligament injuries, back or neck pain, shoulder pain, hip pain & arthritis, sports injuries, joint replacement surgery, spine care & surgery, foot, ankle, hand and wrist injuries, advanced physiotherapy, and digital X-ray."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you offer trauma and fracture management?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. We provide expert trauma and fracture management using modern surgical techniques and rehabilitation for faster recovery."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What treatments do you offer for knee pain and ligament injuries?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We treat knee pain and ligament injuries with medication, physiotherapy, arthroscopy, and surgery if required to reduce pain and restore mobility."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you treat spine, back, or neck pain?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, we provide treatments for spine, back, and neck pain, including physiotherapy, medication, injections, and surgical solutions."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you provide physiotherapy in Chromepet?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Our clinic has advanced physiotherapy facilities to treat orthopedic conditions, sports injuries, post-fracture recovery, and arthritis care."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you offer digital X-ray services?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. We offer digital X-ray services at our clinic in Chromepet for accurate diagnosis of fractures, joint issues, and spine problems."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you provide general health consultation?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. We consult for fever & infections, stomach problems, general pain, fatigue & weakness, wound care, and diabetic treatment."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where is your clinic located?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Our clinic is located at 68, Radha Nagar Main Road, opposite J2 Mahal, Chromepet, Chennai."
+          }
+        }
+      ]
     }
   ]
 }
-    </script>
+</script>
  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CG4RXXYF7T"></script>
 <script>
    
