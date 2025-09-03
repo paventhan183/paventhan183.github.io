@@ -1,7 +1,15 @@
 // your code goes here
 
 // Loader hide
-window.addEventListener("load", () => { document.getElementById("loader").style.display = "none"; document.getElementById("call-btn").classList.add("show"); });
+window.addEventListener("load", () => {
+  document.getElementById("loader").style.display = "none";
+  const myElement = document.getElementById("call-btn");
+
+  if (myElement) {
+    myElement.classList.add("show");
+  }
+  //document.getElementById("call-btn").classList.add("show"); 
+});
 
 // Banner slider
 const slides = document.querySelectorAll('.banner-slider .slide');
