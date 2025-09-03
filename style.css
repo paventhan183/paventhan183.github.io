@@ -11,7 +11,12 @@
   line-height: 1.3;
   margin: 10px 0;
 }
-
+.mobile-only {
+    display: none;
+}
+.desktop-only {
+    display: flex;
+}
 .heading-sub {
   font-size: 18px;   /* like h2 */
   font-weight: bold;
@@ -77,6 +82,10 @@
             nav a:last-child { border-bottom:none; }
             .services-row, .timing-contact-row { flex-direction:column; }
             .service-section, .timing-contact-section { max-width:100%; flex-basis:100%; }
+            .mobile-only {display:flex}
+            .desktop-only {
+    display: none;
+}
           }
           #moveUpBtn {
           display: none; /* hidden by default */
@@ -164,4 +173,3 @@ footer p {
     .fixed-bottom-bar .phone {
       background: #007bff; /* Blue */
     }
-
