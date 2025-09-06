@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appointment Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      /* background: linear-gradient(to right, #b06ab3, #4568dc); */
+      margin: 0;
+      
+    }
+    .form-box {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    input[type="text"],
+    input[type="number"],
+    input[type="tel"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+    .radio-group {
+      margin-top: 5px;
+    }
+    .radio-group-inline label {
+      margin-right: 15px;
+    }
+    .radio-group-stacked div:not(:last-child) {
+      margin-bottom: 5px;
+    }
+    .radio-group input[type="radio"] {
+      vertical-align: middle;
+      margin-right: 5px;
+    }
+    button {
+      background: #25D366;
+      color: white;
+      border: none;
+      padding: 12px;
+      margin-top: 15px;
+      width: 100%;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #1ebe5d;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-box">
+    <h2>Appointment / Contact Form</h2>
+
+    <label for="name">* Name</label>
+    <input type="text" id="name" required>
+
+    <label for="age">* Age</label>
+    <input type="number" id="age" required>
+
+    <label>Gender</label>
+    <div class="radio-group radio-group-inline">
+      <label><input type="radio" name="gender" value="Male"> Male</label>
+      <label><input type="radio" name="gender" value="Female"> Female</label>
+    </div>
+
+    <label for="mobile">* Mobile Number</label>
+    <input type="tel" id="mobile" placeholder="+91" required>
+
+    <label for="date">* Clinic Visit</label>
+    <input type="date" id="date" required>
+
+    <label>* Reason for visit</label>
+    <div class="radio-group radio-group-stacked">
+      <div><label><input type="radio" name="reason" value="Ortho"> Ortho</label></div>
+      <div><label><input type="radio" name="reason" value="General problem"> General problem (Fever, Cold, Others)</label></div>
+    </div>
+
+    <button onclick="sendWhatsApp()">Submit on WhatsApp</button>
+  </div>
+
+  <script>
+    function sendWhatsApp() {
+      let name = document.getElementById("name").value;
+      let age = document.getElementById("age").value;
+      let mobile = document.getElementById("mobile").value;
+      let date = document.getElementById("date").value;
+      let gender = document.querySelector('input[name="gender"]:checked')?.value || "";
+      let reason = document.querySelector('input[name="reason"]:checked')?.value || "";
+
+      if (!name || !age || !mobile || !date || !reason) {
+        alert("Please fill all required fields");
+        return;
+      }
+
+      let message = `*Clinic Appointment Request*%0A
+Name: ${name}%0A
+Age: ${age}%0A
+Gender: ${gender}%0A
+Mobile: ${mobile}%0A
+Clinic Visit: ${date}%0A
+Reason: ${reason}`;
+
+      // Change this number to your clinic's WhatsApp number
+      let phoneNumber = "919444261111";  
+
+      let url = `https://wa.me/${phoneNumber}?text=${message}`;
+      window.open(url, "_blank");
+    }
+  </script>
+
+</body>
+</html>
