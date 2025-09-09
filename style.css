@@ -876,3 +876,6 @@ footer p {
   background: #0D9488; /* New Primary Color */
   /* Blue */
 }
+i.fas.fa-phone-alt{
+      transform: rotate(90deg);
+}
