@@ -1,4 +1,9 @@
 /* General Reset */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 150px; /* Offset for desktop sticky header */
+}
+
 body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
@@ -130,6 +135,7 @@ header {
   position: sticky;
   top: 0;
   z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Adds separation on scroll */
 }
 
 header h1 {
@@ -705,6 +711,10 @@ nav a:hover i {
 
 /* Responsive */
 @media(max-width:768px) {
+  html {
+    scroll-padding-top: 100px; /* Offset for mobile sticky header */
+  }
+
   #menu-toggle {
     display: flex;
     order: 2;

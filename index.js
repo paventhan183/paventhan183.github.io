@@ -26,6 +26,17 @@ menuToggle.addEventListener('keydown', (e) => {
   }
 });
 
+// Close menu when a nav link is clicked (for mobile)
+document.querySelectorAll('#nav-menu a').forEach(link => {
+  link.addEventListener('click', () => {
+    // Check if the mobile menu is open before closing
+    if (navMenu.classList.contains('show')) {
+      navMenu.classList.remove('show');
+      menuToggle.classList.remove('open');
+    }
+  });
+});
+
 
 // Animate counters
 function animateCount(id, target, duration, plus) {
