@@ -6,28 +6,44 @@
   <title>Appointment Form</title>
   <style>
     body {
-      font-family:  sans-serif;
-      /* background: linear-gradient(to right, #b06ab3, #4568dc); */
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #F8FAFC;
+      /* Light blue-gray background */
       margin: 0;
-      
+      padding: 20px;
+      /* Add some padding for smaller screens */
+      box-sizing: border-box;
     }
+
     .form-box {
       background: #fff;
       border-radius: 12px;
-      padding: 20px;
-      max-width: 400px;
+      padding: 30px;
+      /* More padding */
+      max-width: 450px;
       margin: auto;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      /* Softer, larger shadow */
+      border: 1px solid #e0e0e0;
     }
+
     h2 {
       text-align: center;
-      color: #333;
+      color: #0D9488;
+      /* Use primary theme color */
+      margin-top: 0;
+      margin-bottom: 25px;
+      font-size: 1.5rem;
     }
+
     label {
       display: block;
-      margin-top: 10px;
-      
+      margin-top: 15px;
+      color: #334155;
+      font-weight: 600;
+      font-size: 0.9rem;
     }
+
     input[type="text"],
     input[type="number"],
     input[type="tel"],
@@ -35,38 +51,71 @@
     select,
     textarea {
       width: 100%;
-      padding: 8px;
-      margin-top: 5px;
+      padding: 12px;
+      /* Taller inputs */
+      margin-top: 8px;
       border: 1px solid #ccc;
-      border-radius: 6px;
+      border-radius: 8px;
       box-sizing: border-box;
+      font-size: 1rem;
+      transition: border-color 0.3s, box-shadow 0.3s;
     }
+
+    input:focus {
+      outline: none;
+      border-color: #0D9488;
+      /* Highlight with theme color */
+      box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.2);
+    }
+
     .radio-group {
-      margin-top: 5px;
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
     }
+
+    /* Reset styles for labels within radio groups */
+    .radio-group label {
+      display: inline-block;
+      font-weight: normal;
+      margin-top: 0;
+    }
+
     .radio-group-inline label {
-      margin-right: 15px;
+      margin-right: 20px;
     }
+
     .radio-group-stacked div:not(:last-child) {
-      margin-bottom: 5px;
+      margin-bottom: 8px;
     }
+
     .radio-group input[type="radio"] {
       vertical-align: middle;
-      margin-right: 5px;
+      margin-right: 8px;
     }
+
     button {
-      background: #25D366;
+      background: #0D9488;
+      /* Use primary theme color */
       color: white;
       border: none;
-      padding: 12px;
-      margin-top: 15px;
+      padding: 15px;
+      /* Taller button */
+      margin-top: 25px;
       width: 100%;
-      border-radius: 6px;
-      font-size: 16px;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: bold;
       cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
     }
+
     button:hover {
-      background: #1ebe5d;
+      background: #0F766E;
+      /* Darker shade for hover */
+      transform: translateY(-2px);
+      /* Slight lift on hover */
     }
   </style>
 </head>
