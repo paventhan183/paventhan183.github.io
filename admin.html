@@ -210,6 +210,21 @@
       }
     });
     logoutButton.addEventListener('click', logout);
+
+    // --- Deterrents for Inspect Element ---
+    // Note: These measures are not foolproof security. A determined user can still view the source code.
+
+    // Disable right-click context menu
+    document.addEventListener('contextmenu', event => event.preventDefault());
+
+    // Disable common developer tool keyboard shortcuts
+    document.addEventListener('keydown', function(event) {
+      if (event.keyCode === 123 || // F12
+        (event.ctrlKey && event.shiftKey && (event.keyCode === 73 || event.keyCode === 74 || event.keyCode === 67)) || // Ctrl+Shift+I/J/C
+        (event.ctrlKey && event.keyCode === 85)) { // Ctrl+U (View Source)
+        event.preventDefault();
+      }
+    });
   </script>
 </body>
 </html>
