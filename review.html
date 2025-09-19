@@ -140,24 +140,20 @@
   <div class="container">
     <a href="admin.html" class="back-link">← Back to Admin Panel</a>
     <h2>Send Review Link</h2>
-    <div id="error" class="error">Please enter a valid name and mobile number.</div>
-
-    <label for="name">Name:</label>
-    <input type="text" id="name" placeholder="Enter patient name" />
+    <div id="error" class="error">Please enter a valid 10-digit mobile number.</div>
 
     <label for="mobile">Mobile Number (without country code):</label>
-    <input type="tel" id="mobile" placeholder="e.g. 9444261111" />
+    <input type="tel" id="mobile" placeholder="e.g. 9444261111" maxlength="10" />
 
     <button id="sendBtn">Send Message</button>
   </div>
 
   <script>
     document.getElementById('sendBtn').addEventListener('click', () => {
-      const name = document.getElementById('name').value.trim();
       let mobile = document.getElementById('mobile').value.trim();
 
       const phoneRegex = /^[0-9]{10}$/;
-      if (!name || !phoneRegex.test(mobile)) {
+      if (!phoneRegex.test(mobile)) {
         document.getElementById('error').style.display = 'block';
         return;
       }
@@ -166,7 +162,7 @@
       mobile = '91' + mobile;
 
       const message =
-        `Hello ${name},
+        `Hello Sir/Madam,
 Thank you for visiting *Dr. Mani's Ortho Speciality & General Clinic*.
 Your review means a lot to us — it helps others find the right care and encourages our team.
 If you were happy with our service, please give us a *5-star rating* ⭐⭐⭐⭐⭐.
