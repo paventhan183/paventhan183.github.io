@@ -64,6 +64,7 @@
 
     input[type="text"],
     input[type="date"],
+    input[type="tel"],
     input[type="time"],
     textarea {
       width: 100%;
@@ -80,6 +81,7 @@
 
     input[type="text"]:focus,
     input[type="date"]:focus,
+    input[type="tel"]:focus,
     input[type="time"]:focus,
     textarea:focus {
       outline: none;
@@ -129,8 +131,8 @@
     <h2>Send Appointment Confirmation</h2>
     <div id="error" class="error"></div>
 
-    <label for="phone">Phone Number (with country code):</label>
-    <input type="text" id="phone" placeholder="e.g. 91XXXXXXXXXX">
+    <label for="phone">Mobile Number (without country code):</label>
+    <input type="tel" id="phone" placeholder="e.g. 9444261111">
 
     <label for="date">Date:</label>
     <input type="date" id="date">
@@ -153,16 +155,26 @@
 
     function sendMessage() {
       const errorDiv = document.getElementById("error");
-      const phone = document.getElementById("phone").value.trim();
+      let phone = document.getElementById("phone").value.trim(); // Use let as we'll modify it
       const dateValue = document.getElementById("date").value;
       const timeValue = document.getElementById("time").value;
 
+      // Basic check for empty fields
       if (!phone || !dateValue || !timeValue) {
         errorDiv.textContent = "Please fill in all required fields.";
         errorDiv.style.display = 'block';
         return;
       }
+      // Validate phone number (assuming 10 digits without country code)
+      const phoneRegex = /^[0-9]{10}$/;
+      if (!phoneRegex.test(phone)) {
+        errorDiv.textContent = "Please enter a valid 10-digit mobile number (e.g., 9444261111).";
+        errorDiv.style.display = 'block';
+        return;
+      }
       errorDiv.style.display = 'none';
+
+      phone = '91' + phone; // Prepend '91' for WhatsApp
 
       // Format date for display
       const dateObj = new Date(dateValue + 'T00:00:00');
@@ -177,9 +189,21 @@
 
       const location = "Dr. Mani's Ortho Speciality & General Clinic, 68, Radha Nagar Main Road, Opposite J2 Mahal, Chromepet, Chennai";
       const mapLink = "https://g.page/r/CfKLCQ4kwt5UEBM";
-      const message = `Hello Sir/Madam,%0AThank you for speaking with us today.%0AAs confirmed, your appointment is scheduled:%0A%0A📅 Date: ${date}%0A⏰ Time: ${time}%0A🏥 Location: ${location}%0A📍 Google Map: ${mapLink}%0A%0APlease let us know if you need any changes.%0AWe look forward to seeing you.`;
+      const message = `Hello Sir/Madam,
+Thank you for speaking with us today.
+As confirmed, your appointment is scheduled:
 
-      const url = `https://wa.me/${phone}?text=${message}`;
+📅 Date: ${date}
+⏰ Time: ${time}
+🏥 Location: ${location}
+📍 Google Map: ${mapLink}
+
+Please let us know if you need any changes.
+We look forward to seeing you.`;
+
+      const encodedMessage = encodeURIComponent(message);
+      //console.log(encodedMessage);
+      const url = `https://wa.me/${phone}?text=${encodedMessage}`;
       window.open(url, "_blank");
     }
   </script>
