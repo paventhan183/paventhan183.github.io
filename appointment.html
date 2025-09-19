@@ -33,6 +33,19 @@
       box-sizing: border-box;
     }
 
+    .back-link {
+      display: inline-block;
+      margin-bottom: 15px;
+      color: #0D9488;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
     h2 {
       margin-bottom: 20px;
       color: #0D9488;
@@ -112,6 +125,7 @@
 </head>
 <body>
   <div class="container">
+    <a href="admin.html" class="back-link">← Back to Admin Panel</a>
     <h2>Send Appointment Confirmation</h2>
     <div id="error" class="error"></div>
 
