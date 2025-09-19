@@ -131,7 +131,7 @@
     <h2>Send Appointment Confirmation</h2>
     <div id="error" class="error"></div>
 
-    <label for="phone">Mobile Number (without country code):</label>
+    <label for="phone">Mobile Number:</label>
     <input type="tel" id="phone" placeholder="e.g. 9444261111">
 
     <label for="date">Date:</label>
@@ -159,22 +159,25 @@
       const dateValue = document.getElementById("date").value;
       const timeValue = document.getElementById("time").value;
 
-      // Basic check for empty fields
       if (!phone || !dateValue || !timeValue) {
         errorDiv.textContent = "Please fill in all required fields.";
         errorDiv.style.display = 'block';
         return;
       }
-      // Validate phone number (assuming 10 digits without country code)
-      const phoneRegex = /^[0-9]{10}$/;
-      if (!phoneRegex.test(phone)) {
+
+      // Sanitize and validate phone number
+      const sanitizedPhone = phone.replace(/[^0-9]/g, '');
+
+      if (sanitizedPhone.length === 10) {
+        phone = '91' + sanitizedPhone;
+      } else if (sanitizedPhone.startsWith('91') && sanitizedPhone.length === 12) {
+        phone = sanitizedPhone;
+      } else {
         errorDiv.textContent = "Please enter a valid 10-digit mobile number (e.g., 9444261111).";
         errorDiv.style.display = 'block';
         return;
       }
       errorDiv.style.display = 'none';
-
-      phone = '91' + phone; // Prepend '91' for WhatsApp
 
       // Format date for display
       const dateObj = new Date(dateValue + 'T00:00:00');
@@ -188,7 +191,7 @@
       const time = timeObj.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
 
       const location = "Dr. Mani's Ortho Speciality & General Clinic, 68, Radha Nagar Main Road, Opposite J2 Mahal, Chromepet, Chennai";
-      const mapLink = "https://maps.google.com/?q=12.970613,80.148506";
+      const mapLink = "https://www.google.com/maps/dir/?api=1&destination=Dr+Mani's+Ortho+Speciality+%26+General+Clinic,Chromepet,Chennai";
       const message = `Hello Sir/Madam,
 Thank you for speaking with us today.
 As confirmed, your appointment is scheduled:
