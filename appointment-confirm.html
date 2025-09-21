@@ -445,6 +445,9 @@
                     ? `<span class="status-sent status-review-sent">Sent</span>`
                     : `<span class="status-pending">Pending</span>`;
 
+                const [year, month, day] = appt.date.split('-');
+                const displayDate = `${day}-${month}-${year}`;
+
                 const displayTime = new Date('1970-01-01T' + appt.time).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
                 
                 const cell = row.insertCell(0);
@@ -459,7 +462,7 @@
                             </div>
                         </div>
                         <div class="detail-row">
-                            <div class="datetime-info">${appt.date} <span style="color: #64748b;">${displayTime}</span></div>
+                            <div class="datetime-info">${displayDate} <span style="margin: 0 8px; color: #e2e8f0;">|</span> <span style="color: #64748b;">${displayTime}</span></div>
                             <div class="status-info">
                                 <span title="Confirmation"><strong>Confirmation:</strong> ${confirmationStatus}</span>
                                 <span style="margin: 0 8px; color: #e2e8f0;">|</span>
