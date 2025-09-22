@@ -15,11 +15,11 @@
       font-family: 'Roboto', sans-serif;
       padding: 20px;
       margin: 0;
-      background: #F8FAFC;
+      background: #f1f5f9; /* New: Slightly darker grey background */
       color: #334155;
       display: flex;
       justify-content: center;
-      align-items: flex-start; /* Align to top to see table */
+      align-items: flex-start;
       min-height: 100vh;
       box-sizing: border-box;
     }
@@ -49,11 +49,12 @@
     }
 
     h2 {
-      margin-bottom: 20px;
+      margin-bottom: 25px;
       color: #0D9488;
       text-align: center;
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       margin-top: 0;
+      font-weight: 700;
     }
 
     label {
@@ -193,100 +194,14 @@
         margin-top: 15px; /* Ensure consistent spacing */
     }
 
-    .edit-btn { background-color: #16A34A; } /* Green */
-    .edit-btn:hover { background-color: #15803D; } /* Darker Green */
-
-    .generate-bill-btn { background-color: #16A34A; } /* Green-600 */
-    .generate-bill-btn:hover { background-color: #15803D; } /* Green-700 */
-
-    /* Table Styles */
-    .table-container {
-      margin-top: 30px;
-      width: 100%;
-    }
-
-    .appointments-table {
-      width: 100%;
-      border-collapse: collapse; /* Use collapse for standard table look */
-      border-spacing: 0;
-      font-size: 0.9rem;
-    }
-    .appointments-table th, .appointments-table td {
-      border: 1px solid #e2e8f0;
-      padding: 12px 15px;
-      text-align: left;
-      vertical-align: middle;
-    }
-    .appointments-table th {
-      padding: 0 10px 10px;
-      border-bottom: 2px solid #e0e0e0;
-      background-color: transparent;
-      font-weight: 600;
-      color: #0F766E;
-    }
-    .appointments-table .action-btn {
-      font-size: 0.75rem;
-      padding: 5px 8px;
-      margin: 0; /* Reset margin */
-      width: auto;
-      display: inline-block;
-      border: none;
-      border-radius: 5px;
-      color: white;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-    
-    .confirm-btn {
-        background-color: #0D9488;
-    }
-    .confirm-btn:hover {
-        background-color: #0F766E;
-    }
-
-    .review-btn {
-        background-color: #14B8A6;
-    }
-    .review-btn:hover {
-        background-color: #0D9488;
-    }
-
-    .delete-btn {
-      background-color: #16A34A;
-    }
-    .delete-btn:hover {
-      background-color: #15803D;
-    }
-
-    #clearAllBtn {
-        background-color: #16A34A;
-        margin-top: 20px;
-    }
-    #clearAllBtn:hover {
-        background-color: #15803D;
-    }
-
-    #showAddFormBtn {
-        background-color: #14B8A6;
-    }
-    #showAddFormBtn:hover {
-        background-color: #0D9488;
-    }
-
-    #showAddFormBtn.close-form {
-        background-color: #16A34A; /* Green color */
-    }
-    #showAddFormBtn.close-form:hover {
-        background-color: #15803D; /* Darker green on hover */
-    }
-
     .form-container-collapsible {
         border: 1px solid #e0e0e0;
         border-radius: 8px;
         padding: 25px;
         margin-top: 20px;
-        background-color: #F8FAFC;
+        background-color: #fff; /* White background for form */
         display: none; /* Hidden by default */
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
 
     .form-grid {
@@ -306,28 +221,136 @@
             grid-template-columns: 1fr;
         }
     }
-    /* Status cell styles */
-    .status-pending {
-        color: #D97706; /* Amber 600 */
-        font-style: italic;
+
+    .main-actions-toolbar {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+        flex-wrap: wrap;
     }
-    .status-sent {
-        font-weight: bold;
+    .main-actions-toolbar > button {
+        width: auto;
+        margin-top: 0;
+        padding: 10px 15px;
+        font-size: 0.9rem;
     }
-    .status-confirmed {
-        color: #0D9488; /* Teal 600 */
+    #sortBtn {
+        background-color: #64748B; /* Slate */
     }
-    .status-review-sent {
-        color: #16A34A; /* Green 600 */
+    #sortBtn:hover {
+        background-color: #475569;
     }
 
-    .icon-link {
-        text-decoration: none;
-        margin-right: 10px;
-        font-size: 1.2rem; /* Slightly larger for better touch target */
-        display: inline-flex;
-        align-items: center;
+    /* --- New Button Styles --- */
+    #showAddFormBtn {
+        background-color: #0D9488;
     }
+    #showAddFormBtn:hover {
+        background-color: #0F766E;
+    }
+    #showAddFormBtn.close-form {
+        background-color: #64748B; /* Slate for "close" */
+    }
+    #showAddFormBtn.close-form:hover {
+        background-color: #475569;
+    }
+
+    #clearAllBtn {
+        background-color: transparent;
+        color: #DC2626; /* Red text */
+        border: 2px solid #DC2626;
+        margin-top: 20px;
+    }
+    #clearAllBtn:hover {
+        background-color: #FEE2E2; /* Light red background on hover */
+        color: #B91C1C;
+        transform: translateY(0); /* Override default button hover */
+    }
+
+    /* General Action Button in Cards */
+    .action-btn {
+      font-size: 0.8rem;
+      padding: 6px 12px;
+      margin: 0;
+      width: auto;
+      display: inline-block;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 600;
+      text-align: center;
+    }
+    .action-btn:hover {
+        opacity: 0.85;
+        transform: translateY(-1px);
+    }
+
+    .confirm-btn { background-color: #0D9488; } /* Main Teal */
+    .review-btn { background-color: #14B8A6; } /* Lighter Teal */
+    .generate-bill-btn { background-color: #3B82F6; } /* Blue */
+    .edit-btn { background-color: #64748B; } /* Slate */
+    .delete-btn { background-color: #EF4444; } /* Red */
+
+    /* --- New Card Layout Styles --- */
+    .appointment-list {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .appointment-card {
+      background-color: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      padding: 20px;
+      transition: box-shadow 0.2s ease;
+    }
+    .appointment-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 15px;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 15px;
+      margin-bottom: 15px;
+    }
+    .patient-name {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #1e293b;
+    }
+    .contact-info {
+      font-size: 0.9rem;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .card-body {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+    .datetime-info, .status-details {
+      font-size: 0.9rem;
+    }
+    .datetime-info strong, .status-details strong {
+      display: block;
+      color: #64748b;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+
     .whatsapp-icon-svg {
         display: inline-block;
         width: 1.1rem;
@@ -345,42 +368,37 @@
         background-size: contain;
     }
 
+    .icon-link {
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+    }
+
     /* Hide icons on desktop (screens wider than 768px) */
     @media (min-width: 768px) {
       .mobile-only-icon {
         display: none;
       }
     }
+    
+    .card-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .card-actions .action-btn {
+      flex-grow: 1;
+      min-width: 80px;
+    }
 
-    /* New single-column layout styles */
-    .appointment-details-wrapper {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-    .detail-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 10px; /* Gap for wrapping */
-    }
-    .patient-name {
-        font-weight: 600;
-        font-size: 1rem;
-        color: #1e293b;
-    }
-    .contact-info, .datetime-info, .status-info {
-        display: flex;
-        align-items: center;
-    }
-    .actions-row {
-        display: flex;
-        gap: 5px;
-        margin-top: 5px;
-    }
-    .actions-row .action-btn {
-        flex-grow: 1;
+    .empty-list-message {
+        text-align: center;
+        padding: 40px 20px;
+        color: #64748b;
+        background-color: #fff;
+        border: 1px dashed #cbd5e1;
+        border-radius: 8px;
+        margin-top: 30px;
     }
   </style>
 </head>
@@ -416,20 +434,14 @@
         <button id="addServiceBtn" type="button">➕ Add Service</button>
         <button id="addBtn">Add to List</button> <!-- This will toggle to Update List -->
     </div>
-    
-    <button id="showAddFormBtn">➕ Add New Appointment</button>
 
-    <div class="table-container">
-        <table class="appointments-table">
-            <thead>
-                <tr>
-                    <th>Appointment Details</th>
-                </tr>
-            </thead>
-            <tbody id="appointmentsTbody">
-                <!-- Rows will be added here by JavaScript -->
-            </tbody>
-        </table>
+    <div class="main-actions-toolbar">
+        <button id="showAddFormBtn">➕ Add New Appointment</button>
+        <button id="sortBtn">Sort by Newest First</button>
+    </div>
+    <div id="appointment-list-container" class="appointment-list">
+        <!-- Cards will be added here by JavaScript -->
+        <div id="appointmentsList"></div>
     </div>
     <button id="clearAllBtn">Clear All Appointments</button>
 
@@ -503,10 +515,11 @@
     const timeInput = document.getElementById('time');
     const addBtn = document.getElementById('addBtn');
     const showAddFormBtn = document.getElementById('showAddFormBtn');
+    const sortBtn = document.getElementById('sortBtn');
     const addServiceBtn = document.getElementById('addServiceBtn');
     const addFormContainer = document.getElementById('add-form-container');
     const clearAllBtn = document.getElementById('clearAllBtn');
-    const appointmentsTbody = document.getElementById('appointmentsTbody');
+    const appointmentsList = document.getElementById('appointmentsList');
     const errorDiv = document.getElementById("error");
     const API_BASE_URL = 'https://dr-appointment-t10x.onrender.com';
     //const API_BASE_URL = 'http://localhost:3000';
@@ -514,6 +527,8 @@
     // State variables
     let editingAppointmentId = null;
     let serviceCounter = 0;
+    let allAppointments = [];
+    let sortOrder = 'asc'; // asc: oldest first, desc: newest first
 
     // Set today's date in the date input field on page load
     window.onload = function() {
@@ -543,15 +558,32 @@
             showAddFormBtn.classList.add('close-form');
         }
     });
+
+    sortBtn.addEventListener('click', () => {
+        sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+        sortBtn.textContent = sortOrder === 'asc' ? 'Sort by Newest First' : 'Sort by Oldest First';
+        sortAndRenderAppointments();
+    });
     
+    function sortAndRenderAppointments() {
+        allAppointments.sort((a, b) => {
+            const dateA = new Date(`${a.date}T${a.time}`);
+            const dateB = new Date(`${b.date}T${b.time}`);
+            if (sortOrder === 'asc') {
+                return dateA - dateB;
+            } else {
+                return dateB - dateA;
+            }
+        });
+        renderTable(allAppointments);
+    }
+
     async function loadAndRenderAppointments() {
         try {
             const response = await fetch(`${API_BASE_URL}/api/appointments`, { cache: 'no-cache' });
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
-            }
-            const appointments = await response.json();
-            renderTable(appointments);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
+            allAppointments = await response.json();
+            sortAndRenderAppointments();
         } catch (error) {
             console.error('Failed to load appointments:', error);
             errorDiv.textContent = 'Could not load appointments from the server. Make sure the server is running.';
@@ -627,26 +659,22 @@
     }
 
     function renderTable(appointments) {
-        appointmentsTbody.innerHTML = ''; // Clear existing rows
+        appointmentsList.innerHTML = ''; // Clear existing items
 
         if (appointments.length === 0) {
-            const row = appointmentsTbody.insertRow();
-            const cell = row.insertCell(0);
-            cell.colSpan = 1;
-            cell.textContent = 'No appointments scheduled.';
-            cell.style.textAlign = 'center';
-            cell.style.padding = '20px';
+            appointmentsList.innerHTML = '<p class="empty-list-message">No appointments scheduled.</p>';
         } else {
             appointments.forEach(appt => {
-                const row = appointmentsTbody.insertRow();
-                row.dataset.id = appt.id;
+                const card = document.createElement('div');
+                card.className = 'appointment-card';
+                card.dataset.id = appt.id;
                 // Store data in dataset for easy and robust access
-                row.dataset.name = appt.name;
-                row.dataset.phone = appt.phone;
-                row.dataset.date = appt.date;
-                row.dataset.time = appt.time;
-                row.dataset.services = JSON.stringify(appt.services || []);
-                row.dataset.billupdateflag = appt.billupdateflag;
+                card.dataset.name = appt.name;
+                card.dataset.phone = appt.phone;
+                card.dataset.date = appt.date;
+                card.dataset.time = appt.time;
+                card.dataset.services = JSON.stringify(appt.services || []);
+                card.dataset.billupdateflag = appt.billupdateflag;
  
                 const confirmationStatus = appt.confirmationSent 
                     ? `<span class="status-sent status-confirmed">Sent</span>`
@@ -657,8 +685,8 @@
                     : `<span class="status-pending">Pending</span>`;
 
                 const billStatus = appt.billupdateflag
-                    ? `<span class="status-confirmed">Generated</span>`
-                    : `<span class="status-pending">Pending</span>`;
+                    ? `<span style="color: #16A34A; font-weight: 600;">Generated</span>`
+                    : `<span style="color: #94a3b8;">Pending</span>`;
 
                 const [year, month, day] = appt.date.split('-');
                 const displayDate = `${day}-${month}-${year}`;
@@ -670,36 +698,30 @@
                     generateBillButtonHTML = `<button class="action-btn generate-bill-btn" onclick="generateBill('${appt.id}')">Bill</button>`;
                 }
 
-                const cell = row.insertCell(0);
-                cell.innerHTML = `
-                    <div class="appointment-details-wrapper">
-                        <div class="detail-row">
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div>
                             <div class="patient-name">${appt.name || 'N/A'}</div>
                             <div class="contact-info">
                                 <a href="tel:${appt.phone}" class="icon-link mobile-only-icon" title="Call Patient"><i class="phone-icon-svg"></i></a>
                                 <a href="https://wa.me/${appt.phone}" target="_blank" class="icon-link mobile-only-icon" title="Open WhatsApp Chat"><i class="whatsapp-icon-svg"></i></a>
-                                ${appt.phone}
+                                <span>${appt.phone}</span>
                             </div>
                         </div>
-                        <div class="detail-row">
-                            <div class="datetime-info">${displayDate} <span style="margin: 0 8px; color: #e2e8f0;">|</span> <span style="color: #64748b;">${displayTime}</span></div>
-                            <div class="status-info">
-                                <span title="Confirmation"><strong>Confirmation:</strong> ${confirmationStatus}</span>
-                                <span style="margin: 0 8px; color: #e2e8f0;">|</span>
-                                <span title="Review"><strong>Review:</strong> ${reviewStatus}</span>
-                                <span style="margin: 0 8px; color: #e2e8f0;">|</span>
-                                <span title="Bill Status"><strong>Bill:</strong> ${billStatus}</span>
-                            </div>
-                        </div>
-                        <div class="actions-row">
+                        <div class="card-actions">
                             <button class="action-btn confirm-btn" onclick="sendConfirmation('${appt.id}')">Confirm</button>
                             <button class="action-btn review-btn" onclick="sendReviewRequest('${appt.id}')">Review</button>
                             ${generateBillButtonHTML}
-                            <button class="action-btn delete-btn" onclick="deleteAppointment('${appt.id}')">Delete</button>
                             <button class="action-btn edit-btn" onclick="editAppointment('${appt.id}')">Edit</button>
+                            <button class="action-btn delete-btn" onclick="deleteAppointment('${appt.id}')">Delete</button>
                         </div>
                     </div>
+                    <div class="card-body">
+                        <div class="datetime-info"><strong>Date & Time</strong><span>${displayDate} at ${displayTime}</span></div>
+                        <div class="status-details"><strong>Status</strong><span>Conf: ${confirmationStatus} | Review: ${reviewStatus} | Bill: ${billStatus}</span></div>
+                    </div>
                 `;
+                appointmentsList.appendChild(card);
             });
         }
     }
