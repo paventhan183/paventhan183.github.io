@@ -433,66 +433,65 @@
     </div>
     <button id="clearAllBtn">Clear All Appointments</button>
 
-  </div>
-
-  <!-- Hidden bill template from bill.html -->
-  <div id="bill" style="display:none; padding: 40px; width: 794px; font-family: 'Roboto', sans-serif; color: #333; box-sizing: border-box; background: #fff; flex-direction: column; min-height: 1123px;">
-    <!-- Header -->
-    <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #0D9488; padding-bottom: 15px;">
-      <div>
-        <h1 style="color: #0D9488; margin: 0; font-size: 24px; font-weight: 700;">Dr Mani's Ortho Speciality & General Clinic</h1>
-        <p style="margin: 5px 0 0 0; font-size: 12px;">68, Radha Nagar Main Road, opposite J2 Mahal, Chromepet, Chennai</p>
-        <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Phone:</b> +91-9444261111</p>
-      </div>
-      <div style="text-align: right;">
-        <h2 style="margin: 0; font-size: 28px; color: #333; font-weight: 600;">INVOICE</h2>
-        <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Doctor:</b> Dr Mani Arumugam, M.B.B.S., M.S., ORTHO</p>
-        <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Reg No:</b> MBBS123456</p>
-      </div>
-    </div>
-  
-    <!-- Bill Details -->
-    <div style="display: flex; justify-content: space-between; margin-top: 25px;">
-      <div>
-        <h3 style="margin: 0 0 5px 0; font-size: 14px; color: #555;">Bill To:</h3>
-        <p style="margin: 0; font-size: 14px; font-weight: bold;" id="billPatient"></p>
-      </div>
-      <div style="text-align: right;">
-        <p style="margin: 0; font-size: 14px;"><b style="color: #555;">Bill Number:</b> <span id="billNumber"></span></p>
-        <p style="margin: 5px 0 0 0; font-size: 14px;"><b style="color: #555;">Bill Date:</b> <span id="billDateText"></span></p>
-      </div>
-    </div>
-  
-    <!-- Services Table -->
-    <table style="width: 100%; border-collapse: collapse; margin-top: 30px; font-size: 14px;">
-      <thead style="background-color: #F0FDFA;">
-        <tr>
-          <th style="border-bottom: 2px solid #ddd; padding: 12px; text-align: left; color: #0F766E; width: 50px;">#</th>
-          <th style="border-bottom: 2px solid #ddd; padding: 12px; text-align: left; color: #0F766E;">Service Description</th>
-          <th style="border-bottom: 2px solid #ddd; padding: 12px; text-align: right; color: #0F766E; width: 120px;">Cost (₹)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Rows will be added dynamically -->
-      </tbody>
-      <tfoot>
-        <tr>
-          <td colspan="2" style="border-top: 2px solid #ddd; padding: 12px; text-align: right; font-weight: bold;">Total</td>
-          <td id="billTotal" style="border-top: 2px solid #ddd; padding: 12px; text-align: right; font-weight: bold; color: #0D9488; font-size: 16px;"></td>
-        </tr>
-      </tfoot>
-    </table>
-  
-    <!-- Footer -->
-    <div style="margin-top: auto; border-top: 1px solid #eee; padding-top: 15px; display: flex; flex-direction: column; justify-content: flex-end; height: 100%;">
-        <p style="text-align: center; font-size: 12px; color: #777; margin-bottom: 20px;">Thank you for choosing our clinic!</p>
-        <div style="display: flex; justify-content: space-between; align-items: flex-end;">
-            <div>
-                <p style="font-size: 10px; color: #aaa; margin: 0;">This is a computer-generated bill.</p>
-                <p style="font-size: 11px; color: #b91c1c; font-weight: bold; margin: 5px 0 0 0;">Note: Only signed and sealed bill is valid.</p>
-            </div>
-            <p style="font-size: 12px; color: #333; border-top: 1px solid #999; padding-top: 5px; margin: 0;">Authorized Signature</p>
+    <!-- Hidden bill template for PDF generation -->
+    <div id="bill" style="display:none; padding: 40px; width: 794px; font-family: 'Roboto', sans-serif; color: #333; box-sizing: border-box; background: #fff; flex-direction: column; min-height: 1123px; margin: 20px auto 0 auto;">
+      <!-- Header -->
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #0D9488; padding-bottom: 15px;">
+        <div>
+          <h1 style="color: #0D9488; margin: 0; font-size: 24px; font-weight: 700;">Dr Mani's Ortho Speciality & General Clinic</h1>
+          <p style="margin: 5px 0 0 0; font-size: 12px;">68, Radha Nagar Main Road, opposite J2 Mahal, Chromepet, Chennai</p>
+          <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Phone:</b> +91-9444261111</p>
         </div>
+        <div style="text-align: right;">
+          <h2 style="margin: 0; font-size: 28px; color: #333; font-weight: 600;">INVOICE</h2>
+          <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Doctor:</b> Dr Mani Arumugam, M.B.B.S., M.S., ORTHO</p>
+          <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Reg No:</b> MBBS123456</p>
+        </div>
+      </div>
+    
+      <!-- Bill Details -->
+      <div style="display: flex; justify-content: space-between; margin-top: 25px;">
+        <div>
+          <h3 style="margin: 0 0 5px 0; font-size: 14px; color: #555;">Bill To:</h3>
+          <p style="margin: 0; font-size: 14px; font-weight: bold;" id="billPatient"></p>
+        </div>
+        <div style="text-align: right;">
+          <p style="margin: 0; font-size: 14px;"><b style="color: #555;">Bill Number:</b> <span id="billNumber"></span></p>
+          <p style="margin: 5px 0 0 0; font-size: 14px;"><b style="color: #555;">Bill Date:</b> <span id="billDateText"></span></p>
+        </div>
+      </div>
+    
+      <!-- Services Table -->
+      <table style="width: 100%; border-collapse: collapse; margin-top: 30px; font-size: 14px;">
+        <thead style="background-color: #F0FDFA;">
+          <tr>
+            <th style="border-bottom: 2px solid #ddd; padding: 12px; text-align: left; color: #0F766E; width: 50px;">#</th>
+            <th style="border-bottom: 2px solid #ddd; padding: 12px; text-align: left; color: #0F766E;">Service Description</th>
+            <th style="border-bottom: 2px solid #ddd; padding: 12px; text-align: right; color: #0F766E; width: 120px;">Cost (₹)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Rows will be added dynamically -->
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2" style="border-top: 2px solid #ddd; padding: 12px; text-align: right; font-weight: bold;">Total</td>
+            <td id="billTotal" style="border-top: 2px solid #ddd; padding: 12px; text-align: right; font-weight: bold; color: #0D9488; font-size: 16px;"></td>
+          </tr>
+        </tfoot>
+      </table>
+    
+      <!-- Footer -->
+      <div style="margin-top: auto; border-top: 1px solid #eee; padding-top: 15px; display: flex; flex-direction: column; justify-content: flex-end; height: 100%;">
+          <p style="text-align: center; font-size: 12px; color: #777; margin-bottom: 20px;">Thank you for choosing our clinic!</p>
+          <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+              <div>
+                  <p style="font-size: 10px; color: #aaa; margin: 0;">This is a computer-generated bill.</p>
+                  <p style="font-size: 11px; color: #b91c1c; font-weight: bold; margin: 5px 0 0 0;">Note: Only signed and sealed bill is valid.</p>
+              </div>
+              <p style="font-size: 12px; color: #333; border-top: 1px solid #999; padding-top: 5px; margin: 0;">Authorized Signature</p>
+          </div>
+      </div>
     </div>
   </div>
 
@@ -547,7 +546,7 @@
     
     async function loadAndRenderAppointments() {
         try {
-            const response = await fetch(`${API_BASE_URL}/api/appointments`);
+            const response = await fetch(`${API_BASE_URL}/api/appointments`, { cache: 'no-cache' });
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
             }
@@ -591,7 +590,22 @@
     }
 
     // Event listener for the "Add Service" button
-    addServiceBtn.addEventListener('click', () => addService());
+    addServiceBtn.addEventListener('click', () => {
+        const serviceItems = document.querySelectorAll('.service-item');
+        if (serviceItems.length > 0) {
+            const lastServiceItem = serviceItems[serviceItems.length - 1];
+            const lastServiceDescInput = lastServiceItem.querySelector('.service-desc');
+            const lastServiceDesc = lastServiceDescInput.value.trim();
+            if (!lastServiceDesc) {
+                errorDiv.textContent = 'Please fill in the current service description before adding a new one.';
+                errorDiv.style.display = 'block';
+                lastServiceDescInput.focus();
+                return;
+            }
+        }
+        errorDiv.style.display = 'none'; // Hide error if validation passes
+        addService();
+    });
 
     // Function to reset the form to "Add New Appointment" state
     function resetForm() {
@@ -643,8 +657,8 @@
                     : `<span class="status-pending">Pending</span>`;
 
                 const billStatus = appt.billupdateflag
-                    ? `<span class="status-pending">Update Pending</span>`
-                    : `<span class="status-confirmed">Generated</span>`;
+                    ? `<span class="status-confirmed">Generated</span>`
+                    : `<span class="status-pending">Pending</span>`;
 
                 const [year, month, day] = appt.date.split('-');
                 const displayDate = `${day}-${month}-${year}`;
@@ -835,15 +849,39 @@
         const date = dateInput.value;
         const time = timeInput.value;
 
-        // Collect services
+        // Collect services and perform validation
         const services = [];
-        document.querySelectorAll('.service-item').forEach(item => {
-            const serviceDesc = item.querySelector('.service-desc').value.trim();
+        const serviceItems = document.querySelectorAll('.service-item');
+        let hasEmptyService = false;
+
+        // Reset previous validation styles
+        document.querySelectorAll('.service-desc').forEach(input => input.style.borderColor = '');
+
+        serviceItems.forEach(item => {
+            const serviceDescInput = item.querySelector('.service-desc');
+            const serviceDesc = serviceDescInput.value.trim();
             const cost = Number(item.querySelector('.service-cost').value);
-            if (serviceDesc) { // Only add if description is not empty
+
+            if (!serviceDesc) {
+                hasEmptyService = true;
+                serviceDescInput.style.borderColor = '#DC2626'; // Highlight empty field
+            } else {
                 services.push({ description: serviceDesc, cost: cost });
             }
         });
+
+        if (hasEmptyService) {
+            errorDiv.textContent = 'A service row was added but the description is empty. Please fill it or remove it.';
+            errorDiv.style.display = 'block';
+            return;
+        }
+
+        // In update mode, at least one service is mandatory.
+        if (editingAppointmentId && services.length === 0) {
+            errorDiv.textContent = 'At least one service is required when updating an appointment.';
+            errorDiv.style.display = 'block';
+            return;
+        }
 
         // Validation
         if (!name || !phone || !date || !time) {
