@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Appointment Manager</title>
   <meta name="robots" content="noindex, nofollow" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&display=swap" rel="stylesheet">
@@ -66,6 +68,7 @@
     input[type="date"],
     input[type="tel"],
     input[type="time"],
+    input[type="number"],
     textarea {
       width: 100%;
       padding: 12px;
@@ -83,6 +86,7 @@
     input[type="date"]:focus,
     input[type="tel"]:focus,
     input[type="time"]:focus,
+    input[type="number"]:focus,
     textarea:focus {
       outline: none;
       border-color: #0D9488;
@@ -124,12 +128,81 @@
       display: none;
     }
 
+    /* New styles for service input fields to be on the same row */
+    .service-fields-row {
+      display: flex;
+      gap: 15px; /* Space between service and cost fields */
+      flex-wrap: wrap; /* Allow wrapping on smaller screens */
+      margin-top: 5px; /* Space below the remove button */
+    }
+    .service-field {
+      flex: 1; /* Each field takes equal space */
+      min-width: 120px; /* Minimum width to prevent squishing */
+    }
+    .service-field label {
+      margin-top: 0; /* Override general label margin */
+      margin-bottom: 5px; /* Small space between label and input */
+    }
+    /* End new styles */
+
+    /* Service Item Styles (similar to bill.html) */
+    .service-item {
+      margin-bottom: 15px;
+      padding: 15px;
+      border: 1px solid #E2E8F0;
+      border-radius: 8px;
+      background-color: #F8FAFC;
+      position: relative;
+    }
+
+    #addServiceBtn {
+      background-color: #14B8A6; /* A secondary teal color */
+      margin-top: 10px;
+      margin-bottom: 15px; /* Space below add service button */
+    }
+    #addServiceBtn:hover {
+      background-color: #0D9488;
+    }
+
+    .remove-service-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #FEE2E2;
+      border: 1px solid #FCA5A5;
+      color: #DC2626;
+      font-size: 0.8rem;
+      font-weight: bold;
+      cursor: pointer;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      transition: all 0.2s ease;
+    }
+    .remove-service-btn:hover {
+        background: #FECACA;
+        color: #B91C1C;
+    }
+
+    /* Adjust button styling for update/add */
+    #addBtn, #updateBtn { /* Apply to both states of the button */
+        margin-top: 15px; /* Ensure consistent spacing */
+    }
+
+    .edit-btn { background-color: #16A34A; } /* Green */
+    .edit-btn:hover { background-color: #15803D; } /* Darker Green */
+
+    .generate-bill-btn { background-color: #16A34A; } /* Green-600 */
+    .generate-bill-btn:hover { background-color: #15803D; } /* Green-700 */
+
     /* Table Styles */
     .table-container {
       margin-top: 30px;
       width: 100%;
-      max-height: 60vh; /* Set a max height for the table area */
-      overflow: auto; /* Add scrollbars if content overflows, preventing page scroll */
     }
 
     .appointments-table {
@@ -152,11 +225,10 @@
       color: #0F766E;
     }
     .appointments-table .action-btn {
-      font-size: 0.8rem;
-      padding: 6px 10px;
+      font-size: 0.75rem;
+      padding: 5px 8px;
       margin: 0; /* Reset margin */
       width: auto;
-      min-width: 80px;
       display: inline-block;
       border: none;
       border-radius: 5px;
@@ -180,18 +252,18 @@
     }
 
     .delete-btn {
-      background-color: #DC2626;
+      background-color: #16A34A;
     }
     .delete-btn:hover {
-      background-color: #B91C1C;
+      background-color: #15803D;
     }
 
     #clearAllBtn {
-        background-color: #b91c1c;
+        background-color: #16A34A;
         margin-top: 20px;
     }
     #clearAllBtn:hover {
-        background-color: #991b1b;
+        background-color: #15803D;
     }
 
     #showAddFormBtn {
@@ -202,10 +274,10 @@
     }
 
     #showAddFormBtn.close-form {
-        background-color: #DC2626; /* Red color */
+        background-color: #16A34A; /* Green color */
     }
     #showAddFormBtn.close-form:hover {
-        background-color: #B91C1C; /* Darker red on hover */
+        background-color: #15803D; /* Darker green on hover */
     }
 
     .form-container-collapsible {
@@ -304,12 +376,11 @@
     }
     .actions-row {
         display: flex;
-        gap: 8px;
+        gap: 5px;
         margin-top: 5px;
     }
     .actions-row .action-btn {
         flex-grow: 1;
-      }
     }
   </style>
 </head>
@@ -338,7 +409,12 @@
                 <input type="time" id="time">
             </div>
         </div>
-        <button id="addBtn">Add to List</button>
+        <h3>Services (Optional)</h3>
+        <div id="services-container">
+            <!-- Service items will be added here dynamically -->
+        </div>
+        <button id="addServiceBtn" type="button">➕ Add Service</button>
+        <button id="addBtn">Add to List</button> <!-- This will toggle to Update List -->
     </div>
     
     <button id="showAddFormBtn">➕ Add New Appointment</button>
@@ -359,6 +435,67 @@
 
   </div>
 
+  <!-- Hidden bill template from bill.html -->
+  <div id="bill" style="display:none; padding: 40px; width: 794px; font-family: 'Roboto', sans-serif; color: #333; box-sizing: border-box; background: #fff; flex-direction: column; min-height: 1123px;">
+    <!-- Header -->
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #0D9488; padding-bottom: 15px;">
+      <div>
+        <h1 style="color: #0D9488; margin: 0; font-size: 24px; font-weight: 700;">Dr Mani's Ortho Speciality & General Clinic</h1>
+        <p style="margin: 5px 0 0 0; font-size: 12px;">68, Radha Nagar Main Road, opposite J2 Mahal, Chromepet, Chennai</p>
+        <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Phone:</b> +91-9444261111</p>
+      </div>
+      <div style="text-align: right;">
+        <h2 style="margin: 0; font-size: 28px; color: #333; font-weight: 600;">INVOICE</h2>
+        <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Doctor:</b> Dr Mani Arumugam, M.B.B.S., M.S., ORTHO</p>
+        <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Reg No:</b> MBBS123456</p>
+      </div>
+    </div>
+  
+    <!-- Bill Details -->
+    <div style="display: flex; justify-content: space-between; margin-top: 25px;">
+      <div>
+        <h3 style="margin: 0 0 5px 0; font-size: 14px; color: #555;">Bill To:</h3>
+        <p style="margin: 0; font-size: 14px; font-weight: bold;" id="billPatient"></p>
+      </div>
+      <div style="text-align: right;">
+        <p style="margin: 0; font-size: 14px;"><b style="color: #555;">Bill Number:</b> <span id="billNumber"></span></p>
+        <p style="margin: 5px 0 0 0; font-size: 14px;"><b style="color: #555;">Bill Date:</b> <span id="billDateText"></span></p>
+      </div>
+    </div>
+  
+    <!-- Services Table -->
+    <table style="width: 100%; border-collapse: collapse; margin-top: 30px; font-size: 14px;">
+      <thead style="background-color: #F0FDFA;">
+        <tr>
+          <th style="border-bottom: 2px solid #ddd; padding: 12px; text-align: left; color: #0F766E; width: 50px;">#</th>
+          <th style="border-bottom: 2px solid #ddd; padding: 12px; text-align: left; color: #0F766E;">Service Description</th>
+          <th style="border-bottom: 2px solid #ddd; padding: 12px; text-align: right; color: #0F766E; width: 120px;">Cost (₹)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Rows will be added dynamically -->
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="2" style="border-top: 2px solid #ddd; padding: 12px; text-align: right; font-weight: bold;">Total</td>
+          <td id="billTotal" style="border-top: 2px solid #ddd; padding: 12px; text-align: right; font-weight: bold; color: #0D9488; font-size: 16px;"></td>
+        </tr>
+      </tfoot>
+    </table>
+  
+    <!-- Footer -->
+    <div style="margin-top: auto; border-top: 1px solid #eee; padding-top: 15px; display: flex; flex-direction: column; justify-content: flex-end; height: 100%;">
+        <p style="text-align: center; font-size: 12px; color: #777; margin-bottom: 20px;">Thank you for choosing our clinic!</p>
+        <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+            <div>
+                <p style="font-size: 10px; color: #aaa; margin: 0;">This is a computer-generated bill.</p>
+                <p style="font-size: 11px; color: #b91c1c; font-weight: bold; margin: 5px 0 0 0;">Note: Only signed and sealed bill is valid.</p>
+            </div>
+            <p style="font-size: 12px; color: #333; border-top: 1px solid #999; padding-top: 5px; margin: 0;">Authorized Signature</p>
+        </div>
+    </div>
+  </div>
+
   <script>
     // Element selectors
     const nameInput = document.getElementById('name');
@@ -367,12 +504,17 @@
     const timeInput = document.getElementById('time');
     const addBtn = document.getElementById('addBtn');
     const showAddFormBtn = document.getElementById('showAddFormBtn');
+    const addServiceBtn = document.getElementById('addServiceBtn');
     const addFormContainer = document.getElementById('add-form-container');
     const clearAllBtn = document.getElementById('clearAllBtn');
     const appointmentsTbody = document.getElementById('appointmentsTbody');
     const errorDiv = document.getElementById("error");
-    const API_BASE_URL = 'https://dr-appointment-t10x.onrender.com';
-    //const API_BASE_URL = 'http://localhost:3000';
+    //const API_BASE_URL = 'https://dr-appointment-t10x.onrender.com';
+    const API_BASE_URL = 'http://localhost:3000';
+
+    // State variables
+    let editingAppointmentId = null;
+    let serviceCounter = 0;
 
     // Set today's date in the date input field on page load
     window.onload = function() {
@@ -383,7 +525,7 @@
       const dd = String(today.getDate()).padStart(2, '0');
       dateInput.value = `${yyyy}-${mm}-${dd}`;
       loadAndRenderAppointments();
-      //loadHello();
+      resetForm(); // Initialize form state
     };
 
     showAddFormBtn.addEventListener('click', () => {
@@ -393,8 +535,10 @@
             addFormContainer.style.display = 'none';
             showAddFormBtn.textContent = '➕ Add New Appointment';
             showAddFormBtn.classList.remove('close-form');
+            resetForm(); // Reset form when closing
         } else {
             // Form is hidden, so we are opening it
+            resetForm(); // Reset form for a new entry
             addFormContainer.style.display = 'block';
             showAddFormBtn.textContent = '➖ Close Appointment Form';
             showAddFormBtn.classList.add('close-form');
@@ -405,7 +549,7 @@
         try {
             const response = await fetch(`${API_BASE_URL}/api/appointments`);
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
             }
             const appointments = await response.json();
             renderTable(appointments);
@@ -416,6 +560,57 @@
         }
     }
      
+    // Function to add a service input field
+    function addService(description = '', cost = 0) {
+        serviceCounter++;
+        const servicesContainer = document.getElementById('services-container');
+        const serviceItem = document.createElement('div');
+        serviceItem.classList.add('service-item');
+        // Modified HTML structure to place service and cost inputs on the same row
+        serviceItem.innerHTML = `
+          <button type="button" class="remove-service-btn" title="Remove Service" onclick="this.parentElement.remove()">×</button>
+          <div class="service-fields-row">
+            <div class="service-field">
+              <label for="service${serviceCounter}">Service:</label>
+              <input type="text" id="service${serviceCounter}" class="service-desc" placeholder="Service description" value="${description}">
+            </div>
+            <div class="service-field">
+              <label for="cost${serviceCounter}">Cost (₹):</label>
+              <input type="number" id="cost${serviceCounter}" class="service-cost" min="0" value="${cost}">
+            </div>
+          </div>
+        `;
+
+        // Make the first "Consultation Fee" non-removable, both for new and edited appointments.
+        if (servicesContainer.children.length === 0 && description === 'Consultation Fee') {
+            const removeBtn = serviceItem.querySelector('.remove-service-btn');
+            if (removeBtn) removeBtn.style.display = 'none';
+        }
+
+        servicesContainer.appendChild(serviceItem);
+    }
+
+    // Event listener for the "Add Service" button
+    addServiceBtn.addEventListener('click', () => addService());
+
+    // Function to reset the form to "Add New Appointment" state
+    function resetForm() {
+        editingAppointmentId = null;
+        nameInput.value = '';
+        phoneInput.value = '';
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        dateInput.value = `${yyyy}-${mm}-${dd}`;
+        timeInput.value = '';
+        document.getElementById('services-container').innerHTML = ''; // Clear all service fields
+        addBtn.textContent = 'Add to List';
+        addBtn.classList.remove('update-mode');
+        errorDiv.style.display = 'none';
+        // Make inputs editable (in case they were read-only from an edit)
+        [nameInput, phoneInput, dateInput, timeInput].forEach(input => input.readOnly = false);
+    }
 
     function renderTable(appointments) {
         appointmentsTbody.innerHTML = ''; // Clear existing rows
@@ -436,6 +631,8 @@
                 row.dataset.phone = appt.phone;
                 row.dataset.date = appt.date;
                 row.dataset.time = appt.time;
+                row.dataset.services = JSON.stringify(appt.services || []);
+                row.dataset.billupdateflag = appt.billupdateflag;
  
                 const confirmationStatus = appt.confirmationSent 
                     ? `<span class="status-sent status-confirmed">Sent</span>`
@@ -445,11 +642,20 @@
                     ? `<span class="status-sent status-review-sent">Sent</span>`
                     : `<span class="status-pending">Pending</span>`;
 
+                const billStatus = appt.billupdateflag
+                    ? `<span class="status-pending">Update Pending</span>`
+                    : `<span class="status-confirmed">Generated</span>`;
+
                 const [year, month, day] = appt.date.split('-');
                 const displayDate = `${day}-${month}-${year}`;
 
                 const displayTime = new Date('1970-01-01T' + appt.time).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
                 
+                let generateBillButtonHTML = '';
+                if (appt.billupdateflag) {
+                    generateBillButtonHTML = `<button class="action-btn generate-bill-btn" onclick="generateBill('${appt.id}')">Bill</button>`;
+                }
+
                 const cell = row.insertCell(0);
                 cell.innerHTML = `
                     <div class="appointment-details-wrapper">
@@ -467,12 +673,16 @@
                                 <span title="Confirmation"><strong>Confirmation:</strong> ${confirmationStatus}</span>
                                 <span style="margin: 0 8px; color: #e2e8f0;">|</span>
                                 <span title="Review"><strong>Review:</strong> ${reviewStatus}</span>
+                                <span style="margin: 0 8px; color: #e2e8f0;">|</span>
+                                <span title="Bill Status"><strong>Bill:</strong> ${billStatus}</span>
                             </div>
                         </div>
                         <div class="actions-row">
                             <button class="action-btn confirm-btn" onclick="sendConfirmation('${appt.id}')">Confirm</button>
                             <button class="action-btn review-btn" onclick="sendReviewRequest('${appt.id}')">Review</button>
+                            ${generateBillButtonHTML}
                             <button class="action-btn delete-btn" onclick="deleteAppointment('${appt.id}')">Delete</button>
+                            <button class="action-btn edit-btn" onclick="editAppointment('${appt.id}')">Edit</button>
                         </div>
                     </div>
                 `;
@@ -502,64 +712,228 @@
         return null;
     }
 
+    window.generateBill = async (id) => {
+        const row = document.querySelector(`[data-id='${id}']`);
+        if (!row) return;
+
+        const patientName = row.dataset.name;
+        const billDate = row.dataset.date;
+        const services = JSON.parse(row.dataset.services || '[]');
+        const total = services.reduce((sum, service) => sum + Number(service.cost || 0), 0);
+
+        // --- Populate the professional bill template ---
+        const billNumber = 'INV-' + Date.now().toString().slice(-6);
+        document.getElementById('billNumber').textContent = billNumber;
+        document.getElementById('billPatient').textContent = patientName;
+        document.getElementById('billDateText').textContent = new Date(billDate + 'T00:00:00').toLocaleDateString('en-GB'); // DD/MM/YYYY
+
+        const billTableBody = document.querySelector('#bill table tbody');
+        billTableBody.innerHTML = ''; // Clear previous entries
+
+        services.forEach((service, index) => {
+            const row = billTableBody.insertRow();
+            const cell1 = row.insertCell(0); // S.No.
+            const cell2 = row.insertCell(1); // Description
+            const cell3 = row.insertCell(2); // Cost
+
+            cell1.textContent = index + 1;
+            cell2.textContent = service.description;
+            cell3.textContent = service.cost.toFixed(2);
+
+            // Add styles for a clean look
+            cell1.style.padding = '10px 12px';
+            cell1.style.borderBottom = '1px solid #eee';
+            cell2.style.padding = '10px 12px';
+            cell2.style.borderBottom = '1px solid #eee';
+            cell3.style.padding = '10px 12px';
+            cell3.style.borderBottom = '1px solid #eee';
+            cell3.style.textAlign = 'right';
+        });
+
+        document.getElementById('billTotal').textContent = '₹' + total.toFixed(2);
+
+        const billDiv = document.getElementById('bill');
+        billDiv.style.display = 'flex'; // Temporarily show for rendering
+
+        try {
+            const canvas = await html2canvas(billDiv, {
+                scale: 2,
+                width: billDiv.offsetWidth
+            });
+            
+            const imgData = canvas.toDataURL('image/png');
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF({ orientation: 'portrait', unit: 'px', format: 'a4' });
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+
+            const now = new Date();
+            const timestamp = now.getFullYear().toString() + String(now.getMonth() + 1).padStart(2, '0') + String(now.getDate()).padStart(2, '0');
+            pdf.save(`bill_${patientName.replace(/ /g, '_')}_${timestamp}.pdf`);
+
+            billDiv.style.display = 'none'; // Hide it again
+
+            // The billupdateflag is no longer changed after generating the bill.
+        } catch (error) {
+            console.error('Error generating PDF:', error);
+            billDiv.style.display = 'none'; // Ensure it's hidden on error
+            errorDiv.textContent = 'Failed to generate PDF.';
+            errorDiv.style.display = 'block';
+        }
+    };
+
+    // Function to load appointment data into the form for editing
+    window.editAppointment = (id) => {
+        // Find the appointment in the currently rendered table (or re-fetch if necessary)
+        const row = document.querySelector(`[data-id='${id}']`);
+        if (!row) {
+            console.log(row);
+            errorDiv.textContent = 'Appointment not found for editing.';
+            errorDiv.style.display = 'block';
+            return;
+        }
+
+        // Open the form if it's not already open
+        if (addFormContainer.style.display !== 'block') {
+            addFormContainer.style.display = 'block';
+            showAddFormBtn.textContent = '➖ Close Appointment Form';
+            showAddFormBtn.classList.add('close-form');
+        }
+
+        // Reset form first to clear any previous state
+        resetForm();
+
+        // Populate form fields
+        editingAppointmentId = id;
+        nameInput.value = row.dataset.name;
+        phoneInput.value = row.dataset.phone.replace('91', ''); // Remove country code for display
+        dateInput.value = row.dataset.date;
+        timeInput.value = row.dataset.time;
+        
+        // Populate services
+        const services = JSON.parse(row.dataset.services || '[]');
+        services.forEach(service => addService(service.description, service.cost));
+
+        // Change button text to "Update Appointment"
+        addBtn.textContent = 'Update Appointment';
+        addBtn.classList.add('update-mode'); // Add a class for potential styling
+
+        // As per request: "load value in the text box in the read only mode"
+        // Making name and phone read-only, date and time editable for practical editing
+        nameInput.readOnly = true;
+        phoneInput.readOnly = true;
+        dateInput.readOnly = false; // Allow editing date
+        timeInput.readOnly = false; // Allow editing time
+
+        errorDiv.style.display = 'none';
+    };
+
     addBtn.addEventListener('click', async () => {
         const name = nameInput.value.trim();
         const phone = phoneInput.value.trim();
         const date = dateInput.value;
         const time = timeInput.value;
 
+        // Collect services
+        const services = [];
+        document.querySelectorAll('.service-item').forEach(item => {
+            const serviceDesc = item.querySelector('.service-desc').value.trim();
+            const cost = Number(item.querySelector('.service-cost').value);
+            if (serviceDesc) { // Only add if description is not empty
+                services.push({ description: serviceDesc, cost: cost });
+            }
+        });
+
+        // Validation
         if (!name || !phone || !date || !time) {
-            errorDiv.textContent = "Please fill in all required fields to add an appointment.";
+            errorDiv.textContent = "Please fill in all required fields (Name, Mobile, Date, Time).";
             errorDiv.style.display = 'block';
             return;
         }
         
-        const validPhone = validatePhone(phone);
-        if (!validPhone) {
-            errorDiv.textContent = "Please enter a valid 10-digit Indian mobile number (starting with 6, 7, 8, or 9).";
-            errorDiv.style.display = 'block';
-            return;
+        // Only validate phone if not in edit mode (as it might be read-only)
+        let validPhone = phone;
+        if (!editingAppointmentId) { // If adding new, validate phone
+            validPhone = validatePhone(phone);
+            if (!validPhone) {
+                errorDiv.textContent = "Please enter a valid 10-digit Indian mobile number (starting with 6, 7, 8, or 9).";
+                errorDiv.style.display = 'block';
+                return;
+            }
+        } else { // If editing, use the phone from the dataset (which includes country code)
+            validPhone = document.querySelector(`[data-id='${editingAppointmentId}']`).dataset.phone;
         }
 
         errorDiv.style.display = 'none';
 
-        const newAppointment = { 
-            name,
-            phone: validPhone, // Store the full number with country code
-            date, 
-            time,
-            confirmationSent: false,
-            reviewSent: false
-        };
+        if (editingAppointmentId) {
+            // Update existing appointment
+            const updatePayload = {
+                name,
+                phone: validPhone,
+                date,
+                time,
+                services,
+                billupdateflag: true // Flag to indicate an update, especially for billing
+            };
+            console.log('Update Payload:', updatePayload);
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/appointments/${editingAppointmentId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updatePayload)
+                });
+                if (!response.ok) throw new Error(`Server failed to update appointment: ${response.status} - ${response.statusText}`);
+                resetForm();
+                addFormContainer.style.display = 'none';
+                showAddFormBtn.textContent = '➕ Add New Appointment';
+                showAddFormBtn.classList.remove('close-form');
+                loadAndRenderAppointments();
+            } catch (error) {
+                console.error('Error updating appointment:', error);
+                errorDiv.textContent = `Failed to update appointment on the server: ${error.message}`;
+                errorDiv.style.display = 'block';
+            }
+        } else {
+            // Add new appointment
+            const newAppointmentPayload = { 
+                name,
+                phone: validPhone, // Store the full number with country code
+                date, 
+                time,
+                services, // Include services
+                confirmationSent: false,
+                reviewSent: false,
+                billupdateflag: false // Set to false on initial creation
+            };
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/appointments`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newAppointmentPayload)
+                });
+                if (!response.ok) throw new Error(`Server failed to add appointment: ${response.status} - ${response.statusText}`);
 
-        try {
-            const response = await fetch(`${API_BASE_URL}/api/appointments`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(newAppointment)
-            });
-            if (!response.ok) throw new Error('Server failed to add appointment.');
-
-            // Clear inputs and re-render
-            nameInput.value = '';
-            phoneInput.value = '';
-            timeInput.value = '';
-            addFormContainer.style.display = 'none';
-            showAddFormBtn.textContent = '➕ Add New Appointment';
-            showAddFormBtn.classList.remove('close-form');
-            loadAndRenderAppointments();
-        } catch (error) {
-            console.error('Error adding appointment:', error);
-            errorDiv.textContent = 'Failed to add appointment to the server.';
-            errorDiv.style.display = 'block';
+                resetForm();
+                addFormContainer.style.display = 'none';
+                showAddFormBtn.textContent = '➕ Add New Appointment';
+                showAddFormBtn.classList.remove('close-form');
+                loadAndRenderAppointments();
+            } catch (error) {
+                console.error('Error adding appointment:', error);
+                errorDiv.textContent = `Failed to add appointment to the server: ${error.message}`;
+                errorDiv.style.display = 'block';
+            }
         }
     });
 
     clearAllBtn.addEventListener('click', async () => {
         if (confirm("Are you sure you want to clear the entire list of appointments? This action cannot be undone.")) {
             try {
-                const response = await fetch(`${API_BASE_URL}/api/appointments`, { method: 'DELETE' });
-                if (!response.ok) throw new Error('Server failed to clear appointments.');
+                // Assuming a specific endpoint for clearing all appointments
+                const response = await fetch(`${API_BASE_URL}/api/appointments/clear`, { method: 'DELETE' });
+                if (!response.ok) throw new Error(`Server failed to clear appointments: ${response.status} - ${response.statusText}`);
                 loadAndRenderAppointments();
             } catch (error) {
                 console.error('Error clearing appointments:', error);
@@ -572,7 +946,7 @@
     window.deleteAppointment = async (id) => {
         if (confirm("Are you sure you want to delete this appointment?")) {
             try {
-                const response = await fetch(`${API_BASE_URL}/api/appointments/${id}`, { method: 'DELETE' });
+                const response = await fetch(`${API_BASE_URL}/api/appointments/${id}`, { method: 'DELETE' }); // Standard DELETE for a specific resource
                 if (!response.ok) throw new Error('Server failed to delete appointment.');
                 loadAndRenderAppointments();
             } catch (error) {
@@ -629,7 +1003,7 @@ We look forward to seeing you.`;
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ confirmationSent: true })
             });
-            if (!response.ok) throw new Error('Server failed to update status.');
+            if (!response.ok) throw new Error(`Server failed to update status: ${response.status} - ${response.statusText}`);
             loadAndRenderAppointments();
         } catch (error) {
             console.error('Error updating status:', error);
@@ -664,7 +1038,7 @@ Your rating would help us serve you even better!`;
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ reviewSent: true })
             });
-            if (!response.ok) throw new Error('Server failed to update status.');
+            if (!response.ok) throw new Error(`Server failed to update status: ${response.status} - ${response.statusText}`);
             loadAndRenderAppointments();
         } catch (error) {
             console.error('Error updating status:', error);
