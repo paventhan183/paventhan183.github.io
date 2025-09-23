@@ -470,69 +470,68 @@
         <div id="appointmentsList"></div>
     </div>
     <button id="clearAllBtn">Clear All Appointments</button>
-
-    <!-- Hidden bill template for PDF generation -->
-    <div id="bill" style="display:none; padding: 40px; width: 794px; font-family: 'Roboto', sans-serif; color: #333; box-sizing: border-box; background: #fff; flex-direction: column; min-height: 1123px; margin: 20px auto 0 auto;">
-      <!-- Header -->
-      <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #0D9488; padding-bottom: 15px;">
-        <div>
-          <h1 style="color: #0D9488; margin: 0; font-size: 24px; font-weight: 700;">Dr Mani's Ortho Speciality & General Clinic</h1>
-          <p style="margin: 5px 0 0 0; font-size: 12px;">68, Radha Nagar Main Road, opposite J2 Mahal, Chromepet, Chennai</p>
-          <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Phone:</b> +91-9444261111</p>
-        </div>
-        <div style="text-align: right;">
-          <h2 style="margin: 0; font-size: 28px; color: #333; font-weight: 600;">INVOICE</h2>
-          <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Doctor:</b> Dr Mani Arumugam, M.B.B.S., M.S., ORTHO</p>
-          <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Reg No:</b> MBBS123456</p>
-        </div>
-      </div>
-    
-      <!-- Bill Details -->
-      <div style="display: flex; justify-content: space-between; margin-top: 25px;">
-        <div>
-          <h3 style="margin: 0 0 5px 0; font-size: 14px; color: #555;">Bill To:</h3>
-          <p style="margin: 0; font-size: 14px; font-weight: bold;" id="billPatient"></p>
-        </div>
-        <div style="text-align: right;">
-          <p style="margin: 0; font-size: 14px;"><b style="color: #555;">Bill Number:</b> <span id="billNumber"></span></p>
-          <p style="margin: 5px 0 0 0; font-size: 14px;"><b style="color: #555;">Bill Date:</b> <span id="billDateText"></span></p>
-        </div>
-      </div>
-    
-      <!-- Services Table -->
-      <table style="width: 100%; border-collapse: collapse; margin-top: 30px; font-size: 14px;">
-        <thead style="background-color: #F0FDFA;">
-          <tr>
-            <th style="border-bottom: 2px solid #ddd; padding: 12px; text-align: left; color: #0F766E; width: 50px;">#</th>
-            <th style="border-bottom: 2px solid #ddd; padding: 12px; text-align: left; color: #0F766E;">Service Description</th>
-            <th style="border-bottom: 2px solid #ddd; padding: 12px; text-align: right; color: #0F766E; width: 120px;">Cost (₹)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Rows will be added dynamically -->
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="2" style="border-top: 2px solid #ddd; padding: 12px; text-align: right; font-weight: bold;">Total</td>
-            <td id="billTotal" style="border-top: 2px solid #ddd; padding: 12px; text-align: right; font-weight: bold; color: #0D9488; font-size: 16px;"></td>
-          </tr>
-        </tfoot>
-      </table>
-    
-      <!-- Footer -->
-      <div style="margin-top: auto; border-top: 1px solid #eee; padding-top: 15px; display: flex; flex-direction: column; justify-content: flex-end; height: 100%;">
-          <p style="text-align: center; font-size: 12px; color: #777; margin-bottom: 20px;">Thank you for choosing our clinic!</p>
-          <div style="display: flex; justify-content: space-between; align-items: flex-end;">
-              <div>
-                  <p style="font-size: 10px; color: #aaa; margin: 0;">This is a computer-generated bill.</p>
-                  <p style="font-size: 11px; color: #b91c1c; font-weight: bold; margin: 5px 0 0 0;">Note: Only signed and sealed bill is valid.</p>
-              </div>
-              <p style="font-size: 12px; color: #333; border-top: 1px solid #999; padding-top: 5px; margin: 0;">Authorized Signature</p>
-          </div>
-      </div>
-    </div>
   </div>
 
+  <!-- Hidden bill template for PDF generation -->
+  <div id="bill" style="display:none; padding: 40px; width: 794px; font-family: 'Roboto', sans-serif; color: #333; box-sizing: border-box; background: #fff; flex-direction: column; min-height: 1123px; margin: 20px auto 0 auto;">
+    <!-- Header -->
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #0D9488; padding-bottom: 15px;">
+      <div>
+        <h1 style="color: #0D9488; margin: 0; font-size: 24px; font-weight: 700;">Dr Mani's Ortho Speciality & General Clinic</h1>
+        <p style="margin: 5px 0 0 0; font-size: 12px;">68, Radha Nagar Main Road, opposite J2 Mahal, Chromepet, Chennai</p>
+        <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Phone:</b> +91-9444261111</p>
+      </div>
+      <div style="text-align: right;">
+        <h2 style="margin: 0; font-size: 28px; color: #333; font-weight: 600;">INVOICE</h2>
+        <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Doctor:</b> Dr Mani Arumugam, M.B.B.S., M.S., ORTHO</p>
+        <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Reg No:</b> MBBS123456</p>
+      </div>
+    </div>
+  
+    <!-- Bill Details -->
+    <div style="display: flex; justify-content: space-between; margin-top: 25px;">
+      <div>
+        <h3 style="margin: 0 0 5px 0; font-size: 14px; color: #555;">Bill To:</h3>
+        <p style="margin: 0; font-size: 14px; font-weight: bold;" id="billPatient"></p>
+      </div>
+      <div style="text-align: right;">
+        <p style="margin: 0; font-size: 14px;"><b style="color: #555;">Bill Number:</b> <span id="billNumber"></span></p>
+        <p style="margin: 5px 0 0 0; font-size: 14px;"><b style="color: #555;">Bill Date:</b> <span id="billDateText"></span></p>
+      </div>
+    </div>
+  
+    <!-- Services Table -->
+    <table style="width: 100%; border-collapse: collapse; margin-top: 30px; font-size: 14px;">
+      <thead style="background-color: #F0FDFA;">
+        <tr>
+          <th style="border-bottom: 2px solid #ddd; padding: 12px; text-align: left; color: #0F766E; width: 50px;">#</th>
+          <th style="border-bottom: 2px solid #ddd; padding: 12px; text-align: left; color: #0F766E;">Service Description</th>
+          <th style="border-bottom: 2px solid #ddd; padding: 12px; text-align: right; color: #0F766E; width: 120px;">Cost (₹)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Rows will be added dynamically -->
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="2" style="border-top: 2px solid #ddd; padding: 12px; text-align: right; font-weight: bold;">Total</td>
+          <td id="billTotal" style="border-top: 2px solid #ddd; padding: 12px; text-align: right; font-weight: bold; color: #0D9488; font-size: 16px;"></td>
+        </tr>
+      </tfoot>
+    </table>
+  
+    <!-- Footer -->
+    <div style="margin-top: auto; border-top: 1px solid #eee; padding-top: 15px; display: flex; flex-direction: column; justify-content: flex-end; height: 100%;">
+        <p style="text-align: center; font-size: 12px; color: #777; margin-bottom: 20px;">Thank you for choosing our clinic!</p>
+        <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+            <div>
+                <p style="font-size: 10px; color: #aaa; margin: 0;">This is a computer-generated bill.</p>
+                <p style="font-size: 11px; color: #b91c1c; font-weight: bold; margin: 5px 0 0 0;">Note: Only signed and sealed bill is valid.</p>
+            </div>
+            <p style="font-size: 12px; color: #333; border-top: 1px solid #999; padding-top: 5px; margin: 0;">Authorized Signature</p>
+        </div>
+    </div>
+  </div>
   <script>
     // Element selectors
     const nameInput = document.getElementById('name');
@@ -567,12 +566,50 @@
 
     // Set today's date in the date input field on page load
     window.onload = async function() {
-      const today = new Date();
+      // Check for a URL parameter to auto-generate and download a bill.
+      // Example: appointment-confirm.html?bill_phone=918015241869
+      const urlParams = new URLSearchParams(window.location.search);
+      const billPhone = urlParams.get('bill_phone');
 
+      if (billPhone) {
+          showLoader();
+          const container = document.querySelector('.container');
+          // Replace page content with a status message
+          container.innerHTML = '<h2>Generating Bill...</h2><div id="error" class="error"></div>';
+          const autoBillErrorDiv = container.querySelector('#error');
+
+          try {
+              // Use the production API base URL for the shareable link to work for patients
+              const response = await fetch(`${API_BASE_URL}/api/bill-details/${billPhone}`);
+              if (!response.ok) {
+                  let errorMsg = `HTTP error! status: ${response.status}`;
+                  try {
+                      const errorData = await response.json();
+                      if (errorData.message) errorMsg = errorData.message;
+                  } catch (e) { /* Ignore if response is not JSON */ }
+                  throw new Error(errorMsg);
+              }
+              const billDetails = await response.json();
+              await populateAndSavePdf(billDetails);
+              container.innerHTML = '<h2>Bill downloaded successfully. You can close this window.</h2>';
+          } catch (error) {
+              console.error('Error auto-generating bill:', error);
+              container.querySelector('h2').textContent = 'Error Generating Bill';
+              autoBillErrorDiv.textContent = `Failed to auto-generate bill: ${error.message}`;
+              autoBillErrorDiv.style.display = 'block';
+          } finally {
+              hideLoader();
+          }
+          return; // Stop further page initialization
+      }
+
+      // --- Default page load behavior ---
+      const today = new Date();
       const yyyy = today.getFullYear();
       const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
       const dd = String(today.getDate()).padStart(2, '0');
       dateInput.value = `${yyyy}-${mm}-${dd}`;
+
       showLoader();
       try {
         await loadAndRenderAppointments();
@@ -792,13 +829,9 @@
         return null;
     }
 
-    window.generateBill = async (id) => {
-        const row = document.querySelector(`[data-id='${id}']`);
-        if (!row) return;
-
-        const patientName = row.dataset.name;
-        const billDate = row.dataset.date;
-        const services = JSON.parse(row.dataset.services || '[]');
+    // Helper function to populate bill template and generate PDF from data
+    async function populateAndSavePdf({ patientName, billDate, services }) {
+        const billDiv = document.getElementById('bill');
         const total = services.reduce((sum, service) => sum + Number(service.cost || 0), 0);
 
         // --- Populate the professional bill template ---
@@ -832,10 +865,8 @@
 
         document.getElementById('billTotal').textContent = '₹' + total.toFixed(2);
 
-        const billDiv = document.getElementById('bill');
         billDiv.style.display = 'flex'; // Temporarily show for rendering
 
-        showLoader();
         try {
             const canvas = await html2canvas(billDiv, {
                 scale: 2,
@@ -852,14 +883,40 @@
             const now = new Date();
             const timestamp = now.getFullYear().toString() + String(now.getMonth() + 1).padStart(2, '0') + String(now.getDate()).padStart(2, '0');
             pdf.save(`bill_${patientName.replace(/ /g, '_')}_${timestamp}.pdf`);
-
-            // The billupdateflag is no longer changed after generating the bill.
-        } catch (error) {
-            console.error('Error generating PDF:', error);
-            errorDiv.textContent = 'Failed to generate PDF.';
-            errorDiv.style.display = 'block';
         } finally {
             billDiv.style.display = 'none'; // Hide it again
+        }
+    }
+
+    window.generateBill = async (id) => {
+        showLoader();
+        try {
+            const row = document.querySelector(`[data-id='${id}']`);
+            if (!row) throw new Error("Appointment row not found.");
+
+            const phone = row.dataset.phone;
+            if (!phone) throw new Error("Phone number not found for this appointment.");
+
+            // Fetch bill details from the server
+            const response = await fetch(`${API_BASE_URL}/api/bill-details/${phone}`);
+            if (!response.ok) {
+                let errorMsg = `HTTP error! status: ${response.status}`;
+                try {
+                    const errorData = await response.json();
+                    if (errorData.message) errorMsg = errorData.message;
+                } catch (e) { /* Ignore if response is not JSON */ }
+                throw new Error(errorMsg);
+            }
+            const billDetails = await response.json();
+
+            // Generate and save the PDF using the new helper function
+            await populateAndSavePdf(billDetails);
+
+        } catch (error) {
+            console.error('Error generating bill:', error);
+            errorDiv.textContent = `Failed to generate bill: ${error.message}`;
+            errorDiv.style.display = 'block';
+        } finally {
             hideLoader();
         }
     };
@@ -1137,15 +1194,29 @@ We look forward to seeing you.`;
         // Get data from the row's dataset for reliability
         const name = row.dataset.name;
         const phone = row.dataset.phone;
+        const billUpdateFlag = row.dataset.billupdateflag === 'true'; // Check if services were added
         if (!phone) return;
+
+        // Conditionally create the bill download part of the message
+        let billDownloadMessage = '';
+        if (billUpdateFlag) {
+            const cleanUrl = window.location.origin + window.location.pathname;
+            const billDownloadUrl = `${cleanUrl}?bill_phone=${phone}`;
+            billDownloadMessage = `
+
+You can also download your bill here:
+${billDownloadUrl}`;
+        }
 
         const message =
 `Hello ${name},
 Thank you for visiting *Dr. Mani's Ortho Speciality & General Clinic*.
+
 Your review means a lot to us — it helps others find the right care and encourages our team.
 If you were happy with our service, please give us a *5-star rating* ⭐⭐⭐⭐⭐.
-You can share your feedback here: https://g.page/r/CfKLCQ4kwt5UEBM/review
-Your rating would help us serve you even better!`;
+You can share your feedback here: https://g.page/r/CfKLCQ4kwt5UEBM/review${billDownloadMessage}
+
+We look forward to seeing you again!`;
 
         const encodedMessage = encodeURIComponent(message);
         const waLink = `https://wa.me/${phone}?text=${encodedMessage}`;
