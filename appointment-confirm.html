@@ -18,8 +18,9 @@
       background: #f1f5f9; /* New: Slightly darker grey background */
       color: #334155;
       display: flex;
+      flex-direction: column;
       justify-content: center;
-      align-items: flex-start;
+      align-items: center;
       min-height: 100vh;
       box-sizing: border-box;
     }
@@ -219,6 +220,21 @@
     @media (max-width: 600px) {
         .form-grid {
             grid-template-columns: 1fr;
+        }
+        body {
+            padding: 10px;
+        }
+        .container, #bill-preview-container {
+            padding: 15px;
+        }
+        h2 {
+            font-size: 1.5rem;
+        }
+        .main-actions-toolbar {
+            flex-direction: column;
+        }
+        .main-actions-toolbar > button {
+            width: 100%;
         }
     }
 
@@ -423,6 +439,7 @@
       animation: spin 1s linear infinite;
     }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
   </style>
 </head>
 <body>
@@ -776,7 +793,7 @@
                 
                 let generateBillButtonHTML = '';
                 if (appt.billupdateflag) {
-                    generateBillButtonHTML = `<button class="action-btn generate-bill-btn" onclick="generateBill('${appt.id}')">Bill</button>`;
+                    generateBillButtonHTML = `<button class="action-btn generate-bill-btn" onclick="generateBill('${appt.id}')">Download Bill</button>`;
                 }
 
                 card.innerHTML = `
@@ -829,8 +846,8 @@
         return null;
     }
 
-    // Helper function to populate bill template and generate PDF from data
-    async function populateAndSavePdf({ patientName, billDate, services }) {
+    // Helper 1: Populates the bill template in the DOM
+    function populateBillTemplate({ patientName, billDate, services }) {
         const billDiv = document.getElementById('bill');
         const total = services.reduce((sum, service) => sum + Number(service.cost || 0), 0);
 
@@ -864,13 +881,15 @@
         });
 
         document.getElementById('billTotal').textContent = '₹' + total.toFixed(2);
+    }
 
-        billDiv.style.display = 'flex'; // Temporarily show for rendering
-
+    // Helper 2: Takes a screenshot of the #bill div and saves as PDF
+    async function saveBillPdf(patientName) {
+        const billDiv = document.getElementById('bill');
         try {
             const canvas = await html2canvas(billDiv, {
                 scale: 2,
-                width: billDiv.offsetWidth,
+                width: billDiv.scrollWidth, // Use scrollWidth to capture the full width regardless of viewport
                 height: billDiv.scrollHeight,
                 windowHeight: billDiv.scrollHeight
             });
@@ -885,13 +904,30 @@
             const now = new Date();
             const timestamp = now.getFullYear().toString() + String(now.getMonth() + 1).padStart(2, '0') + String(now.getDate()).padStart(2, '0');
             pdf.save(`bill_${patientName.replace(/ /g, '_')}_${timestamp}.pdf`);
+        } catch(error) {
+            console.error("Error saving PDF:", error);
+            errorDiv.textContent = 'Failed to generate PDF file.';
+            errorDiv.style.display = 'block';
+            throw error; // Re-throw to be caught by the caller
+        }
+    }
+
+    // Refactored function for auto-download on page load
+    async function populateAndSavePdf(billDetails) {
+        populateBillTemplate(billDetails);
+        const billDiv = document.getElementById('bill');
+        billDiv.style.display = 'flex'; // Temporarily show for rendering
+        try {
+            await saveBillPdf(billDetails.patientName);
         } finally {
             billDiv.style.display = 'none'; // Hide it again
         }
     }
 
+    // Generates and downloads the bill directly
     window.generateBill = async (id) => {
         showLoader();
+        const billDiv = document.getElementById('bill');
         try {
             const row = document.querySelector(`[data-id='${id}']`);
             if (!row) throw new Error("Appointment row not found.");
@@ -911,14 +947,22 @@
             }
             const billDetails = await response.json();
 
-            // Generate and save the PDF using the new helper function
-            await populateAndSavePdf(billDetails);
+            // Populate the hidden bill template
+            populateBillTemplate(billDetails);
+
+            // Temporarily show the bill for rendering, then save it
+            billDiv.style.display = 'flex';
+            await saveBillPdf(billDetails.patientName);
 
         } catch (error) {
             console.error('Error generating bill:', error);
-            errorDiv.textContent = `Failed to generate bill: ${error.message}`;
-            errorDiv.style.display = 'block';
+            // Error message is set by saveBillPdf or the fetch block
+            if (!errorDiv.textContent) {
+                errorDiv.textContent = `Failed to generate bill: ${error.message}`;
+                errorDiv.style.display = 'block';
+            }
         } finally {
+            if (billDiv) billDiv.style.display = 'none'; // Always hide the bill template
             hideLoader();
         }
     };

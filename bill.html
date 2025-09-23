@@ -17,6 +17,7 @@
       background: #F8FAFC;
       color: #334155;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
@@ -30,7 +31,7 @@
       border-radius: 10px;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
       width: 100%;
-      max-width: 1100px; /* Increased width for two columns */
+      max-width: 900px; /* Adjusted width for single column layout */
       box-sizing: border-box;
       color: #334155;
     }
@@ -132,17 +133,10 @@
     }
     
     .main-layout {
-      display: flex;
-      flex-wrap: wrap; /* Allow wrapping on smaller screens */
-      gap: 30px;
+      /* No longer a flex container */
     }
 
     .form-column {
-      flex: 1;
-      min-width: 300px; /* Ensure it doesn't get too squished */
-    }
-
-    .summary-column {
       flex: 1;
       min-width: 300px;
     }
@@ -187,6 +181,22 @@
         background: #FECACA;
         color: #B91C1C;
     }
+
+    #bill-preview-container {
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 2px solid #e2e8f0;
+    }
+
+    #bill {
+        box-shadow: 0 0 15px rgba(0,0,0,0.15);
+        border: 1px solid #ddd;
+        margin: 0 auto; /* Center the bill preview */
+    }
+
+    #downloadPdfBtn {
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
@@ -210,61 +220,42 @@
       </div>
       <button id="addServiceBtn" type="button">➕ Add Service</button>
 
-      <button id="generateBtn">Generate</button>
+      <button id="generateBtn">Generate Bill Preview</button>
     </div>
+  </div>
+</div>
 
-    <div class="summary-column">
-      <!-- Summary section that appears after generating -->
-      <div id="summary" style="display: none;">
-        <h3>Bill Summary</h3>
-        <p><b>Patient:</b> <span id="summaryPatient"></span></p>
-        <p><b>Date:</b> <span id="summaryDate"></span></p>
-        <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
-            <thead>
-                <tr style="background-color: #F0FDFA;">
-                    <th style="border: 1px solid #ccc; padding: 8px; text-align: left;">Service</th>
-                    <th style="border: 1px solid #ccc; padding: 8px; text-align: right;">Cost (₹)</th>
-                </tr>
-            </thead>
-            <tbody id="summaryTableBody"></tbody>
-            <tfoot>
-                <tr>
-                    <td style="border: 1px solid #ccc; padding: 8px; text-align: right; font-weight: bold;"><b>Total</b></td>
-                    <td id="summaryTotal" style="border: 1px solid #ccc; padding: 8px; text-align: right; font-weight: bold;"></td>
-                </tr>
-            </tfoot>
-        </table>
-        <button id="downloadPdfBtn">Download as PDF</button>
+<!-- Bill Preview Section -->
+<div id="bill-preview-container" style="display: none;">
+  <h3>Bill Preview</h3>
+  <!-- The actual bill template that will be shown and converted to PDF -->
+  <div id="bill" style="display:none; padding: 40px; width: 794px; font-family: 'Roboto', sans-serif; color: #333; box-sizing: border-box; background: #fff; flex-direction: column; min-height: 1123px;">
+    <!-- Header -->
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #0D9488; padding-bottom: 15px;">
+      <div>
+        <h1 style="color: #0D9488; margin: 0; font-size: 24px; font-weight: 700;">Dr Mani's Ortho Speciality & General Clinic</h1>
+        <p style="margin: 5px 0 0 0; font-size: 12px;">68, Radha Nagar Main Road, opposite J2 Mahal, Chromepet, Chennai</p>
+        <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Phone:</b> +91-9444261111</p>
       </div>
-
-      <!-- Hidden bill template with fixed clinic details -->
-      <div id="bill" style="display:none; padding: 40px; width: 794px; font-family: 'Roboto', sans-serif; color: #333; box-sizing: border-box; background: #fff; flex-direction: column; min-height: 1123px;">
-        <!-- Header -->
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #0D9488; padding-bottom: 15px;">
-          <div>
-            <h1 style="color: #0D9488; margin: 0; font-size: 24px; font-weight: 700;">Dr Mani's Ortho Speciality & General Clinic</h1>
-            <p style="margin: 5px 0 0 0; font-size: 12px;">68, Radha Nagar Main Road, opposite J2 Mahal, Chromepet, Chennai</p>
-            <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Phone:</b> +91-9444261111</p>
-          </div>
-          <div style="text-align: right;">
-            <h2 style="margin: 0; font-size: 28px; color: #333; font-weight: 600;">INVOICE</h2>
-            <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Doctor:</b> Dr Mani Arumugam, M.B.B.S., M.S., ORTHO</p>
-            <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Reg No:</b> MBBS123456</p>
-          </div>
-        </div>
-      
-        <!-- Bill Details -->
-        <div style="display: flex; justify-content: space-between; margin-top: 25px;">
-          <div>
-            <h3 style="margin: 0 0 5px 0; font-size: 14px; color: #555;">Bill To:</h3>
-            <p style="margin: 0; font-size: 14px; font-weight: bold;" id="billPatient"></p>
-          </div>
-          <div style="text-align: right;">
-            <p style="margin: 0; font-size: 14px;"><b style="color: #555;">Bill Number:</b> <span id="billNumber"></span></p>
-            <p style="margin: 5px 0 0 0; font-size: 14px;"><b style="color: #555;">Bill Date:</b> <span id="billDateText"></span></p>
-          </div>
-        </div>
-      
+      <div style="text-align: right;">
+        <h2 style="margin: 0; font-size: 28px; color: #333; font-weight: 600;">INVOICE</h2>
+        <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Doctor:</b> Dr Mani Arumugam, M.B.B.S., M.S., ORTHO</p>
+        <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Reg No:</b> MBBS123456</p>
+      </div>
+    </div>
+  
+    <!-- Bill Details -->
+    <div style="display: flex; justify-content: space-between; margin-top: 25px;">
+      <div>
+        <h3 style="margin: 0 0 5px 0; font-size: 14px; color: #555;">Bill To:</h3>
+        <p style="margin: 0; font-size: 14px; font-weight: bold;" id="billPatient"></p>
+      </div>
+      <div style="text-align: right;">
+        <p style="margin: 0; font-size: 14px;"><b style="color: #555;">Bill Number:</b> <span id="billNumber"></span></p>
+        <p style="margin: 5px 0 0 0; font-size: 14px;"><b style="color: #555;">Bill Date:</b> <span id="billDateText"></span></p>
+      </div>
+    </div>
+  
         <!-- Services Table -->
         <table style="width: 100%; border-collapse: collapse; margin-top: 30px; font-size: 14px;">
           <thead style="background-color: #F0FDFA;">
@@ -298,10 +289,9 @@
               <p style="font-size: 12px; color: #333; border-top: 1px solid #999; padding-top: 5px; margin: 0;">Authorized Signature</p>
           </div>
         </div>
-      </div>
-    </div>
   </div>
-</div>
+  <button id="downloadPdfBtn">Download as PDF</button>
+  </div>
 
 <script>
   // Set today's date in the date input field on page load
@@ -317,8 +307,8 @@
   const servicesContainer = document.getElementById('services-container');
   const generateBtn = document.getElementById('generateBtn');
   const downloadPdfBtn = document.getElementById('downloadPdfBtn');
-  const summaryDiv = document.getElementById('summary');
   const errorDiv = document.getElementById('error');
+  const billPreviewContainer = document.getElementById('bill-preview-container');
 
   let serviceCounter = 0;
 
@@ -363,11 +353,10 @@
   generateBtn.addEventListener('click', () => {
     const patientName = document.getElementById('patientName').value.trim();
     const billDate = document.getElementById('billDate').value;
-
-    summaryDiv.style.display = 'none'; // Hide summary on new generation attempt
-
     const services = [];
     let total = 0;
+
+    billPreviewContainer.style.display = 'none'; // Hide preview on new generation attempt
 
     const serviceItems = document.querySelectorAll('.service-item');
     serviceItems.forEach(item => {
@@ -396,37 +385,13 @@
     // Store data for PDF generation
     billData = { patientName, billDate, services, total };
 
-    // --- Populate summary view ---
-    document.getElementById('summaryPatient').textContent = patientName;
-    document.getElementById('summaryDate').textContent = new Date(billDate + 'T00:00:00').toLocaleDateString('en-GB');
-    
-    const summaryTableBody = document.getElementById('summaryTableBody');
-    summaryTableBody.innerHTML = ''; // Clear previous entries
-
-    services.forEach(service => {
-      const row = summaryTableBody.insertRow();
-      const cell1 = row.insertCell(0);
-      const cell2 = row.insertCell(1);
-      cell1.textContent = service.description;
-      cell2.textContent = service.cost.toFixed(2);
-      cell1.style.border = '1px solid #ccc';
-      cell1.style.padding = '8px';
-      cell2.style.border = '1px solid #ccc';
-      cell2.style.padding = '8px';
-      cell2.style.textAlign = 'right';
-    });
-    
-    document.getElementById('summaryTotal').textContent = total.toFixed(2);
-
-    // Show the summary
-    summaryDiv.style.display = 'block';
+    // Populate and show the bill preview
+    populateBill(billData);
+    billPreviewContainer.style.display = 'block';
+    document.getElementById('bill').style.display = 'flex';
   });
 
- downloadPdfBtn.addEventListener('click', () => {
-    // Use the stored billData
-    const { patientName, billDate, services, total } = billData;
-
-    // --- Populate the professional bill template ---
+  function populateBill({ patientName, billDate, services, total }) {
     const billNumber = 'INV-' + Date.now().toString().slice(-6);
     document.getElementById('billNumber').textContent = billNumber;
     document.getElementById('billPatient').textContent = patientName;
@@ -456,14 +421,20 @@
     });
 
     document.getElementById('billTotal').textContent = '₹' + total.toFixed(2);
+  }
+
+ downloadPdfBtn.addEventListener('click', () => {
+    const { patientName } = billData; // Get patient name for the file
 
     const billDiv = document.getElementById('bill');
-    billDiv.style.display = 'flex'; // Temporarily show for rendering
+    // The bill is already visible, so we just capture it.
 
     html2canvas(billDiv, {
       scale: 2,
-      // Explicitly set the width to capture the full A4-sized div, ignoring the mobile viewport
-      width: billDiv.offsetWidth
+      // Capture the full height of the bill content, not just the visible part
+      width: billDiv.scrollWidth, // Use scrollWidth to capture full width on all devices
+      height: billDiv.scrollHeight,
+      windowHeight: billDiv.scrollHeight
     }).then(canvas => {
       const imgData = canvas.toDataURL('image/png');
       const { jsPDF } = window.jspdf;
@@ -482,8 +453,6 @@
         String(now.getDate()).padStart(2, '0');
 
       pdf.save(`bill_${patientName.replace(/ /g, '_')}_${timestamp}.pdf`);
-
-      billDiv.style.display = 'none'; // Hide it again
     });
   });
 </script>
