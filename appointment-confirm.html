@@ -400,9 +400,35 @@
         border-radius: 8px;
         margin-top: 30px;
     }
+
+    /* Loader styles */
+    #loader-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.8);
+      display: none; /* Hidden by default */
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    .loader {
+      border: 8px solid #f3f3f3; /* Light grey */
+      border-top: 8px solid #0D9488; /* Teal */
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
+  <div id="loader-overlay">
+    <div class="loader"></div>
+  </div>
   <div class="container">
     <a href="admin.html" class="back-link">← Back to Admin Panel</a>
     <h2>Appointment Manager</h2>
@@ -522,7 +548,16 @@
     const appointmentsList = document.getElementById('appointmentsList');
     const errorDiv = document.getElementById("error");
     const API_BASE_URL = 'https://dr-appointment-t10x.onrender.com';
+    const loaderOverlay = document.getElementById('loader-overlay');
     //const API_BASE_URL = 'http://localhost:3000';
+
+    function showLoader() {
+        if (loaderOverlay) loaderOverlay.style.display = 'flex';
+    }
+
+    function hideLoader() {
+        if (loaderOverlay) loaderOverlay.style.display = 'none';
+    }
 
     // State variables
     let editingAppointmentId = null;
@@ -531,14 +566,21 @@
     let sortOrder = 'asc'; // asc: oldest first, desc: newest first
 
     // Set today's date in the date input field on page load
-    window.onload = function() {
+    window.onload = async function() {
       const today = new Date();
 
       const yyyy = today.getFullYear();
       const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
       const dd = String(today.getDate()).padStart(2, '0');
       dateInput.value = `${yyyy}-${mm}-${dd}`;
-      loadAndRenderAppointments();
+      showLoader();
+      try {
+        await loadAndRenderAppointments();
+      } catch (e) {
+        // Error is already displayed by the function
+      } finally {
+        hideLoader();
+      }
       resetForm(); // Initialize form state
     };
 
@@ -579,6 +621,7 @@
     }
 
     async function loadAndRenderAppointments() {
+        // This function now expects a loader to be handled by its caller.
         try {
             const response = await fetch(`${API_BASE_URL}/api/appointments`, { cache: 'no-cache' });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
@@ -588,9 +631,10 @@
             console.error('Failed to load appointments:', error);
             errorDiv.textContent = 'Could not load appointments from the server. Make sure the server is running.';
             errorDiv.style.display = 'block';
+            throw error; // Re-throw to be handled by the caller's catch/finally block
         }
     }
-     
+
     // Function to add a service input field
     function addService(description = '', cost = 0) {
         serviceCounter++;
@@ -791,6 +835,7 @@
         const billDiv = document.getElementById('bill');
         billDiv.style.display = 'flex'; // Temporarily show for rendering
 
+        showLoader();
         try {
             const canvas = await html2canvas(billDiv, {
                 scale: 2,
@@ -808,14 +853,14 @@
             const timestamp = now.getFullYear().toString() + String(now.getMonth() + 1).padStart(2, '0') + String(now.getDate()).padStart(2, '0');
             pdf.save(`bill_${patientName.replace(/ /g, '_')}_${timestamp}.pdf`);
 
-            billDiv.style.display = 'none'; // Hide it again
-
             // The billupdateflag is no longer changed after generating the bill.
         } catch (error) {
             console.error('Error generating PDF:', error);
-            billDiv.style.display = 'none'; // Ensure it's hidden on error
             errorDiv.textContent = 'Failed to generate PDF.';
             errorDiv.style.display = 'block';
+        } finally {
+            billDiv.style.display = 'none'; // Hide it again
+            hideLoader();
         }
     };
 
@@ -927,6 +972,7 @@
 
         errorDiv.style.display = 'none';
 
+        showLoader();
         if (editingAppointmentId) {
             // Update existing appointment
             const updatePayload = {
@@ -938,6 +984,7 @@
                 billupdateflag: true // Flag to indicate an update, especially for billing
             };
             console.log('Update Payload:', updatePayload);
+
             try {
                 const response = await fetch(`${API_BASE_URL}/api/appointments/${editingAppointmentId}`, {
                     method: 'PUT',
@@ -949,11 +996,13 @@
                 addFormContainer.style.display = 'none';
                 showAddFormBtn.textContent = '➕ Add New Appointment';
                 showAddFormBtn.classList.remove('close-form');
-                loadAndRenderAppointments();
+                await loadAndRenderAppointments();
             } catch (error) {
                 console.error('Error updating appointment:', error);
                 errorDiv.textContent = `Failed to update appointment on the server: ${error.message}`;
                 errorDiv.style.display = 'block';
+            } finally {
+                hideLoader();
             }
         } else {
             // Add new appointment
@@ -979,39 +1028,47 @@
                 addFormContainer.style.display = 'none';
                 showAddFormBtn.textContent = '➕ Add New Appointment';
                 showAddFormBtn.classList.remove('close-form');
-                loadAndRenderAppointments();
+                await loadAndRenderAppointments();
             } catch (error) {
                 console.error('Error adding appointment:', error);
                 errorDiv.textContent = `Failed to add appointment to the server: ${error.message}`;
                 errorDiv.style.display = 'block';
+            } finally {
+                hideLoader();
             }
         }
     });
 
     clearAllBtn.addEventListener('click', async () => {
         if (confirm("Are you sure you want to clear the entire list of appointments? This action cannot be undone.")) {
+            showLoader();
             try {
                 const response = await fetch(`${API_BASE_URL}/api/appointments`, { method: 'DELETE' });
                 if (!response.ok) throw new Error(`Server failed to clear appointments: ${response.status} - ${response.statusText}`);
-                loadAndRenderAppointments();
+                await loadAndRenderAppointments();
             } catch (error) {
                 console.error('Error clearing appointments:', error);
                 errorDiv.textContent = 'Failed to clear all appointments on the server.';
                 errorDiv.style.display = 'block';
+            } finally {
+                hideLoader();
             }
         }
     });
 
     window.deleteAppointment = async (id) => {
         if (confirm("Are you sure you want to delete this appointment?")) {
+            showLoader();
             try {
                 const response = await fetch(`${API_BASE_URL}/api/appointments/${id}`, { method: 'DELETE' }); // Standard DELETE for a specific resource
                 if (!response.ok) throw new Error('Server failed to delete appointment.');
-                loadAndRenderAppointments();
+                await loadAndRenderAppointments();
             } catch (error) {
                 console.error('Error deleting appointment:', error);
                 errorDiv.textContent = 'Failed to delete appointment on the server.';
                 errorDiv.style.display = 'block';
+            } finally {
+                hideLoader();
             }
         }
     };
@@ -1055,6 +1112,7 @@ We look forward to seeing you.`;
         const url = `https://wa.me/${phone}?text=${encodedMessage}`;
         window.open(url, "_blank");
 
+        showLoader();
         // Update status on the server
         try {
             const response = await fetch(`${API_BASE_URL}/api/appointments/${id}`, {
@@ -1063,9 +1121,12 @@ We look forward to seeing you.`;
                 body: JSON.stringify({ confirmationSent: true })
             });
             if (!response.ok) throw new Error(`Server failed to update status: ${response.status} - ${response.statusText}`);
-            loadAndRenderAppointments();
+            await loadAndRenderAppointments();
         } catch (error) {
             console.error('Error updating status:', error);
+            // Optionally show an error to the user
+        } finally {
+            hideLoader();
         }
     };
 
@@ -1090,6 +1151,7 @@ Your rating would help us serve you even better!`;
         const waLink = `https://wa.me/${phone}?text=${encodedMessage}`;
         window.open(waLink, '_blank');
 
+        showLoader();
         // Update status on the server
         try {
             const response = await fetch(`${API_BASE_URL}/api/appointments/${id}`, {
@@ -1098,9 +1160,12 @@ Your rating would help us serve you even better!`;
                 body: JSON.stringify({ reviewSent: true })
             });
             if (!response.ok) throw new Error(`Server failed to update status: ${response.status} - ${response.statusText}`);
-            loadAndRenderAppointments();
+            await loadAndRenderAppointments();
         } catch (error) {
             console.error('Error updating status:', error);
+            // Optionally show an error to the user
+        } finally {
+            hideLoader();
         }
     };
   </script>
