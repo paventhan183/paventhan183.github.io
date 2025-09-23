@@ -870,7 +870,9 @@
         try {
             const canvas = await html2canvas(billDiv, {
                 scale: 2,
-                width: billDiv.offsetWidth
+                width: billDiv.offsetWidth,
+                height: billDiv.scrollHeight,
+                windowHeight: billDiv.scrollHeight
             });
             
             const imgData = canvas.toDataURL('image/png');
