@@ -1079,8 +1079,8 @@
         // Making name and phone read-only, date and time editable for practical editing
         nameInput.readOnly = true;
         phoneInput.readOnly = true;
-        dateInput.readOnly = false; // Allow editing date
-        timeInput.readOnly = false; // Allow editing time
+        dateInput.readOnly = true; // Make date read-only
+        timeInput.readOnly = true; // Make time read-only
 
         errorDiv.style.display = 'none';
     };
