@@ -160,7 +160,13 @@
     #addServiceBtn {
       background-color: #14B8A6; /* A secondary teal color */
       margin-top: 10px;
-      margin-bottom: 15px; /* Space below add service button */
+      margin-bottom: 20px; /* Space below add service button */
+      /* Make it smaller to differentiate from the main action button */
+      width: auto;
+      padding: 8px 16px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      align-self: flex-start; /* Align to the left */
     }
     #addServiceBtn:hover {
       background-color: #0D9488;
@@ -243,6 +249,7 @@
         gap: 10px;
         margin-top: 20px;
         flex-wrap: wrap;
+        justify-content: space-between; /* This will push items to opposite ends */
     }
     .main-actions-toolbar > button {
         width: auto;
@@ -250,11 +257,24 @@
         padding: 10px 15px;
         font-size: 0.9rem;
     }
-    #sortBtn {
-        background-color: #64748B; /* Slate */
+
+    /* New styles for filter */
+    .filter-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        /* margin-left: auto; - No longer needed with justify-content */
     }
-    #sortBtn:hover {
-        background-color: #475569;
+    .filter-container label {
+        margin: 0; /* Reset margin from general label style */
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+    .filter-container input[type="date"] {
+        padding: 8px 10px; /* Smaller padding for toolbar */
+        margin: 0; /* Reset margin */
+        width: auto;
+        font-size: 0.9rem;
     }
 
     /* --- New Button Styles --- */
@@ -265,10 +285,13 @@
         background-color: #0F766E;
     }
     #showAddFormBtn.close-form {
-        background-color: #64748B; /* Slate for "close" */
+        background-color: transparent;
+        color: #DC2626; /* Red text */
+        border: 2px solid #DC2626;
     }
     #showAddFormBtn.close-form:hover {
-        background-color: #475569;
+        background-color: #FEE2E2; /* Light red background on hover */
+        color: #B91C1C;
     }
 
     #clearAllBtn {
@@ -475,16 +498,22 @@
             <!-- Service items will be added here dynamically -->
         </div>
         <button id="addServiceBtn" type="button">➕ Add Service</button>
-        <button id="addBtn">Add to List</button> <!-- This will toggle to Update List -->
+        <button id="addBtn">Save Appointment</button> <!-- This will toggle to Update List -->
     </div>
 
     <div class="main-actions-toolbar">
         <button id="showAddFormBtn">➕ Add New Appointment</button>
-        <button id="sortBtn">Sort by Newest First</button>
+        <!-- The addBtn is moved here and its visibility will be managed by JS -->
+        <button id="addBtn" style="display: none;">Add Appointment</button>
+
+        <div class="filter-container">
+            <label for="filterDate">Filter by Date:</label>
+            <input type="date" id="filterDate">
+        </div>
     </div>
     <div id="appointment-list-container" class="appointment-list">
         <!-- Cards will be added here by JavaScript -->
-        <div id="appointmentsList"></div>
+        <div id="appointmentsList"></div> <!-- This was misplaced and is now correctly here -->
     </div>
     <button id="clearAllBtn">Clear All Appointments</button>
   </div>
@@ -557,11 +586,11 @@
     const timeInput = document.getElementById('time');
     const addBtn = document.getElementById('addBtn');
     const showAddFormBtn = document.getElementById('showAddFormBtn');
-    const sortBtn = document.getElementById('sortBtn');
     const addServiceBtn = document.getElementById('addServiceBtn');
     const addFormContainer = document.getElementById('add-form-container');
     const clearAllBtn = document.getElementById('clearAllBtn');
     const appointmentsList = document.getElementById('appointmentsList');
+    const filterDateInput = document.getElementById('filterDate');
     const errorDiv = document.getElementById("error");
     const API_BASE_URL = 'https://dr-appointment-t10x.onrender.com';
     const loaderOverlay = document.getElementById('loader-overlay');
@@ -579,7 +608,6 @@
     let editingAppointmentId = null;
     let serviceCounter = 0;
     let allAppointments = [];
-    let sortOrder = 'asc'; // asc: oldest first, desc: newest first
 
     // Set today's date in the date input field on page load
     window.onload = async function() {
@@ -633,11 +661,12 @@
       const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
       const dd = String(today.getDate()).padStart(2, '0');
       dateInput.value = `${yyyy}-${mm}-${dd}`;
+      filterDateInput.value = `${yyyy}-${mm}-${dd}`; // Set filter to today by default
 
       showLoader();
       try {
         await loadAndRenderAppointments();
-      } catch (e) {
+      } catch (e) { 
         // Error is already displayed by the function
       } finally {
         hideLoader();
@@ -652,6 +681,7 @@
             addFormContainer.style.display = 'none';
             showAddFormBtn.textContent = '➕ Add New Appointment';
             showAddFormBtn.classList.remove('close-form');
+            addBtn.style.display = 'none'; // Hide addBtn when form is closed
             resetForm(); // Reset form when closing
         } else {
             // Form is hidden, so we are opening it
@@ -659,26 +689,28 @@
             addFormContainer.style.display = 'block';
             showAddFormBtn.textContent = '➖ Close Appointment Form';
             showAddFormBtn.classList.add('close-form');
+            addBtn.style.display = 'block'; // Show addBtn when form is opened
         }
     });
 
-    sortBtn.addEventListener('click', () => {
-        sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
-        sortBtn.textContent = sortOrder === 'asc' ? 'Sort by Newest First' : 'Sort by Oldest First';
-        sortAndRenderAppointments();
-    });
-    
-    function sortAndRenderAppointments() {
-        allAppointments.sort((a, b) => {
+    filterDateInput.addEventListener('change', filterAndRenderAppointments);
+
+    function filterAndRenderAppointments() {
+        const filterDate = filterDateInput.value;
+        let appointmentsToRender = allAppointments;
+
+        if (filterDate) {
+            appointmentsToRender = allAppointments.filter(appt => appt.date === filterDate);
+        }
+
+        // Sort the (potentially filtered) list
+        appointmentsToRender.sort((a, b) => {
             const dateA = new Date(`${a.date}T${a.time}`);
             const dateB = new Date(`${b.date}T${b.time}`);
-            if (sortOrder === 'asc') {
-                return dateA - dateB;
-            } else {
-                return dateB - dateA;
-            }
+            return dateB - dateA; // Always sort newest first
         });
-        renderTable(allAppointments);
+
+        renderTable(appointmentsToRender);
     }
 
     async function loadAndRenderAppointments() {
@@ -687,7 +719,7 @@
             const response = await fetch(`${API_BASE_URL}/api/appointments`, { cache: 'no-cache' });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
             allAppointments = await response.json();
-            sortAndRenderAppointments();
+            filterAndRenderAppointments();
         } catch (error) {
             console.error('Failed to load appointments:', error);
             errorDiv.textContent = 'Could not load appointments from the server. Make sure the server is running.';
@@ -756,9 +788,10 @@
         dateInput.value = `${yyyy}-${mm}-${dd}`;
         timeInput.value = '';
         document.getElementById('services-container').innerHTML = ''; // Clear all service fields
-        addBtn.textContent = 'Add to List';
-        addBtn.classList.remove('update-mode');
+                addBtn.textContent = 'Add Appointment';
+        addBtn.classList.remove('update-mode'); 
         errorDiv.style.display = 'none';
+        addBtn.style.display = 'block'; // Ensure addBtn is visible when form is reset (and open)
         // Make inputs editable (in case they were read-only from an edit)
         [nameInput, phoneInput, dateInput, timeInput].forEach(input => input.readOnly = false);
     }
@@ -1007,8 +1040,9 @@
         services.forEach(service => addService(service.description, service.cost));
 
         // Change button text to "Update Appointment"
-        addBtn.textContent = 'Update Appointment';
+        addBtn.textContent = 'Update Appointment'; 
         addBtn.classList.add('update-mode'); // Add a class for potential styling
+        addBtn.style.display = 'block'; // Ensure addBtn is visible when editing
 
         // As per request: "load value in the text box in the read only mode"
         // Making name and phone read-only, date and time editable for practical editing
@@ -1106,6 +1140,7 @@
                 addFormContainer.style.display = 'none';
                 showAddFormBtn.textContent = '➕ Add New Appointment';
                 showAddFormBtn.classList.remove('close-form');
+                addBtn.style.display = 'none'; // Hide addBtn after successful update
                 await loadAndRenderAppointments();
             } catch (error) {
                 console.error('Error updating appointment:', error);
@@ -1138,6 +1173,7 @@
                 addFormContainer.style.display = 'none';
                 showAddFormBtn.textContent = '➕ Add New Appointment';
                 showAddFormBtn.classList.remove('close-form');
+                addBtn.style.display = 'none'; // Hide addBtn after successful add
                 await loadAndRenderAppointments();
             } catch (error) {
                 console.error('Error adding appointment:', error);
