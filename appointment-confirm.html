@@ -294,18 +294,6 @@
         color: #B91C1C;
     }
 
-    #clearAllBtn {
-        background-color: transparent;
-        color: #DC2626; /* Red text */
-        border: 2px solid #DC2626;
-        margin-top: 20px;
-    }
-    #clearAllBtn:hover {
-        background-color: #FEE2E2; /* Light red background on hover */
-        color: #B91C1C;
-        transform: translateY(0); /* Override default button hover */
-    }
-
     /* General Action Button in Cards */
     .action-btn {
       font-size: 0.8rem;
@@ -514,8 +502,7 @@
     <div id="appointment-list-container" class="appointment-list">
         <!-- Cards will be added here by JavaScript -->
         <div id="appointmentsList"></div> <!-- This was misplaced and is now correctly here -->
-    </div>
-    <button id="clearAllBtn">Clear All Appointments</button>
+    </div> 
   </div>
 
   <!-- Hidden bill template for PDF generation -->
@@ -588,7 +575,6 @@
     const showAddFormBtn = document.getElementById('showAddFormBtn');
     const addServiceBtn = document.getElementById('addServiceBtn');
     const addFormContainer = document.getElementById('add-form-container');
-    const clearAllBtn = document.getElementById('clearAllBtn');
     const appointmentsList = document.getElementById('appointmentsList');
     const filterDateInput = document.getElementById('filterDate');
     const errorDiv = document.getElementById("error");
@@ -1223,23 +1209,6 @@
             } catch (error) {
                 console.error('Error adding appointment:', error);
                 errorDiv.textContent = `Failed to add appointment to the server: ${error.message}`;
-                errorDiv.style.display = 'block';
-            } finally {
-                hideLoader();
-            }
-        }
-    });
-
-    clearAllBtn.addEventListener('click', async () => {
-        if (confirm("Are you sure you want to clear the entire list of appointments? This action cannot be undone.")) {
-            showLoader();
-            try {
-                const response = await fetch(`${API_BASE_URL}/api/appointments`, { method: 'DELETE' });
-                if (!response.ok) throw new Error(`Server failed to clear appointments: ${response.status} - ${response.statusText}`);
-                await loadAndRenderAppointments();
-            } catch (error) {
-                console.error('Error clearing appointments:', error);
-                errorDiv.textContent = 'Failed to clear all appointments on the server.';
                 errorDiv.style.display = 'block';
             } finally {
                 hideLoader();
