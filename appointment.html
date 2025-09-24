@@ -156,8 +156,31 @@
       const yyyy = today.getFullYear();
       const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
       const dd = String(today.getDate()).padStart(2, '0');
-      document.getElementById('date').value = `${yyyy}-${mm}-${dd}`;
+      const todayDateString = `${yyyy}-${mm}-${dd}`;
+
+      const dateInput = document.getElementById('date');
+      const timeInput = document.getElementById('time');
+
+      dateInput.value = todayDateString;
+      dateInput.min = todayDateString; // Disable past dates
+
+      const hh = String(today.getHours()).padStart(2, '0');
+      const min = String(today.getMinutes()).padStart(2, '0');
+      const currentTimeString = `${hh}:${min}`;
+      timeInput.min = currentTimeString; // Disable past times for today
     };
+
+    document.getElementById('date').addEventListener('change', function() {
+        const selectedDate = this.value;
+        const today = new Date();
+        const todayDateString = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+        const currentTimeString = `${String(today.getHours()).padStart(2, '0')}:${String(today.getMinutes()).padStart(2, '0')}`;
+
+        document.getElementById('time').min = (selectedDate === todayDateString) ? currentTimeString : '00:00';
+        if (selectedDate === todayDateString && document.getElementById('time').value < currentTimeString) {
+            document.getElementById('time').value = currentTimeString; // Reset time if it's in the past
+        }
+    });
 
     function sendMessage() {
       const errorDiv = document.getElementById("error");

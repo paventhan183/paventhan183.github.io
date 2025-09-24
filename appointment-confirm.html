@@ -609,18 +609,44 @@
     let serviceCounter = 0;
     let allAppointments = [];
 
+    // Helper function to get today's date in YYYY-MM-DD format
+    function getTodayDateString() {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        return `${yyyy}-${mm}-${dd}`;
+    }
+
+    // Helper function to get current time in HH:MM format
+    function getCurrentTimeString() {
+        const now = new Date();
+        const hh = String(now.getHours()).padStart(2, '0');
+        const mm = String(now.getMinutes()).padStart(2, '0');
+        return `${hh}:${mm}`;
+    }
+
     // Set today's date in the date input field on page load
     window.onload = async function() {
       // Check for a URL parameter to auto-generate and download a bill.
       // Example: appointment-confirm.html?bill_phone=918015241869
       const urlParams = new URLSearchParams(window.location.search);
       const billPhone = urlParams.get('bill_phone');
+      const todayDateString = getTodayDateString();
+      const currentTimeString = getCurrentTimeString();
 
       // Security Check: If not downloading a bill, user must be logged in.
       if (!billPhone && localStorage.getItem('isAdminLoggedIn') !== 'true') {
           // Redirect to login page if not logged in and not accessing a bill via URL
           window.location.href = 'admin.html';
           return; // Stop further execution
+      }
+
+      // Set min time for the form's time input if the selected date is today
+      if (dateInput.value === todayDateString) {
+          timeInput.min = currentTimeString;
+      } else {
+          timeInput.min = '00:00'; // No time restriction for future dates
       }
 
       if (billPhone) {
@@ -656,12 +682,26 @@
       }
 
       // --- Default page load behavior ---
-      const today = new Date();
-      const yyyy = today.getFullYear();
-      const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
-      const dd = String(today.getDate()).padStart(2, '0');
-      dateInput.value = `${yyyy}-${mm}-${dd}`;
-      filterDateInput.value = `${yyyy}-${mm}-${dd}`; // Set filter to today by default
+      dateInput.value = todayDateString;
+      dateInput.min = todayDateString; // Disable past dates
+      filterDateInput.value = todayDateString; // Set filter to today by default
+
+      // Set min time for the form's time input if the selected date is today
+      if (dateInput.value === todayDateString) {
+          timeInput.min = currentTimeString;
+      } else {
+          timeInput.min = '00:00'; // No time restriction for future dates
+      }
+
+      dateInput.addEventListener('change', () => {
+          const selectedDate = dateInput.value;
+          const todayDate = getTodayDateString();
+          const currentTime = getCurrentTimeString();
+          timeInput.min = (selectedDate === todayDate) ? currentTime : '00:00';
+          if (selectedDate === todayDate && timeInput.value && timeInput.value < currentTime) {
+              timeInput.value = currentTime; // Reset time if it's in the past
+          }
+      });
 
       showLoader();
       try {
@@ -781,12 +821,17 @@
         editingAppointmentId = null;
         nameInput.value = '';
         phoneInput.value = '';
-        const today = new Date();
-        const yyyy = today.getFullYear();
-        const mm = String(today.getMonth() + 1).padStart(2, '0');
-        const dd = String(today.getDate()).padStart(2, '0');
-        dateInput.value = `${yyyy}-${mm}-${dd}`;
+        const todayDateString = getTodayDateString();
+        const currentTimeString = getCurrentTimeString();
+
+        dateInput.value = todayDateString;
+        dateInput.min = todayDateString; // Ensure min date is set on reset
         timeInput.value = '';
+        if (dateInput.value === todayDateString) {
+            timeInput.min = currentTimeString;
+        } else {
+            timeInput.min = '00:00';
+        }
         document.getElementById('services-container').innerHTML = ''; // Clear all service fields
                 addBtn.textContent = 'Add Appointment';
         addBtn.classList.remove('update-mode'); 

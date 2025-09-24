@@ -152,6 +152,16 @@
   </div>
 
   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const dateInput = document.getElementById('date');
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+      const dd = String(today.getDate()).padStart(2, '0');
+      dateInput.value = `${yyyy}-${mm}-${dd}`;
+      dateInput.min = `${yyyy}-${mm}-${dd}`; // Disable past dates
+    });
+
     function sendWhatsApp() {
       let name = document.getElementById("name").value;
       let age = document.getElementById("age").value;
