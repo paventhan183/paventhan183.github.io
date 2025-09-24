@@ -149,6 +149,13 @@
   </div>
 
   <script>
+    // Security Check: User must be logged in to access this page.
+    document.addEventListener('DOMContentLoaded', function() {
+      if (localStorage.getItem('isAdminLoggedIn') !== 'true') {
+        window.location.href = 'admin.html';
+      }
+    });
+
     document.getElementById('sendBtn').addEventListener('click', () => {
       let mobile = document.getElementById('mobile').value.trim();
 

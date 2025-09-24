@@ -146,6 +146,12 @@
   <script>
     // Set today's date in the date input field on page load
     window.onload = function() {
+      // Security Check: User must be logged in to access this page.
+      if (localStorage.getItem('isAdminLoggedIn') !== 'true') {
+        window.location.href = 'admin.html';
+        return;
+      }
+
       const today = new Date();
       const yyyy = today.getFullYear();
       const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed

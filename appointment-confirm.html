@@ -588,6 +588,13 @@
       const urlParams = new URLSearchParams(window.location.search);
       const billPhone = urlParams.get('bill_phone');
 
+      // Security Check: If not downloading a bill, user must be logged in.
+      if (!billPhone && localStorage.getItem('isAdminLoggedIn') !== 'true') {
+          // Redirect to login page if not logged in and not accessing a bill via URL
+          window.location.href = 'admin.html';
+          return; // Stop further execution
+      }
+
       if (billPhone) {
           showLoader();
           const container = document.querySelector('.container');
