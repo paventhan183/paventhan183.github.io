@@ -529,7 +529,7 @@
         <p style="margin: 0; font-size: 14px; font-weight: bold;" id="billPatient"></p>
       </div>
       <div style="text-align: right;">
-        <p style="margin: 0; font-size: 14px;"><b style="color: #555;">Bill Number:</b> <span id="billNumber"></span></p>
+        <!-- <p style="margin: 0; font-size: 14px;"><b style="color: #555;">Bill Number:</b> <span id="billNumber"></span></p> -->
         <p style="margin: 5px 0 0 0; font-size: 14px;"><b style="color: #555;">Bill Date:</b> <span id="billDateText"></span></p>
       </div>
     </div>
@@ -925,7 +925,7 @@
         // --- Populate the professional bill template ---
         const billNumber = 'INV-' + Date.now().toString().slice(-6);
         document.getElementById('billNumber').textContent = billNumber;
-        document.getElementById('billPatient').textContent = patientName;
+        document.getElementById('billPatient').textContent = `Mr./Mrs./Ms.${patientName}`;
         document.getElementById('billDateText').textContent = new Date(billDate + 'T00:00:00').toLocaleDateString('en-GB'); // DD/MM/YYYY
 
         const billTableBody = document.querySelector('#bill table tbody');
