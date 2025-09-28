@@ -593,7 +593,6 @@
     // State variables
     let editingAppointmentId = null;
     let serviceCounter = 0;
-    let allAppointments = [];
 
     // Helper function to get today's date in YYYY-MM-DD format
     function getTodayDateString() {
@@ -618,6 +617,7 @@
       // Example: appointment-confirm.html?bill_phone=918015241869
       const urlParams = new URLSearchParams(window.location.search);
       const billPhone = urlParams.get('bill_phone');
+      const billDate = urlParams.get('date'); // Read the date from URL
       const todayDateString = getTodayDateString();
       const currentTimeString = getCurrentTimeString();
 
@@ -636,7 +636,7 @@
       }
 
       if (billPhone) {
-          showLoader();
+          showLoader(); // Loader shown
           const container = document.querySelector('.container');
           // Replace page content with a status message
           container.innerHTML = '<h2>Generating Bill...</h2><div id="error" class="error"></div>';
@@ -644,7 +644,11 @@
 
           try {
               // Use the production API base URL for the shareable link to work for patients
-              const response = await fetch(`${API_BASE_URL}/api/bill-details/${billPhone}`);
+              if (!billDate) {
+                  throw new Error("Date parameter is missing in the URL.");
+              }
+              const response = await fetch(`${API_BASE_URL}/api/bill-details/${billPhone}?date=${billDate}`);
+
               if (!response.ok) {
                   let errorMsg = `HTTP error! status: ${response.status}`;
                   try {
@@ -662,7 +666,7 @@
               autoBillErrorDiv.textContent = `Failed to auto-generate bill: ${error.message}`;
               autoBillErrorDiv.style.display = 'block';
           } finally {
-              hideLoader();
+              hideLoader(); // Loader hidden
           }
           return; // Stop further page initialization
       }
@@ -690,13 +694,10 @@
       });
 
       showLoader();
-      try {
-        await loadAndRenderAppointments();
-      } catch (e) { 
-        // Error is already displayed by the function
-      } finally {
-        hideLoader();
-      }
+      // Load appointments for today's date on initial load
+      await loadAppointmentsByDate(todayDateString).finally(() => {
+          hideLoader();
+      });
       resetForm(); // Initialize form state
     };
 
@@ -719,38 +720,31 @@
         }
     });
 
-    filterDateInput.addEventListener('change', filterAndRenderAppointments);
-
-    function filterAndRenderAppointments() {
+    filterDateInput.addEventListener('change', async () => {
         const filterDate = filterDateInput.value;
-        let appointmentsToRender = allAppointments;
-
-        if (filterDate) {
-            appointmentsToRender = allAppointments.filter(appt => appt.date === filterDate);
-        }
-
-        // Sort the (potentially filtered) list
-        appointmentsToRender.sort((a, b) => {
-            const dateA = new Date(`${a.date}T${a.time}`);
-            const dateB = new Date(`${b.date}T${b.time}`);
-            return dateB - dateA; // Always sort newest first
+        showLoader();
+        await loadAppointmentsByDate(filterDate).finally(() => {
+            hideLoader();
         });
+    });
 
-        renderTable(appointmentsToRender);
-    }
-
-    async function loadAndRenderAppointments() {
-        // This function now expects a loader to be handled by its caller.
+    async function loadAppointmentsByDate(date) {
         try {
-            const response = await fetch(`${API_BASE_URL}/api/appointments`, { cache: 'no-cache' });
+            if (!date) {
+                renderTable([]); // Render an empty table if no date is provided
+                return;
+            }
+            const response = await fetch(`${API_BASE_URL}/api/appointments/by-date?date=${date}`, { cache: 'no-cache' });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
-            allAppointments = await response.json();
-            filterAndRenderAppointments();
+            const appointments = await response.json();
+            // Sort the fetched list by time (newest first)
+            appointments.sort((a, b) => new Date(`${b.date}T${b.time}`) - new Date(`${a.date}T${a.time}`));
+            renderTable(appointments);
         } catch (error) {
             console.error('Failed to load appointments:', error);
             errorDiv.textContent = 'Could not load appointments from the server. Make sure the server is running.';
             errorDiv.style.display = 'block';
-            throw error; // Re-throw to be handled by the caller's catch/finally block
+            renderTable([]); // Clear the table on error
         }
     }
 
@@ -1006,13 +1000,14 @@
             const phone = row.dataset.phone;
             if (!phone) throw new Error("Phone number not found for this appointment.");
 
+            const date = row.dataset.date; // Get the date from the record
+            if (!date) throw new Error("Date not found for this appointment.");
+
             // Fetch bill details from the server
-            const response = await fetch(`${API_BASE_URL}/api/bill-details/${phone}`);
+            const response = await fetch(`${API_BASE_URL}/api/bill-details/${phone}?date=${date}`);
             if (!response.ok) {
                 let errorMsg = `HTTP error! status: ${response.status}`;
                 try {
-                    const errorData = await response.json();
-                    if (errorData.message) errorMsg = errorData.message;
                 } catch (e) { /* Ignore if response is not JSON */ }
                 throw new Error(errorMsg);
             }
@@ -1172,7 +1167,7 @@
                 showAddFormBtn.textContent = '➕ Add New Appointment';
                 showAddFormBtn.classList.remove('close-form');
                 addBtn.style.display = 'none'; // Hide addBtn after successful update
-                await loadAndRenderAppointments();
+                await loadAppointmentsByDate(filterDateInput.value);
             } catch (error) {
                 console.error('Error updating appointment:', error);
                 errorDiv.textContent = `Failed to update appointment on the server: ${error.message}`;
@@ -1205,7 +1200,7 @@
                 showAddFormBtn.textContent = '➕ Add New Appointment';
                 showAddFormBtn.classList.remove('close-form');
                 addBtn.style.display = 'none'; // Hide addBtn after successful add
-                await loadAndRenderAppointments();
+                await loadAppointmentsByDate(filterDateInput.value);
             } catch (error) {
                 console.error('Error adding appointment:', error);
                 errorDiv.textContent = `Failed to add appointment to the server: ${error.message}`;
@@ -1222,7 +1217,7 @@
             try {
                 const response = await fetch(`${API_BASE_URL}/api/appointments/${id}`, { method: 'DELETE' }); // Standard DELETE for a specific resource
                 if (!response.ok) throw new Error('Server failed to delete appointment.');
-                await loadAndRenderAppointments();
+                await loadAppointmentsByDate(filterDateInput.value);
             } catch (error) {
                 console.error('Error deleting appointment:', error);
                 errorDiv.textContent = 'Failed to delete appointment on the server.';
@@ -1280,8 +1275,8 @@ We look forward to seeing you.`;
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ confirmationSent: true })
             });
-            if (!response.ok) throw new Error(`Server failed to update status: ${response.status} - ${response.statusText}`);
-            await loadAndRenderAppointments();
+            if (!response.ok) throw new Error(`Server failed to update status: ${response.status} - ${response.statusText}`); 
+            await loadAppointmentsByDate(filterDateInput.value);
         } catch (error) {
             console.error('Error updating status:', error);
             // Optionally show an error to the user
@@ -1304,7 +1299,7 @@ We look forward to seeing you.`;
         let billDownloadMessage = '';
         if (billUpdateFlag) {
             const cleanUrl = window.location.origin + window.location.pathname;
-            const billDownloadUrl = `${cleanUrl}?bill_phone=${phone}`;
+            const billDownloadUrl = `${cleanUrl}?bill_phone=${phone}&date=${row.dataset.date}`;
             billDownloadMessage = `
 
 You can also download your bill here:
@@ -1331,8 +1326,8 @@ You can share your feedback here: https://g.page/r/CfKLCQ4kwt5UEBM/review${billD
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ reviewSent: true })
             });
-            if (!response.ok) throw new Error(`Server failed to update status: ${response.status} - ${response.statusText}`);
-            await loadAndRenderAppointments();
+            if (!response.ok) throw new Error(`Server failed to update status: ${response.status} - ${response.statusText}`); 
+            await loadAppointmentsByDate(filterDateInput.value);
         } catch (error) {
             console.error('Error updating status:', error);
             // Optionally show an error to the user
