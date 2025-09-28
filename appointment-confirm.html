@@ -923,8 +923,8 @@
         const total = services.reduce((sum, service) => sum + Number(service.cost || 0), 0);
 
         // --- Populate the professional bill template ---
-        const billNumber = 'INV-' + Date.now().toString().slice(-6);
-        document.getElementById('billNumber').textContent = billNumber;
+        // const billNumber = 'INV-' + Date.now().toString().slice(-6);
+        // document.getElementById('billNumber').textContent = billNumber;
         document.getElementById('billPatient').textContent = 'Mr./Mrs./Ms.'+ patientName;
         document.getElementById('billDateText').textContent = new Date(billDate + 'T00:00:00').toLocaleDateString('en-GB'); // DD/MM/YYYY
 
