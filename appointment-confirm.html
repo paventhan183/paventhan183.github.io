@@ -414,6 +414,8 @@
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
+      margin-top: 15px;
+      padding-top: 15px;
     }
     .card-actions .action-btn {
       flex-grow: 1;
@@ -878,17 +880,17 @@
                                 <span>${appt.phone}</span>
                             </div>
                         </div>
-                        <div class="card-actions">
-                            <button class="action-btn confirm-btn" onclick="sendConfirmation('${appt.id}')">Confirm</button>
-                            <button class="action-btn review-btn" onclick="sendReviewRequest('${appt.id}')">Review</button>
-                            ${generateBillButtonHTML}
-                            <button class="action-btn edit-btn" onclick="editAppointment('${appt.id}')">Edit</button>
-                            <button class="action-btn delete-btn" onclick="deleteAppointment('${appt.id}')">Delete</button>
-                        </div>
                     </div>
                     <div class="card-body">
                         <div class="datetime-info"><strong>Date & Time</strong><span>${displayDate} at ${displayTime}</span></div>
                         <div class="status-details"><strong>Status</strong><span>Conf: ${confirmationStatus} | Review: ${reviewStatus} | Bill: ${billStatus}</span></div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="action-btn confirm-btn" onclick="sendConfirmation('${appt.id}')">Confirm</button>
+                        <button class="action-btn review-btn" onclick="sendReviewRequest('${appt.id}')">Review</button>
+                        ${generateBillButtonHTML}
+                        <button class="action-btn edit-btn" onclick="editAppointment('${appt.id}')">Edit</button>
+                        <button class="action-btn delete-btn" onclick="deleteAppointment('${appt.id}')">Delete</button>
                     </div>
                 `;
                 appointmentsList.appendChild(card);
