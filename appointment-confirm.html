@@ -320,6 +320,7 @@
     .generate-bill-btn { background-color: #3B82F6; } /* Blue */
     .edit-btn { background-color: #64748B; } /* Slate */
     .delete-btn { background-color: #EF4444; } /* Red */
+    .bill-share-btn { background-color: #22c55e; } /* Green */
 
     /* --- New Card Layout Styles --- */
     .appointment-list {
@@ -558,10 +559,13 @@
     <div style="margin-top: auto; border-top: 1px solid #eee; padding-top: 15px; display: flex; flex-direction: column; justify-content: flex-end; height: 100%;">
         <p style="text-align: center; font-size: 12px; color: #777; margin-bottom: 20px;">Thank you for choosing our clinic!</p>
         <div style="display: flex; justify-content: space-between; align-items: flex-end;">
-            <div>
-                <p style="font-size: 10px; color: #aaa; margin: 0;">This is a computer-generated bill.</p>
+            <div style="text-align: left;">
+                <p style="font-size: 10px; color: #aaa; margin: 0;">This is a computer-generated bill and is valid only when signed.</p>
             </div>
-            <p style="font-size: 12px; color: #333; border-top: 1px solid #999; padding-top: 5px; margin: 0;">Authorized Signature</p>
+            <div style="text-align: center;">
+                <img src="signature.png" alt="Signature" style="width: 120px; height: 40px; display: block; margin-bottom: -5px;">
+                <p style="font-size: 12px; color: #333; border-top: 1px solid #999; padding-top: 5px; margin: 0;">Authorized Signature</p>
+            </div>
         </div>
     </div>
   </div>
@@ -858,7 +862,10 @@
                 
                 let generateBillButtonHTML = '';
                 if (appt.billupdateflag) {
-                    generateBillButtonHTML = `<button class="action-btn generate-bill-btn" onclick="generateBill('${appt.id}')">Download Bill</button>`;
+                    generateBillButtonHTML = `
+                        <button class="action-btn generate-bill-btn" onclick="generateBill('${appt.id}')">Download Bill</button>
+                        <button class="action-btn bill-share-btn" onclick="shareBill('${appt.id}')">Share Bill</button>
+                    `;
                 }
 
                 card.innerHTML = `
@@ -1292,19 +1299,7 @@ We look forward to seeing you.`;
         // Get data from the row's dataset for reliability
         const name = row.dataset.name;
         const phone = row.dataset.phone;
-        const billUpdateFlag = row.dataset.billupdateflag === 'true'; // Check if services were added
         if (!phone) return;
-
-        // Conditionally create the bill download part of the message
-        let billDownloadMessage = '';
-        if (billUpdateFlag) {
-            const cleanUrl = window.location.origin + window.location.pathname;
-            const billDownloadUrl = `${cleanUrl}?bill_phone=${phone}&date=${row.dataset.date}`;
-            billDownloadMessage = `
-
-You can also download your bill here:
-${billDownloadUrl}`;
-        }
 
         const message =
 `Hello ${name},
@@ -1312,7 +1307,7 @@ Thank you for visiting *Dr. Mani's Ortho Speciality & General Clinic*.
 
 Your review means a lot to us — it helps others find the right care and encourages our team.
 If you were happy with our service, please give us a *5-star rating* ⭐⭐⭐⭐⭐.
-You can share your feedback here: https://g.page/r/CfKLCQ4kwt5UEBM/review${billDownloadMessage}`;
+You can share your feedback here: https://g.page/r/CfKLCQ4kwt5UEBM/review`;
 
         const encodedMessage = encodeURIComponent(message);
         const waLink = `https://wa.me/${phone}?text=${encodedMessage}`;
@@ -1334,6 +1329,33 @@ You can share your feedback here: https://g.page/r/CfKLCQ4kwt5UEBM/review${billD
         } finally {
             hideLoader();
         }
+    };
+
+    window.shareBill = async (id) => {
+        const row = document.querySelector(`[data-id='${id}']`);
+        if (!row) return;
+
+        const name = row.dataset.name;
+        const phone = row.dataset.phone;
+        const billUpdateFlag = row.dataset.billupdateflag === 'true';
+
+        if (!phone || !billUpdateFlag) return;
+
+        const cleanUrl = window.location.origin + window.location.pathname;
+        const billDownloadUrl = `${cleanUrl}?bill_phone=${phone}&date=${row.dataset.date}`;
+
+        const message =
+`Hello ${name},
+Thank you for visiting *Dr. Mani's Ortho Speciality & General Clinic*.
+
+You can download your bill using the link below:
+${billDownloadUrl}
+
+We wish you a speedy recovery!`;
+
+        const encodedMessage = encodeURIComponent(message);
+        const waLink = `https://wa.me/${phone}?text=${encodedMessage}`;
+        window.open(waLink, '_blank');
     };
   </script>
 </body>
