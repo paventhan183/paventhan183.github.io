@@ -697,6 +697,77 @@ nav a:hover i {
   color: #fff; /* Make icon bright on hover too */
 }
 
+/* Slideshow container */
+.slideshow-container {
+  position: relative;
+  margin: auto;
+}
+
+/* Individual slide */
+.before-after-slide {
+  display: none;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* Before/After image wrapper */
+.before-after-image {
+  position: relative;
+  text-align: center;
+  flex: 1;
+  min-width: 250px;
+  max-width: 400px;
+}
+
+/* Style for a slide that contains a single, combined image */
+.before-after-image.single-image {
+  max-width: 820px; /* Allow the single image to be wider */
+  flex-basis: 100%;
+}
+
+.before-after-image img {
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  width: 100%; /* Make image fill the container width */
+  height: 600px; /* Set a fixed height */
+  object-fit: cover; /* Crop image to fit without distortion */
+}
+
+.image-label {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: rgba(13, 148, 136, 0.8); /* Teal with transparency */
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  transition: 0.3s ease;
+  border-radius: 0 3px 3px 0;
+  background-color: rgba(0,0,0,0.4);
+  user-select: none;
+}
+
+.next { right: 0; border-radius: 3px 0 0 3px; }
+.prev { left: 0; }
+
+.prev:hover, .next:hover { background-color: rgba(0,0,0,0.8); }
+
 @keyframes bounce {
 
   0%,
@@ -801,6 +872,11 @@ nav a:hover i {
 
   .testimonials-grid {
     grid-template-columns: 1fr;
+  }
+
+  .prev, .next {
+    font-size: 16px;
+    padding: 12px;
   }
 }
 
