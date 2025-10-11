@@ -1,7 +1,6 @@
 /* General Reset */
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 150px; /* Offset for desktop sticky header */
 }
 
 body {
@@ -132,9 +131,6 @@ header {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Adds separation on scroll */
 }
 
@@ -720,6 +716,7 @@ nav a:hover i {
   width: 100%; /* Make image fill the container width */
   height: 250px; /* Smaller height for grid layout */
   object-fit: contain; /* Show full image without cropping */
+  transition: transform 0.3s ease;
 }
 
 .image-label {
@@ -736,7 +733,7 @@ nav a:hover i {
 
 /* Remove blur on hover for the Before & After images */
 .before-after-image:hover img {
-  transform: scale(1.05); /* Add a subtle zoom on hover */
+  transform: scale(1.05);
 }
 
 /* --- New Fullscreen Image Modal Styles --- */
@@ -829,9 +826,8 @@ body.modal-open > *:not(#image-modal) {
   transition: filter 0.3s ease;
 }
 
-.gallery-image:hover {
-  transform: scale(1.05);
-  filter: blur(8px) brightness(1.05); /* Keep blur and slightly brighten on hover */
+.clinic-gallery-container .gallery-image:hover {
+  filter: blur(0) brightness(1.05); /* Remove blur on hover */
 }
 
 /* --- End Clinic Gallery Styles --- */
@@ -850,10 +846,6 @@ body.modal-open > *:not(#image-modal) {
 
 /* Responsive */
 @media(max-width:768px) {
-  html {
-    scroll-padding-top: 100px; /* Offset for mobile sticky header */
-  }
-
   #menu-toggle {
     display: flex;
     order: 2;
