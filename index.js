@@ -142,23 +142,45 @@ function highlightNavOnScroll() {
 window.addEventListener('scroll', highlightNavOnScroll);
 document.addEventListener('DOMContentLoaded', highlightNavOnScroll); // Run on initial load to highlight the top link
 
-// Slideshow Logic
-let slideIndex = 1;
-showSlides(slideIndex);
+// Fullscreen Image Modal Logic
+const modal = document.createElement('div');
+modal.id = 'image-modal';
+modal.style.display = 'none';
+modal.innerHTML = `
+  <span class="close-modal">&times;</span>
+  <img class="modal-content" id="modal-image">
+`;
+document.body.appendChild(modal);
 
-// Next/previous controls
-function plusSlides(n) {
-  showSlides(slideIndex += n);
+const modalImg = document.getElementById('modal-image');
+const closeModal = document.querySelector('.close-modal');
+
+// Function to open the modal
+function openModal(src) {
+  modal.style.display = 'flex';
+  modalImg.src = src;
+  document.body.classList.add('modal-open'); // Add blur to background
 }
 
-function showSlides(n) {
-  let i;
-  let slides = document.getElementsByClassName("before-after-slide");
-  if (n > slides.length) {slideIndex = 1}
-  if (n < 1) {slideIndex = slides.length}
-  for (i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";
+// Function to close the modal
+function closeModalFunction() {
+  modal.style.display = 'none';
+  document.body.classList.remove('modal-open'); // Remove blur from background
+}
+
+// Add click listeners to all slideshow images
+document.querySelectorAll('.before-after-image img').forEach(img => {
+  img.addEventListener('click', function() {
+    openModal(this.src);
+  });
+});
+
+// Close modal when the 'x' is clicked
+closeModal.addEventListener('click', closeModalFunction);
+
+// Close modal when clicking outside the image
+modal.addEventListener('click', function(e) {
+  if (e.target !== modalImg) {
+    closeModalFunction();
   }
-  
-  slides[slideIndex-1].style.display = "flex";
-}
+});

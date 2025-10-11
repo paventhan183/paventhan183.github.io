@@ -697,41 +697,29 @@ nav a:hover i {
   color: #fff; /* Make icon bright on hover too */
 }
 
-/* Slideshow container */
-.slideshow-container {
-  position: relative;
+/* Before/After Grid container */
+.before-after-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 images per row */
+  gap: 15px;
   margin: auto;
-}
-
-/* Individual slide */
-.before-after-slide {
-  display: none;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
+  margin-top: 20px;
 }
 
 /* Before/After image wrapper */
 .before-after-image {
   position: relative;
   text-align: center;
-  flex: 1;
-  min-width: 250px;
-  max-width: 400px;
-}
-
-/* Style for a slide that contains a single, combined image */
-.before-after-image.single-image {
-  max-width: 820px; /* Allow the single image to be wider */
-  flex-basis: 100%;
+  cursor: pointer; /* Indicate images are clickable */
+  transition: transform 0.3s ease;
 }
 
 .before-after-image img {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   width: 100%; /* Make image fill the container width */
-  height: 600px; /* Set a fixed height */
-  object-fit: cover; /* Crop image to fit without distortion */
+  height: 250px; /* Smaller height for grid layout */
+  object-fit: contain; /* Show full image without cropping */
 }
 
 .image-label {
@@ -746,27 +734,107 @@ nav a:hover i {
   font-weight: 600;
 }
 
-/* Next & previous buttons */
-.prev, .next {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  width: auto;
-  padding: 16px;
-  margin-top: -22px;
-  color: white;
-  font-weight: bold;
-  font-size: 20px;
-  transition: 0.3s ease;
-  border-radius: 0 3px 3px 0;
-  background-color: rgba(0,0,0,0.4);
-  user-select: none;
+/* Remove blur on hover for the Before & After images */
+.before-after-image:hover img {
+  transform: scale(1.05); /* Add a subtle zoom on hover */
 }
 
-.next { right: 0; border-radius: 3px 0 0 3px; }
-.prev { left: 0; }
+/* --- New Fullscreen Image Modal Styles --- */
+/* The Modal (background) */
+#image-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1001; /* Sit on top */
+  padding: 20px; /* Padding around the image */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+  box-sizing: border-box;
+  display: flex; /* Use flexbox for centering */
+  align-items: center;
+  justify-content: center;
+  -webkit-backdrop-filter: blur(5px); /* For Safari */
+  backdrop-filter: blur(5px); /* "Frosted glass" effect */
+}
 
-.prev:hover, .next:hover { background-color: rgba(0,0,0,0.8); }
+/* Modal Content (image) */
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 1200px;
+  max-height: calc(100vh - 40px); /* Full viewport height minus padding */
+  object-fit: contain; /* Fit image within bounds without cropping */
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+  from {transform:scale(0)}
+  to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close-modal {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+/* --- End Modal Styles --- */
+
+/* --- Background blur for when modal is open --- */
+body.modal-open > *:not(#image-modal) {
+  filter: blur(5px);
+  transition: filter 0.3s ease-in-out;
+}
+
+/* --- New Clinic Gallery Styles --- */
+.clinic-gallery-section {
+  position: relative; /* Needed for arrow positioning */
+}
+
+.clinic-gallery-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px; /* Space between images */
+  margin-top: 20px;
+}
+
+.gallery-image-wrapper {
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.gallery-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+  filter: blur(8px); /* Increased blur effect */
+  transition: filter 0.3s ease;
+}
+
+.gallery-image:hover {
+  transform: scale(1.05);
+  filter: blur(8px) brightness(1.05); /* Keep blur and slightly brighten on hover */
+}
+
+/* --- End Clinic Gallery Styles --- */
 
 @keyframes bounce {
 
@@ -868,6 +936,14 @@ nav a:hover i {
 
   .commitment-grid {
     grid-template-columns: 1fr;
+  }
+
+  .before-after-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 images per row on mobile */
+  }
+
+  .clinic-gallery-container {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on smaller tablets */
   }
 
   .testimonials-grid {
