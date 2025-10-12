@@ -372,6 +372,20 @@
       margin-bottom: 4px;
       font-weight: 600;
     }
+    .status-details div {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .status-sent {
+        color: #16a34a; /* Green */
+        font-weight: 600;
+    }
+
+    .status-pending {
+        color: #f59e0b; /* Amber/Yellow */
+        font-weight: 600;
+    }
 
     .whatsapp-icon-svg {
         display: inline-block;
@@ -927,16 +941,16 @@
                 card.dataset.billupdateflag = appt.billupdateflag;
  
                 const confirmationStatus = appt.confirmationSent 
-                    ? `<span class="status-sent status-confirmed">Sent</span>`
+                    ? `<span class="status-sent">Sent</span>`
                     : `<span class="status-pending">Pending</span>`;
 
                 const reviewStatus = appt.reviewSent
-                    ? `<span class="status-sent status-review-sent">Sent</span>`
+                    ? `<span class="status-sent">Sent</span>`
                     : `<span class="status-pending">Pending</span>`;
 
                 const billStatus = appt.billupdateflag
-                    ? `<span style="color: #16A34A; font-weight: 600;">Generated</span>`
-                    : `<span style="color: #94a3b8;">Pending</span>`;
+                    ? `<span class="status-sent">Generated</span>`
+                    : `<span class="status-pending">Pending</span>`;
 
                 const [year, month, day] = appt.date.split('-');
                 const displayDate = `${day}-${month}-${year}`;
@@ -965,7 +979,12 @@
                     </div>
                     <div class="card-body">
                         <div class="datetime-info"><strong>Date & Time</strong><span>${displayDate} at ${displayTime}</span></div>
-                        <div class="status-details"><strong>Status</strong><span>Conf: ${confirmationStatus} | Review: ${reviewStatus} | Bill: ${billStatus}</span></div>
+                        <div class="status-details">
+                            <strong>Status</strong>
+                            <div><span>Confirmation:</span> ${confirmationStatus}</div>
+                            <div><span>Review Request:</span> ${reviewStatus}</div>
+                            <div><span>Bill:</span> ${billStatus}</div>
+                        </div>
                     </div>
                     <div class="card-actions">
                         <div class="actions-dropdown">
@@ -1174,6 +1193,9 @@
         timeInput.readOnly = true; // Make time read-only
 
         errorDiv.style.display = 'none';
+
+        // Close the dropdown menu
+        document.getElementById(`dropdown-${id}`).style.display = 'none';
     };
 
     addBtn.addEventListener('click', async () => {
