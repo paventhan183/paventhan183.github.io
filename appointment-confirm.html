@@ -946,9 +946,9 @@
                 let generateBillButtonHTML = '';
                 if (appt.billupdateflag) {
                     generateBillButtonHTML = `
-                        <a href="#" onclick="generateBill('${appt.id}'); return false;">Download Bill</a>
                         <a href="#" onclick="viewBill('${appt.id}'); return false;">View Bill</a>
                         <a href="#" onclick="shareBill('${appt.id}'); return false;">Share Bill</a>
+                        <a href="#" onclick="generateBill('${appt.id}'); return false;">Download Bill</a>
                     `;
                 }
  
@@ -973,8 +973,8 @@
                             <div id="dropdown-${appt.id}" class="dropdown-content">
                                 <a href="#" onclick="sendConfirmation('${appt.id}'); return false;">Confirm Appointment</a>
                                 <a href="#" onclick="sendReviewRequest('${appt.id}'); return false;">Send Review Request</a>
-                                ${generateBillButtonHTML}
                                 <a href="#" onclick="editAppointment('${appt.id}'); return false;">Edit/Add Services</a>
+                                ${generateBillButtonHTML}
                                 <a href="#" onclick="deleteAppointment('${appt.id}'); return false;" style="color: #EF4444;">Delete Appointment</a>
                             </div>
                         </div>
