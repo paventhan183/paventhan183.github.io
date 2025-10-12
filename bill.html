@@ -231,24 +231,22 @@
   <!-- The actual bill template that will be shown and converted to PDF -->
   <div id="bill" style="display:none; padding: 40px; width: 794px; font-family: 'Roboto', sans-serif; color: #333; box-sizing: border-box; background: #fff; flex-direction: column; min-height: 1123px;">
     <!-- Header -->
-    <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #0D9488; padding-bottom: 15px;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #000; padding-bottom: 15px;">
       <div>
-        <h1 style="color: #0D9488; margin: 0; font-size: 24px; font-weight: 700;">Dr Mani's Ortho Speciality & General Clinic</h1>
+        <h1 style="color: #000; margin: 0; font-size: 24px; font-weight: 700; white-space: nowrap;">Dr Mani's Ortho Speciality & General Clinic</h1>
         <p style="margin: 5px 0 0 0; font-size: 12px;">68, Radha Nagar Main Road, opposite J2 Mahal, Chromepet, Chennai</p>
         <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Phone:</b> +91-9444261111</p>
       </div>
       <div style="text-align: right;">
-        <h2 style="margin: 0; font-size: 28px; color: #333; font-weight: 600;">INVOICE</h2>
-        <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Doctor:</b> Dr Mani Arumugam, M.B.B.S., M.S., ORTHO</p>
+        <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Dr. Mani Arumugam,</b> M.B.B.S., M.S. (Ortho)</p>
         <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Reg No:</b> MBBS123456</p>
       </div>
     </div>
   
     <!-- Bill Details -->
     <div style="display: flex; justify-content: space-between; margin-top: 25px;">
-      <div>
-        <h3 style="margin: 0 0 5px 0; font-size: 14px; color: #555;">Bill To:</h3>
-        <p style="margin: 0; font-size: 14px; font-weight: bold;" id="billPatient"></p>
+      <div style="display: flex; align-items: baseline; gap: 8px;">
+        <h3 style="margin: 0; font-size: 14px; color: #555; font-weight: normal;">Bill To: <strong id="billPatient" style="color: #333;"></strong></h3>
       </div>
       <div style="text-align: right;">
         <p style="margin: 0; font-size: 14px;"><b style="color: #555;">Bill Number:</b> <span id="billNumber"></span></p>
@@ -258,11 +256,11 @@
   
         <!-- Services Table -->
         <table style="width: 100%; border-collapse: collapse; margin-top: 30px; font-size: 14px;">
-          <thead style="background-color: #F0FDFA;">
+          <thead style="background-color: #f3f4f6;">
             <tr>
-              <th style="border-bottom: 2px solid #ddd; padding: 12px; text-align: left; color: #0F766E; width: 50px;">#</th>
-              <th style="border-bottom: 2px solid #ddd; padding: 12px; text-align: left; color: #0F766E;">Service Description</th>
-              <th style="border-bottom: 2px solid #ddd; padding: 12px; text-align: right; color: #0F766E; width: 120px;">Cost (₹)</th>
+              <th style="border-bottom: 2px solid #ddd; padding: 12px; text-align: left; color: #000; width: 50px;">S.NO</th>
+              <th style="border-bottom: 2px solid #ddd; padding: 12px; text-align: left; color: #000;">Service Description</th>
+              <th style="border-bottom: 2px solid #ddd; padding: 12px; text-align: right; color: #000; width: 120px;">Cost (₹)</th>
             </tr>
           </thead>
           <tbody>
@@ -271,7 +269,7 @@
           <tfoot>
             <tr>
               <td colspan="2" style="border-top: 2px solid #ddd; padding: 12px; text-align: right; font-weight: bold;">Total</td>
-              <td id="billTotal" style="border-top: 2px solid #ddd; padding: 12px; text-align: right; font-weight: bold; color: #0D9488; font-size: 16px;"></td>
+              <td id="billTotal" style="border-top: 2px solid #ddd; padding: 12px; text-align: right; font-weight: bold; color: #000; font-size: 16px;"></td>
             </tr>
           </tfoot>
         </table>
@@ -403,7 +401,7 @@
   function populateBill({ patientName, billDate, services, total }) {
     const billNumber = 'INV-' + Date.now().toString().slice(-6);
     document.getElementById('billNumber').textContent = billNumber;
-    document.getElementById('billPatient').textContent = patientName;
+    document.getElementById('billPatient').textContent = 'Mr./Mrs./Ms. ' + patientName;
     document.getElementById('billDateText').textContent = new Date(billDate + 'T00:00:00').toLocaleDateString('en-GB'); // DD/MM/YYYY
 
     const billTableBody = document.querySelector('#bill table tbody');
