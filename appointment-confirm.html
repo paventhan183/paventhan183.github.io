@@ -547,22 +547,27 @@
   <!-- Hidden bill template for PDF generation -->
   <div id="bill" style="display:none; padding: 40px; width: 794px; font-family: 'Roboto', sans-serif; color: #333; box-sizing: border-box; background: #fff; flex-direction: column; min-height: 1123px; margin: 20px auto 0 auto;">
     <!-- Header -->
-    <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #000; padding-bottom: 15px;">
-      <div>
-        <h1 style="color: #000; margin: 0; font-size: 24px; font-weight: 700; white-space: nowrap;">Dr Mani's Ortho Speciality & General Clinic</h1>
-        <p style="margin: 5px 0 0 0; font-size: 12px;">68, Radha Nagar Main Road, opposite J2 Mahal, Chromepet, Chennai</p>
-        <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Phone:</b> +91-9444261111</p>
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #000; padding-bottom: 15px;">
+      <div style="display: flex; align-items: center;">
+        <img src="IMG-20250712-WA0001.jpg" alt="Clinic Logo" style="width: 70px; height: 70px; margin-right: 15px; border-radius: 8px; filter: grayscale(100%);">
+        <div>
+          <h1 style="color: #000; margin: 0; font-size: 22px; font-weight: 700; white-space: nowrap;">Dr Mani's Ortho Speciality & General Clinic</h1>
+          <p style="margin: 4px 0 0 0; font-size: 12px; font-style: italic; color: #555;">Compassionate care for a pain-free life.</p>
+          <p style="margin: 5px 0 0 0; font-size: 12px;">68, Radha Nagar Main Road, opposite J2 Mahal, Chromepet, Chennai</p>
+          <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Phone:</b> +91-9444261111</p>
+          <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Website:</b> https://drmaniortho.in/</p>
+        </div>
       </div>
       <div style="text-align: right;">
         <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Dr. Mani Arumugam,</b> M.B.B.S., M.S. (Ortho)</p>
-        <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Reg No:</b> 98278</p>
+        <p style="margin: 5px 0 0 0; font-size: 12px;"><b>Registration No:</b> 98278</p>
       </div>
     </div>
   
     <!-- Bill Details -->
     <div style="display: flex; justify-content: space-between; margin-top: 25px;">
-      <div style="display: flex; align-items: baseline; gap: 8px;">
-        <h3 style="margin: 0; font-size: 14px; color: #555; font-weight: normal;">Bill To: <strong id="billPatient" style="color: #333;"></strong></h3>
+      <div>
+        <h3 style="margin: 0; font-size: 14px; color: #555; font-weight: bold;">Bill To: <span id="billPatient" style="color: #333; font-weight: normal;"></span></h3>
       </div>
       <div style="text-align: right;">
         <!-- <p style="margin: 0; font-size: 14px;"><b style="color: #555;">Bill Number:</b> <span id="billNumber"></span></p> -->
