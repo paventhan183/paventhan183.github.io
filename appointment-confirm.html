@@ -657,13 +657,14 @@
       // Check for a URL parameter to auto-generate and download a bill.
       // Example: appointment-confirm.html?bill_phone=918015241869
       const urlParams = new URLSearchParams(window.location.search);
+      const viewBillPhone = urlParams.get('view_bill_phone');
       const billPhone = urlParams.get('bill_phone');
       const billDate = urlParams.get('date'); // Read the date from URL
       const todayDateString = getTodayDateString();
       const currentTimeString = getCurrentTimeString();
 
       // Security Check: If not downloading a bill, user must be logged in.
-      if (!billPhone && localStorage.getItem('isAdminLoggedIn') !== 'true') {
+      if (!billPhone && !viewBillPhone && localStorage.getItem('isAdminLoggedIn') !== 'true') {
           // Redirect to login page if not logged in and not accessing a bill via URL
           window.location.href = 'admin.html';
           return; // Stop further execution
@@ -676,7 +677,7 @@
           timeInput.min = '00:00'; // No time restriction for future dates
       }
 
-      if (billPhone) {
+      if (billPhone || viewBillPhone) {
           showLoader(); // Loader shown
           const container = document.querySelector('.container');
           // Replace page content with a status message
@@ -688,7 +689,7 @@
               if (!billDate) {
                   throw new Error("Date parameter is missing in the URL.");
               }
-              const response = await fetch(`${API_BASE_URL}/api/bill-details/${billPhone}?date=${billDate}`);
+              const response = await fetch(`${API_BASE_URL}/api/bill-details/${billPhone || viewBillPhone}?date=${billDate}`);
 
               if (!response.ok) {
                   let errorMsg = `HTTP error! status: ${response.status}`;
@@ -699,8 +700,17 @@
                   throw new Error(errorMsg);
               }
               const billDetails = await response.json();
-              await populateAndSavePdf(billDetails);
-              container.innerHTML = '<h2>Bill downloaded successfully. You can close this window.</h2>';
+
+              if (billPhone) {
+                await populateAndSavePdf(billDetails);
+                container.innerHTML = '<h2>Bill downloaded successfully. You can close this window.</h2>';
+              } else if (viewBillPhone) {
+                document.title = `Bill for ${billDetails.patientName}`;
+                populateBillTemplate(billDetails);
+                container.style.display = 'none'; // Hide the main app container
+                const billDiv = document.getElementById('bill');
+                billDiv.style.display = 'flex'; // Show the bill
+              }
           } catch (error) {
               console.error('Error auto-generating bill:', error);
               container.querySelector('h2').textContent = 'Error Generating Bill';
@@ -927,6 +937,7 @@
                 if (appt.billupdateflag) {
                     generateBillButtonHTML = `
                         <a href="#" onclick="generateBill('${appt.id}'); return false;">Download Bill</a>
+                        <a href="#" onclick="viewBill('${appt.id}'); return false;">View Bill</a>
                         <a href="#" onclick="shareBill('${appt.id}'); return false;">Share Bill</a>
                     `;
                 }
@@ -1426,6 +1437,19 @@ We wish you a speedy recovery!`;
         window.open(waLink, '_blank');
     };
 
+    window.viewBill = (id) => {
+        const row = document.querySelector(`[data-id='${id}']`);
+        if (!row) return;
+
+        const phone = row.dataset.phone;
+        const billUpdateFlag = row.dataset.billupdateflag === 'true';
+
+        if (!phone || !billUpdateFlag) return;
+
+        const cleanUrl = window.location.origin + window.location.pathname;
+        const billViewUrl = `${cleanUrl}?view_bill_phone=${phone}&date=${row.dataset.date}`;
+        window.open(billViewUrl, '_blank');
+    };
     // Function to toggle the actions dropdown
     window.toggleActionsDropdown = (event, id) => {
         event.stopPropagation(); // Prevent the global click listener from closing it immediately
