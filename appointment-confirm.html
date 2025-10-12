@@ -724,8 +724,15 @@
 
       // --- Default page load behavior ---
       dateInput.value = todayDateString;
-      dateInput.min = todayDateString; // Disable past dates
-      filterDateInput.value = todayDateString; // Set filter to today by default
+      dateInput.min = todayDateString;
+
+      // New logic to retain filter date
+      const storedFilterDate = sessionStorage.getItem('filterDate');
+      const initialFilterDate = storedFilterDate || todayDateString;
+      filterDateInput.value = initialFilterDate;
+      if (!storedFilterDate) {
+          sessionStorage.setItem('filterDate', todayDateString);
+      }
 
       // Set min time for the form's time input if the selected date is today
       if (dateInput.value === todayDateString) {
@@ -733,7 +740,6 @@
       } else {
           timeInput.min = '00:00'; // No time restriction for future dates
       }
-
       dateInput.addEventListener('change', () => {
           const selectedDate = dateInput.value;
           const todayDate = getTodayDateString();
@@ -745,8 +751,8 @@
       });
 
       showLoader();
-      // Load appointments for today's date on initial load
-      await loadAppointmentsByDate(todayDateString).finally(() => {
+      // Load appointments for the initial filter date
+      await loadAppointmentsByDate(initialFilterDate).finally(() => {
           hideLoader();
       });
 
@@ -799,6 +805,7 @@
 
     filterDateInput.addEventListener('change', async () => {
         const filterDate = filterDateInput.value;
+        sessionStorage.setItem('filterDate', filterDate); // Store the new date
         showLoader();
         await loadAppointmentsByDate(filterDate).finally(() => {
             hideLoader();
