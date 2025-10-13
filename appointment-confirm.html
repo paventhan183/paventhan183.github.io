@@ -37,6 +37,20 @@
       box-sizing: border-box;
     }
 
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    #logout-button {
+      background-color: #b91c1c; /* Red for logout */
+      width: auto;
+      padding: 8px 16px;
+    }
+
     .back-link {
       display: inline-block;
       margin-bottom: 15px;
@@ -511,7 +525,11 @@
     <div class="loader"></div>
   </div>
   <div class="container">
-    <a href="admin.html" class="back-link">← Back to Admin Panel</a>
+    <div class="page-header">
+      <a href="admin.html" class="back-link" style="margin-bottom: 0;">← Back to Admin Panel</a>
+      <button id="logout-button" class="action-btn">Logout</button>
+    </div>
+
     <h2>Appointment Manager</h2>
     <div id="error" class="error"></div>
 
@@ -637,6 +655,7 @@
     const filterDateInput = document.getElementById('filterDate');
     const errorDiv = document.getElementById("error");
     const API_BASE_URL = 'https://dr-appointment-t10x.onrender.com';
+    const logoutButton = document.getElementById('logout-button');
     const loaderOverlay = document.getElementById('loader-overlay');
     //const API_BASE_URL = 'http://localhost:3000';
 
@@ -651,6 +670,12 @@
     // State variables
     let editingAppointmentId = null;
     let serviceCounter = 0;
+
+    function logout() {
+      sessionStorage.removeItem('isAdminLoggedIn');
+      sessionStorage.removeItem('authToken');
+      window.location.href = 'admin.html';
+    }
 
     // Helper function to get today's date in YYYY-MM-DD format
     function getTodayDateString() {
@@ -800,6 +825,8 @@
       });
       resetForm(); // Initialize form state
     };
+
+    logoutButton.addEventListener('click', logout);
 
     showAddFormBtn.addEventListener('click', () => {
         const isVisible = addFormContainer.style.display === 'block';
