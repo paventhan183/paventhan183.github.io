@@ -131,9 +131,36 @@
     #logout-button:hover {
       background-color: #991b1b;
     }
+
+    /* Loader styles */
+    #loader-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.8);
+      display: none; /* Hidden by default */
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    .loader {
+      border: 8px solid #f3f3f3; /* Light grey */
+      border-top: 8px solid #0D9488; /* Teal */
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
+  <div id="loader-overlay">
+    <div class="loader"></div>
+  </div>
+
   <div class="container">
     <div id="login-block">
       <h2>Admin Login</h2>
@@ -157,6 +184,7 @@
     const passwordInput = document.getElementById('password');
     const errorDiv = document.getElementById('error-message');
     const logoutButton = document.getElementById('logout-button');
+    const loaderOverlay = document.getElementById('loader-overlay');
     const API_BASE_URL = 'https://dr-appointment-t10x.onrender.com';
     //const API_BASE_URL = 'http://localhost:3000';
 
@@ -169,6 +197,14 @@
       adminBlock.style.display = 'none';
     }
 
+    function showLoader() {
+      if (loaderOverlay) loaderOverlay.style.display = 'flex';
+    }
+
+    function hideLoader() {
+      if (loaderOverlay) loaderOverlay.style.display = 'none';
+    }
+
     async function attemptLogin() {
       const password = passwordInput.value;
       if (!password) {
@@ -177,6 +213,7 @@
         return;
       }
 
+      showLoader();
       try {
         const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
           method: 'POST',
@@ -199,6 +236,8 @@
         console.error('Login failed:', error);
         errorDiv.textContent = 'Login failed. Please check your connection and try again.';
         errorDiv.style.display = 'block';
+      } finally {
+        hideLoader();
       }
     }
 
