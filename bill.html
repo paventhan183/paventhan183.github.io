@@ -302,7 +302,7 @@
   // Set today's date in the date input field on page load
   window.onload = function() {
     // Security Check: User must be logged in to access this page.
-    if (localStorage.getItem('isAdminLoggedIn') !== 'true') {
+    if (sessionStorage.getItem('isAdminLoggedIn') !== 'true') {
       window.location.href = 'admin.html';
       return;
     }

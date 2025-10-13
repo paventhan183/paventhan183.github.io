@@ -151,7 +151,7 @@
   <script>
     // Security Check: User must be logged in to access this page.
     document.addEventListener('DOMContentLoaded', function() {
-      if (localStorage.getItem('isAdminLoggedIn') !== 'true') {
+      if (sessionStorage.getItem('isAdminLoggedIn') !== 'true') {
         window.location.href = 'admin.html';
       }
     });

@@ -157,6 +157,8 @@
     const passwordInput = document.getElementById('password');
     const errorDiv = document.getElementById('error-message');
     const logoutButton = document.getElementById('logout-button');
+    const API_BASE_URL = 'https://dr-appointment-t10x.onrender.com';
+    //const API_BASE_URL = 'http://localhost:3000';
 
     function showAdminPanel() {
       loginBlock.style.display = 'none';
@@ -168,41 +170,54 @@
       adminBlock.style.display = 'none';
     }
 
-    function attemptLogin() {
-      const pass = passwordInput.value;
+    async function attemptLogin() {
+      const password = passwordInput.value;
+      if (!password) {
+        errorDiv.textContent = 'Please enter the password.';
+        errorDiv.style.display = 'block';
+        return;
+      }
 
-      // Generate the dynamic password based on the current date (DDMM)
-      const now = new Date();
-      const day = String(now.getDate()).padStart(2, '0');
-      const month = String(now.getMonth() + 1).padStart(2, '0'); // getMonth() is 0-indexed
-      const correctPassword = `${day}${month}`;
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: 'admin', password })
+        });
 
-      // IMPORTANT: This is still client-side validation and is not secure.
-      // Anyone can view the source code to see this logic.
-      if (pass === correctPassword) {
-        localStorage.setItem('isAdminLoggedIn', 'true');
-        showAdminPanel();
-        errorDiv.style.display = 'none';
-      } else {
-        errorDiv.textContent = 'Invalid password.';
+        if (response.ok) {
+          const data = await response.json();
+          sessionStorage.setItem('authToken', data.token);
+          sessionStorage.setItem('isAdminLoggedIn', 'true');
+          showAdminPanel();
+          errorDiv.style.display = 'none';
+        } else {
+          const errorData = await response.json();
+          errorDiv.textContent = errorData.message || 'Invalid password.';
+          errorDiv.style.display = 'block';
+        }
+      } catch (error) {
+        console.error('Login failed:', error);
+        errorDiv.textContent = 'Login failed. Please check your connection and try again.';
         errorDiv.style.display = 'block';
       }
     }
 
     function logout() {
-      localStorage.removeItem('isAdminLoggedIn');
+      sessionStorage.removeItem('isAdminLoggedIn');
+      sessionStorage.removeItem('authToken');
       showLoginPanel();
     }
 
     // Initial check on page load
-    if (localStorage.getItem('isAdminLoggedIn') === 'true') {
+    if (sessionStorage.getItem('isAdminLoggedIn') === 'true') {
       showAdminPanel();
     }
 
     passwordInput.addEventListener('keypress', function(event) {
       if (event.key === 'Enter') {
         event.preventDefault();
-        attemptLogin();
+        attemptLogin(); // This will now be async
       }
     });
     logoutButton.addEventListener('click', logout);
@@ -214,20 +229,6 @@
       }
     });
 
-    // --- Deterrents for Inspect Element ---
-    // Note: These measures are not foolproof security. A determined user can still view the source code.
-
-    // Disable right-click context menu
-    document.addEventListener('contextmenu', event => event.preventDefault());
-
-    // Disable common developer tool keyboard shortcuts
-    document.addEventListener('keydown', function(event) {
-      if (event.keyCode === 123 || // F12
-        (event.ctrlKey && event.shiftKey && (event.keyCode === 73 || event.keyCode === 74 || event.keyCode === 67)) || // Ctrl+Shift+I/J/C
-        (event.ctrlKey && event.keyCode === 85)) { // Ctrl+U (View Source)
-        event.preventDefault();
-      }
-    });
   </script>
 </body>
 </html>
