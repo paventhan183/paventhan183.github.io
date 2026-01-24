@@ -1356,6 +1356,12 @@
                 });
                 if (!response.ok) throw new Error(`Server failed to add appointment: ${response.status} - ${response.statusText}`);
 
+                // Send WhatsApp notification to the specific number
+                const notificationPhone = '919789078382';
+                const notificationMsg = `New Appointment:\nPatient: ${name}\nDate: ${date}\nTime: ${time}\nPatient Phone: ${validPhone}`;
+                const notificationUrl = `https://wa.me/${notificationPhone}?text=${encodeURIComponent(notificationMsg)}`;
+                window.open(notificationUrl, '_blank');
+
                 resetForm();
                 addFormContainer.style.display = 'none';
                 showAddFormBtn.textContent = '➕ Add New Appointment';
