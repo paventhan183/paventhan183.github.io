@@ -265,7 +265,16 @@
         margin-top: 20px;
         flex-wrap: wrap;
         justify-content: space-between; /* This will push items to opposite ends */
+        align-items: center;
     }
+
+    .toolbar-left {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
     .main-actions-toolbar > button {
         width: auto;
         margin-top: 0;
@@ -288,6 +297,25 @@
     .filter-container input[type="date"] {
         padding: 8px 10px; /* Smaller padding for toolbar */
         margin: 0; /* Reset margin */
+        width: auto;
+        font-size: 0.9rem;
+    }
+
+    /* New styles for search */
+    .search-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .search-container input[type="text"] {
+        padding: 8px 10px;
+        margin: 0;
+        width: 200px;
+        font-size: 0.9rem;
+    }
+    .search-container button {
+        margin: 0;
+        padding: 8px 12px;
         width: auto;
         font-size: 0.9rem;
     }
@@ -561,14 +589,20 @@
     </div>
 
     <div class="main-actions-toolbar">
+        <div class="toolbar-left">
+            <div class="search-container">
+                <input type="text" id="searchName" placeholder="Search Patient Name">
+            </div>
+    
+            <div class="filter-container">
+                <label for="filterDate">Filter by Date:</label>
+                <input type="date" id="filterDate">
+            </div>
+        </div>
+
         <button id="showAddFormBtn">➕ Add New Appointment</button>
         <!-- The addBtn is moved here and its visibility will be managed by JS -->
         <button id="addBtn" style="display: none;">Add Appointment</button>
-
-        <div class="filter-container">
-            <label for="filterDate">Filter by Date:</label>
-            <input type="date" id="filterDate">
-        </div>
     </div>
     <div id="appointment-list-container" class="appointment-list">
         <!-- Cards will be added here by JavaScript -->
@@ -653,6 +687,7 @@
     const addFormContainer = document.getElementById('add-form-container');
     const appointmentsList = document.getElementById('appointmentsList');
     const filterDateInput = document.getElementById('filterDate');
+    const searchNameInput = document.getElementById('searchName');
     const errorDiv = document.getElementById("error");
     const API_BASE_URL = 'https://dr-appointment-t10x.onrender.com';
     const logoutButton = document.getElementById('logout-button');
@@ -856,6 +891,15 @@
         });
     });
 
+    searchNameInput.addEventListener('input', function () {
+        const name = this.value.trim();
+        if (name === '') {
+            loadAppointmentsByDate(filterDateInput.value);
+        } else if (name.length >= 3) {
+            searchAppointmentsByName(name);
+        }
+    });
+
     async function loadAppointmentsByDate(date) {
         try {
             if (!date) {
@@ -879,6 +923,31 @@
             errorDiv.textContent = 'Could not load appointments from the server. Make sure the server is running.';
             errorDiv.style.display = 'block';
             renderTable([]); // Clear the table on error
+        }
+    }
+
+    async function searchAppointmentsByName(name) {
+        try {
+            showLoader();
+            const token = sessionStorage.getItem('authToken');
+            const headers = {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            };
+
+            const response = await fetch(`${API_BASE_URL}/api/appointments/search?name=${encodeURIComponent(name)}`, { headers, cache: 'no-cache' });
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
+            const appointments = await response.json();
+            // Sort the fetched list by time (newest first)
+            appointments.sort((a, b) => new Date(`${b.date}T${b.time}`) - new Date(`${a.date}T${a.time}`));
+            renderTable(appointments);
+        } catch (error) {
+            console.error('Failed to search appointments:', error);
+            errorDiv.textContent = 'Could not search appointments. Make sure the server is running.';
+            errorDiv.style.display = 'block';
+            renderTable([]); 
+        } finally {
+            hideLoader();
         }
     }
 
@@ -940,7 +1009,7 @@
 
         dateInput.value = todayDateString;
         dateInput.min = todayDateString; // Ensure min date is set on reset
-        timeInput.value = '';
+        timeInput.value = currentTimeString;
         if (dateInput.value === todayDateString) {
             timeInput.min = currentTimeString;
         } else {
