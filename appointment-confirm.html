@@ -320,6 +320,13 @@
         font-size: 0.9rem;
     }
 
+    #clearSearchBtn {
+        background-color: #64748B;
+    }
+    #clearSearchBtn:hover {
+        background-color: #475569;
+    }
+
     /* --- New Button Styles --- */
     #showAddFormBtn {
         background-color: #0D9488;
@@ -592,10 +599,10 @@
         <div class="toolbar-left">
             <div class="search-container">
                 <input type="text" id="searchName" placeholder="Search Patient Name">
+                <button id="clearSearchBtn">Clear</button>
             </div>
     
             <div class="filter-container">
-                <label for="filterDate">Filter by Date:</label>
                 <input type="date" id="filterDate">
             </div>
         </div>
@@ -688,6 +695,7 @@
     const appointmentsList = document.getElementById('appointmentsList');
     const filterDateInput = document.getElementById('filterDate');
     const searchNameInput = document.getElementById('searchName');
+    const clearSearchBtn = document.getElementById('clearSearchBtn');
     const errorDiv = document.getElementById("error");
     const API_BASE_URL = 'https://dr-appointment-t10x.onrender.com';
     const logoutButton = document.getElementById('logout-button');
@@ -898,6 +906,11 @@
         } else if (name.length >= 3) {
             searchAppointmentsByName(name);
         }
+    });
+
+    clearSearchBtn.addEventListener('click', () => {
+        searchNameInput.value = '';
+        loadAppointmentsByDate(filterDateInput.value);
     });
 
     async function loadAppointmentsByDate(date) {
