@@ -1,4 +1,8 @@
 /* General Reset */
+* {
+  box-sizing: border-box;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -235,7 +239,8 @@ nav a.active::after {
 }
 
 .hero-content {
-  max-width: 800px;
+  max-width: 1200px;
+  width: 100%;
 }
 
 .hero-title {
@@ -378,7 +383,7 @@ nav a.active::after {
   gap: 20px;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 0 10px;
+  
 }
 
 .service-section,
